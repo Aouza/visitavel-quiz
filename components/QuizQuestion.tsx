@@ -138,7 +138,8 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
             );
           }
 
-          return null;
+          // Fallback for unsupported question types
+          return <div>Unsupported question type</div>;
         }}
       />
 
