@@ -20,18 +20,22 @@ interface QuizQuestionProps {
 
 export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
   return (
-    <div className="space-y-4 w-full">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold leading-tight">
+    <div className="space-y-8 w-full">
+      <div className="space-y-4">
+        <h2 className="text-2xl md:text-3xl font-semibold leading-tight text-slate-900">
           {question.title}
         </h2>
         {question.helper && (
-          <p className="text-sm text-muted-foreground">{question.helper}</p>
+          <p className="text-base text-slate-600 leading-relaxed">
+            {question.helper}
+          </p>
         )}
         {!question.required && (
-          <p className="text-xs text-muted-foreground italic">
-            Esta pergunta é opcional - você pode pular se preferir
-          </p>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200">
+            <span className="text-xs text-slate-600">
+              💡 Opcional - pode pular se preferir
+            </span>
+          </div>
         )}
       </div>
 
@@ -49,7 +53,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                   value={field.value as string}
                   onChange={field.onChange}
                   max={new Date().toISOString().split("T")[0]}
-                  className="max-w-md"
+                  className="max-w-md h-14 text-base rounded-2xl border-slate-300 focus:border-slate-900 focus:ring-slate-900"
                   aria-label={question.title}
                 />
               </div>
@@ -66,21 +70,20 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                 aria-label={question.title}
               >
                 {question.options.map((option) => (
-                  <div
+                  <label
                     key={option.value}
-                    className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent transition-colors cursor-pointer"
+                    htmlFor={`${question.id}-${option.value}`}
+                    className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                   >
                     <RadioGroupItem
                       value={option.value}
                       id={`${question.id}-${option.value}`}
+                      className="flex-shrink-0"
                     />
-                    <Label
-                      htmlFor={`${question.id}-${option.value}`}
-                      className="flex-1 cursor-pointer font-normal"
-                    >
+                    <span className="flex-1 text-base text-slate-700">
                       {option.label}
-                    </Label>
-                  </div>
+                    </span>
+                  </label>
                 ))}
               </RadioGroup>
             );
@@ -100,9 +103,10 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                   const isChecked = values.includes(option.value);
 
                   return (
-                    <div
+                    <label
                       key={option.value}
-                      className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent transition-colors"
+                      htmlFor={`${question.id}-${option.value}`}
+                      className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                     >
                       <Checkbox
                         id={`${question.id}-${option.value}`}
@@ -116,14 +120,12 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                             );
                           }
                         }}
+                        className="flex-shrink-0"
                       />
-                      <Label
-                        htmlFor={`${question.id}-${option.value}`}
-                        className="flex-1 cursor-pointer font-normal"
-                      >
+                      <span className="flex-1 text-base text-slate-700">
                         {option.label}
-                      </Label>
-                    </div>
+                      </span>
+                    </label>
                   );
                 })}
               </div>
@@ -140,21 +142,20 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                 aria-label={question.title}
               >
                 {question.options.map((option) => (
-                  <div
+                  <label
                     key={option.value}
-                    className="flex items-center space-x-3 p-4 rounded-lg border hover:bg-accent transition-colors cursor-pointer"
+                    htmlFor={`${question.id}-${option.value}`}
+                    className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                   >
                     <RadioGroupItem
                       value={option.value}
                       id={`${question.id}-${option.value}`}
+                      className="flex-shrink-0"
                     />
-                    <Label
-                      htmlFor={`${question.id}-${option.value}`}
-                      className="flex-1 cursor-pointer font-normal"
-                    >
+                    <span className="flex-1 text-base text-slate-700">
                       {option.label}
-                    </Label>
-                  </div>
+                    </span>
+                  </label>
                 ))}
               </RadioGroup>
             );
@@ -166,9 +167,11 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
       />
 
       {error && (
-        <p className="text-sm text-red-600 mt-2" role="alert">
-          {error}
-        </p>
+        <div className="flex items-center gap-2 p-4 rounded-2xl bg-red-50 border border-red-200">
+          <span className="text-sm text-red-700" role="alert">
+            ⚠️ {error}
+          </span>
+        </div>
       )}
     </div>
   );
