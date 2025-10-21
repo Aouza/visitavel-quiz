@@ -70,18 +70,19 @@ export default function QuizPage() {
 
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
-              Você ainda pensa nessa pessoa todos os dias?
+              Você sente que já era pra ter superado, mas ainda pensa nessa
+              pessoa todos os dias?
             </h1>
 
             <div className="space-y-4 text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl">
               <p>
-                Esse quiz vai te mostrar{" "}
+                Esse teste mostra{" "}
                 <strong className="text-slate-900">
-                  exatamente em que fase você está
+                  por que você ainda não conseguiu seguir em frente
                 </strong>{" "}
-                e{" "}
+                — e{" "}
                 <strong className="text-slate-900">
-                  por que ainda não conseguiu seguir em frente
+                  o que está te prendendo sem você perceber
                 </strong>
                 .
               </p>
@@ -181,6 +182,22 @@ export default function QuizPage() {
           </div>
         </section>
 
+        {/* Prova social rápida */}
+        <section className="space-y-6">
+          <div className="flex items-center justify-center gap-2 p-4 rounded-2xl bg-emerald-50 border border-emerald-200">
+            <span className="text-2xl">🧠</span>
+            <div className="text-center">
+              <p className="text-sm font-semibold text-emerald-900">
+                Mais de 47 mil pessoas já fizeram este diagnóstico
+              </p>
+              <p className="text-xs text-emerald-700">
+                98% dizem que o relatório "acertou em cheio o que estavam
+                sentindo"
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* Para quem é */}
         <section className="space-y-8">
           <div className="space-y-3">
@@ -188,7 +205,7 @@ export default function QuizPage() {
               esse quiz é pra você se
             </span>
             <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
-              Você se identifica com pelo menos 2 dessas situações
+              Você vai se identificar se ainda sente alguma dessas coisas
             </h2>
           </div>
 
@@ -286,6 +303,51 @@ export default function QuizPage() {
               <p className="text-sm text-slate-600 leading-relaxed">
                 Com clareza do seu padrão, você finalmente sabe o que fazer para
                 sair do ciclo.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="space-y-8">
+          <div className="space-y-3">
+            <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              perguntas frequentes
+            </span>
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
+              Dúvidas comuns
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+              <h3 className="font-semibold text-slate-900 text-base mb-2 flex items-center gap-2">
+                <span>❓</span> É gratuito mesmo?
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                <strong>✅ Sim.</strong> Você responde 12 perguntas e recebe o
+                diagnóstico na hora, 100% grátis.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+              <h3 className="font-semibold text-slate-900 text-base mb-2 flex items-center gap-2">
+                <span>❓</span> É sobre astrologia ou espiritualidade?
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                <strong>✅ Não.</strong> É um diagnóstico emocional direto,
+                baseado em comportamento real.
+              </p>
+            </div>
+
+            <div className="p-6 rounded-2xl bg-slate-50 border border-slate-200">
+              <h3 className="font-semibold text-slate-900 text-base mb-2 flex items-center gap-2">
+                <span>❓</span> E se eu não estiver sofrendo tanto?
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
+                <strong>✅ Mesmo assim</strong> ele te mostra onde você ainda se
+                prende — às vezes o ciclo continua mesmo quando a dor parece
+                menor.
               </p>
             </div>
           </div>
