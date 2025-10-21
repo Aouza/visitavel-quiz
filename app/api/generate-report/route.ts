@@ -24,12 +24,14 @@ interface GenerateReportRequest {
   scores: Record<Segment, number>;
   birthdate?: string;
   exBirthdate?: string;
+  mode?: "summary" | "full";
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: GenerateReportRequest = await request.json();
-    const { segment, answers, scores, birthdate, exBirthdate } = body;
+    const { segment, answers, scores, birthdate, exBirthdate, mode } = body;
+    const isSummary = mode === "summary";
 
     // Validação
     if (!segment || !answers) {
@@ -106,7 +108,7 @@ Resposta: ${selectedOption?.label || "Não respondida"}
     const segmentContent = getSegmentContent(segment);
 
     // Preparar prompt para OpenAI
-    const systemPrompt = `Você é um psicólogo especializado em relacionamentos e superação de términos amorosos. 
+    const basePrompt = `Você é um psicólogo especializado em relacionamentos e superação de términos amorosos. 
 Sua tarefa é criar um relatório personalizado e empático baseado nas respostas de um quiz sobre pós-término.
 
 Você deve:
@@ -115,8 +117,9 @@ Você deve:
 3. Fornecer insights personalizados e construtivos
 4. Oferecer orientações práticas e aplicáveis
 5. Manter um tom acolhedor, mas profissional
-6. Evitar julgamentos e manter foco em soluções
+6. Evitar julgamentos e manter foco em soluções`;
 
+    const fullReportSections = `
 O relatório deve ter as seguintes seções:
 - **Análise do Seu Momento Atual**: Uma análise profunda e personalizada do estado emocional da pessoa
 - **Pontos de Atenção**: 3-4 aspectos específicos que merecem cuidado imediato
@@ -124,7 +127,24 @@ O relatório deve ter as seguintes seções:
 - **Plano de Ação Personalizado**: 5-7 ações práticas e específicas que a pessoa pode começar hoje
 - **Mensagem de Apoio**: Uma mensagem final encorajadora e realista`;
 
-    const userPrompt = `A pessoa realizou o quiz de pós-término e foi classificada na fase: **${segmentContent.headline}**
+    const summarySections = `
+Escreva APENAS o Resumo Emocional (não inclua plano completo). Estrutura obrigatória:
+1) **Título principal**: nome simbólico do diagnóstico (não cite signos)
+2) **Resumo interpretativo**: 1 parágrafo forte, claro e assertivo
+3) **Desenvolvimento emocional**: 2 a 3 parágrafos de leitura simbólica profunda
+4) **Interrupção estratégica**: uma única linha final que provoque curiosidade, sem parecer teaser vazio
+
+Regras:
+- Linguagem humana, íntima e reveladora, sem jargões místicos
+- Nunca mencione astrologia, horóscopo ou signos; use apenas as características comportamentais fornecidas no contexto adicional
+- Entregue valor real; não prometa conteúdo futuro dentro do texto (a linha final é apenas uma frase de curiosidade)`;
+
+    const systemPrompt = `${basePrompt}
+${isSummary ? summarySections : fullReportSections}`;
+
+    const userPrompt = `A pessoa realizou o quiz de pós-término e foi classificada na fase: **${
+      segmentContent.headline
+    }**
 
 ${segmentContent.description}
 
@@ -139,7 +159,9 @@ ${answersContext}
 - Superação: ${scores.superacao} pontos
 ${astrologicalContext}
 
-Por favor, crie um relatório personalizado, profundo e empático baseado nessas informações. Use markdown para formatação e seja específico nas orientações.
+ Por favor, crie ${
+   isSummary ? "APENAS o Resumo Emocional solicitado" : "um relatório completo"
+ } personalizado, profundo e empático baseado nessas informações. Use markdown para formatação e seja específico nas orientações.
 
 **IMPORTANTE:** Se houver "Contexto Adicional de Personalidade", incorpore esses insights de forma NATURAL e SUTIL no relatório, sem mencionar explicitamente astrologia, horóscopo ou signos. Trate como características comportamentais e de personalidade observadas.`;
 

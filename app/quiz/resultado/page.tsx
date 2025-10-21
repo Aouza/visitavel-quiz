@@ -1,20 +1,26 @@
 /**
  * @file: app/quiz/resultado/page.tsx
- * @responsibility: Página de resultado do quiz (resumo básico + CTAs)
+ * @responsibility: Página de resultado elegante com preview real
  */
 
 "use client";
 
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ResultCard } from "@/components/ResultCard";
+import { ElegantResultCard } from "@/components/ElegantResultCard";
 import { type Segment } from "@/lib/questions";
 import { trackPageView } from "@/lib/analytics";
+import { loadQuizProgress } from "@/lib/storage";
+import { computeSegment } from "@/lib/scoring";
 
 function ResultContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [segment, setSegment] = useState<Segment | null>(null);
+  const [quizData, setQuizData] = useState<{
+    answers: Record<string, string | string[]>;
+    scores: Record<Segment, number>;
+  } | null>(null);
 
   useEffect(() => {
     const seg = searchParams.get("seg") as Segment;
@@ -29,9 +35,30 @@ function ResultContent() {
         "superacao",
       ].includes(seg)
     ) {
-      // Segmento inválido, redirecionar para o quiz
       router.push("/quiz");
       return;
+    }
+
+    // Carregar dados do quiz
+    const savedProgress = loadQuizProgress();
+    if (savedProgress?.answers) {
+      const result = computeSegment(savedProgress.answers);
+      setQuizData({
+        answers: savedProgress.answers,
+        scores: result.scores,
+      });
+    } else {
+      // Se não houver dados salvos, criar mock básico
+      setQuizData({
+        answers: {},
+        scores: {
+          devastacao: 0,
+          abstinencia: 0,
+          interiorizacao: 0,
+          ira: 0,
+          superacao: 0,
+        },
+      });
     }
 
     setSegment(seg);
@@ -39,41 +66,29 @@ function ResultContent() {
   }, [searchParams, router]);
 
   const handlePrimaryAction = () => {
-    // Ir para página de oferta
     router.push(`/oferta?seg=${segment}`);
   };
 
-  const handleSecondaryAction = () => {
-    // Confirmar envio e ir para oferta mesmo assim
-    alert(
-      "Perfeito! Vamos enviar o resumo para seu e-mail. Enquanto isso, veja nossa oferta especial."
-    );
-    router.push(`/oferta?seg=${segment}`);
-  };
-
-  if (!segment) {
+  if (!segment || !quizData) {
     return (
       <div className="container mx-auto px-4 py-12 text-center">
-        <p className="text-muted-foreground">Carregando seu resultado...</p>
+        <div className="inline-flex items-center gap-3">
+          <div className="w-8 h-8 border-4 border-teal-600 border-t-transparent rounded-full animate-spin" />
+          <p className="text-slate-600">Carregando seu resultado...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-12">
-      <ResultCard
-        segment={segment}
-        onPrimaryAction={handlePrimaryAction}
-        onSecondaryAction={handleSecondaryAction}
-      />
-
-      {/* Explicação adicional */}
-      <div className="max-w-2xl mx-auto mt-8 text-center space-y-4">
-        <p className="text-sm text-muted-foreground">
-          Este é apenas um resumo gratuito. Para acelerar sua recuperação e
-          evitar recaídas, preparamos um Kit Anti-Recaída completo com
-          ferramentas práticas e suporte especializado.
-        </p>
+    <div className="min-h-screen bg-gradient-to-br from-[#f9fafb] via-[#f3f4f6] to-[#ffffff] text-slate-900">
+      <div className="container mx-auto px-4 pt-16 pb-28">
+        <ElegantResultCard
+          segment={segment}
+          answers={quizData.answers}
+          scores={quizData.scores}
+          onPrimaryAction={handlePrimaryAction}
+        />
       </div>
     </div>
   );
