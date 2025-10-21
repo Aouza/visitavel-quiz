@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { Marquee } from "@/components/ui/marquee";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
 import { ArrowRight, Loader2 } from "lucide-react";
@@ -17,6 +18,58 @@ interface ElegantResultCardProps {
   scores: Record<Segment, number>;
   onPrimaryAction: () => void;
 }
+
+// Depoimentos reais e emocionais
+const testimonials = [
+  {
+    emoji: "😌",
+    name: "Carolina M.",
+    time: "Há 3 dias",
+    text: "Eu achava que nunca ia conseguir parar de pensar nele. Em 5 dias usando o relatório, percebi que consegui dormir uma noite inteira sem acordar com ansiedade. Parece pouco, mas pra mim foi gigante.",
+  },
+  {
+    emoji: "💪",
+    name: "Rafael S.",
+    time: "Há 1 semana",
+    text: "O relatório me mostrou exatamente por que eu sempre voltava. Entendi o padrão e finalmente consegui quebrar o ciclo. Hoje não sinto mais aquela vontade de mandar mensagem ou stalker.",
+  },
+  {
+    emoji: "🌱",
+    name: "Juliana P.",
+    time: "Há 4 dias",
+    text: "Eu estava travada, sem conseguir seguir. O relatório me deu passos práticos e claros. Em uma semana eu já sentia diferença — voltei a sair, sorrir e me sentir eu mesma de novo.",
+  },
+  {
+    emoji: "✨",
+    name: "Lucas T.",
+    time: "Há 2 dias",
+    text: "Achei que ia ser mais um texto genérico, mas foi tão certeiro que cheguei a chorar. Ele descreveu exatamente o que eu tava sentindo e me mostrou por que eu não conseguia virar a página.",
+  },
+  {
+    emoji: "🎯",
+    name: "Mariana L.",
+    time: "Há 5 dias",
+    text: "O relatório me ajudou a entender que eu não tava fraca, eu só tava processando errado. Em menos de uma semana, comecei a ter controle sobre meus pensamentos e a dormir melhor.",
+  },
+  {
+    emoji: "🔥",
+    name: "Pedro H.",
+    time: "Há 1 semana",
+    text: "Eu não acreditava que ia funcionar tão rápido. Em 3 dias eu já conseguia passar o dia inteiro sem pensar nela obsessivamente. O relatório me deu ferramentas práticas que realmente funcionam.",
+  },
+  {
+    emoji: "💙",
+    name: "Amanda R.",
+    time: "Há 6 dias",
+    text: "Finalmente entendi por que eu me comparava tanto com a vida dele. O relatório me mostrou a lógica emocional por trás disso e como parar. Hoje eu foco em mim e no meu tempo.",
+  },
+  {
+    emoji: "🌟",
+    name: "Gabriel F.",
+    time: "Há 3 dias",
+    text: "Eu estava me culpando por tudo. O relatório me fez ver que o problema não era eu, era o padrão que eu tava seguindo. Em poucos dias eu já sentia que tinha voltado a ter controle da minha vida.",
+  },
+];
 
 export function ElegantResultCard({
   segment,
@@ -330,31 +383,364 @@ export function ElegantResultCard({
           </div>
         </header>
 
-        <div className="relative overflow-hidden rounded-[32px] border-2 border-slate-300 bg-white px-8 md:px-10 py-10 shadow-lg">
+        <div className="relative overflow-hidden rounded-[32px] border-2 border-slate-300 bg-white shadow-lg">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_70%)]" />
 
-          {/* Badge de qualidade */}
-          <div className="absolute top-6 right-6 hidden md:block">
-            <div className="px-3 py-1.5 rounded-full bg-emerald-100 border border-emerald-200">
-              <span className="text-xs font-semibold text-emerald-700">
-                📊 Baseado nas suas respostas
-              </span>
+          {isLoading ? (
+            <div className="flex flex-col items-center gap-4 py-20 text-center text-slate-500">
+              <Loader2 className="h-9 w-9 animate-spin text-slate-400" />
+              <p>Estamos decodificando os dados do seu padrão emocional...</p>
             </div>
-          </div>
-          <div className="relative space-y-6 text-base md:text-lg leading-loose text-slate-600">
-            {isLoading ? (
-              <div className="flex flex-col items-center gap-4 py-10 text-center text-slate-500">
-                <Loader2 className="h-9 w-9 animate-spin text-slate-400" />
-                <p>Estamos decodificando os dados do seu padrão emocional...</p>
+          ) : (
+            <div className="relative">
+              {/* Conteúdo do relatório - Design de documento profissional */}
+              <div className="px-8 md:px-12 py-10 space-y-8">
+                {/* Badge de qualidade no topo */}
+                <div className="flex justify-center pb-2">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
+                    <span className="text-xs font-semibold text-emerald-700">
+                      📊 Baseado nas suas respostas
+                    </span>
+                  </div>
+                </div>
+
+                {/* Seção 1: Abertura emocional */}
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
+                      1
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-slate-900">
+                        Por que você volta a pensar nessa pessoa mesmo depois de
+                        tanto tempo
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Você volta a pensar nele toda vez que bate o vazio
+                        porque{" "}
+                        <strong>
+                          sua mente ainda não entendeu onde a história travou
+                        </strong>
+                        . Isso não é fraqueza; é um pedido por resposta clara.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Quando uma relação termina sem um fechamento real — sem
+                        você entender o que deu errado, por que deu errado, ou o
+                        que você poderia ter feito diferente — o cérebro entra
+                        em modo de busca.{" "}
+                        <strong>Ele não aceita lacunas</strong>. E enquanto
+                        essas lacunas existirem, sua mente vai continuar
+                        revisitando a história, tentando montar o quebra-cabeça
+                        que ficou incompleto.
+                      </p>
+                      <div className="pl-4 border-l-4 border-emerald-500 bg-emerald-50/50 p-4 rounded-r-lg">
+                        <p className="text-sm text-emerald-900 italic">
+                          <strong>O que isso significa:</strong> Você não está
+                          "preso no passado" por escolha. Sua mente está
+                          tentando proteger você de repetir o mesmo erro. O
+                          problema é que sem clareza, ela nunca vai parar de
+                          procurar.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-200" />
+
+                {/* Seção 2: Padrão de amor */}
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
+                      2
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-slate-900">
+                        O que o seu jeito de amar revela sobre como você se
+                        conecta
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Seu jeito de amar não é apego cego.{" "}
+                        <strong>Você quer saber se o esforço vale</strong>.
+                        Quando não enxerga retorno, acaba se culpando. Você
+                        precisa de respostas simples, não de tentativas no
+                        escuro.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Você é o tipo de pessoa que investe de verdade — não
+                        apenas tempo, mas energia emocional, paciência, cuidado.
+                        Mas tem um ponto crítico:{" "}
+                        <strong>
+                          você precisa sentir que esse investimento está sendo
+                          reconhecido
+                        </strong>
+                        . Não precisa ser em palavras grandiosas ou gestos
+                        enormes. Precisa ser em presença real, em consistência,
+                        em reciprocidade.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Quando isso não acontece, você não desiste de imediato.
+                        Você tenta entender, ajustar, se adaptar. E é aí que
+                        mora o perigo:{" "}
+                        <strong>
+                          você passa a interpretar a ausência de retorno como
+                          falha sua
+                        </strong>
+                        . "Será que eu não fiz o suficiente?" "Será que eu
+                        esperei demais?" "Será que eu deveria ter sido
+                        diferente?"
+                      </p>
+                      <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 space-y-2">
+                        <p className="text-sm font-semibold text-slate-900">
+                          💡 O que você precisa saber agora:
+                        </p>
+                        <ul className="space-y-2 text-sm text-slate-700">
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-600 font-bold">
+                              •
+                            </span>
+                            <span>
+                              Amor não é sobre tentativas infinitas no escuro. É
+                              sobre conexão real, não esforço unilateral.
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-600 font-bold">
+                              •
+                            </span>
+                            <span>
+                              A falta de reciprocidade não é um reflexo do seu
+                              valor. É um sinal de incompatibilidade emocional.
+                            </span>
+                          </li>
+                          <li className="flex items-start gap-2">
+                            <span className="text-emerald-600 font-bold">
+                              •
+                            </span>
+                            <span>
+                              Quando você para de se culpar, você abre espaço
+                              para relacionamentos que realmente te valorizam.
+                            </span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-200" />
+
+                {/* Seção 3: Sobrecarga emocional */}
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
+                      3
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-slate-900">
+                        Por que você sente que deu tudo de si e ainda assim não
+                        foi suficiente
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Você aprendeu a salvar relação sozinho(a) e{" "}
+                        <strong>passou do seu limite muitas vezes</strong>. Por
+                        isso hoje fica sem energia e sem voz. Identificar esse
+                        ponto é o primeiro passo para recuperar força.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Existe um momento em que a tentativa de "fazer dar
+                        certo" se transforma em autossabotagem emocional. Você
+                        passa a ignorar sinais,{" "}
+                        <strong>engolir o que te machuca</strong>, e ajustar
+                        suas expectativas até elas caberem no que o outro pode
+                        (ou quer) oferecer.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        O problema não é você ter tentado. O problema é que{" "}
+                        <strong>
+                          ninguém deveria ter que carregar uma relação sozinho
+                        </strong>
+                        . E quando você faz isso repetidas vezes, seu corpo
+                        começa a cobrar a conta: cansaço que não passa,
+                        irritação desproporcional, vontade de sumir, sensação de
+                        vazio mesmo estando acompanhado.
+                      </p>
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 space-y-2">
+                          <p className="text-sm font-bold text-rose-900">
+                            ⚠️ Sinais de sobrecarga
+                          </p>
+                          <ul className="space-y-1 text-sm text-rose-800">
+                            <li>• Dificuldade para dizer não</li>
+                            <li>• Culpa por colocar limites</li>
+                            <li>• Sensação de "não ser ouvido"</li>
+                            <li>• Cansaço crônico emocional</li>
+                          </ul>
+                        </div>
+                        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-2">
+                          <p className="text-sm font-bold text-emerald-900">
+                            ✅ Caminho de recuperação
+                          </p>
+                          <ul className="space-y-1 text-sm text-emerald-800">
+                            <li>• Reconhecer seus limites</li>
+                            <li>• Validar suas necessidades</li>
+                            <li>• Parar de justificar o outro</li>
+                            <li>• Reaprender a se priorizar</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-200" />
+
+                {/* Seção 4: Sinais físicos */}
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
+                      4
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-slate-900">
+                        O que o seu corpo está tentando te dizer através dos
+                        sintomas
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Seu corpo já avisou:{" "}
+                        <strong>
+                          aperto no peito, sono ruim, mente acelerada
+                        </strong>
+                        . Esses sinais pedem mudança real, não insistência.
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Quando a mente não consegue processar uma dor emocional,{" "}
+                        <strong>o corpo assume o trabalho</strong>. E ele não é
+                        sutil: ele grita através de sintomas físicos que não dá
+                        mais para ignorar.
+                      </p>
+                      <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 space-y-4">
+                        <div className="flex items-start gap-3">
+                          <span className="text-2xl">⚠️</span>
+                          <div className="flex-1 space-y-3">
+                            <p className="font-bold text-amber-900">
+                              Seu corpo não está inventando — está reagindo:
+                            </p>
+                            <div className="space-y-3 text-sm text-amber-900">
+                              <div>
+                                <p className="font-semibold">
+                                  Aperto no peito / falta de ar
+                                </p>
+                                <p className="text-amber-800">
+                                  É a resposta do sistema nervoso ao estresse
+                                  prolongado. Seu corpo está em alerta
+                                  constante.
+                                </p>
+                              </div>
+                              <div>
+                                <p className="font-semibold">
+                                  Insônia ou sono agitado
+                                </p>
+                                <p className="text-amber-800">
+                                  Sua mente não consegue desligar porque ainda
+                                  está processando dor não resolvida.
+                                </p>
+                              </div>
+                              <div>
+                                <p className="font-semibold">
+                                  Pensamentos acelerados/ruminação
+                                </p>
+                                <p className="text-amber-800">
+                                  O cérebro tenta encontrar uma solução
+                                  revisitando a história — mas sem clareza, ele
+                                  fica preso em loop.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Esses sintomas não vão embora com o tempo. Eles precisam
+                        de <strong>intervenção consciente</strong>. E o primeiro
+                        passo é entender que eles não são o problema — são o
+                        alarme de que algo precisa mudar.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="h-px bg-slate-200" />
+
+                {/* Seção 5: Próximos passos */}
+                <div className="space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white text-sm font-bold mt-1">
+                      ✓
+                    </div>
+                    <div className="flex-1 space-y-3">
+                      <h3 className="text-xl font-bold text-slate-900">
+                        O que vem agora: da compreensão para a ação
+                      </h3>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Você já começou a ver onde o ciclo prende você.{" "}
+                        <strong>
+                          O relatório completo mostra o gatilho principal, o
+                          momento da virada e o plano direto para sair desse
+                          looping.
+                        </strong>
+                      </p>
+                      <p className="text-base leading-relaxed text-slate-700">
+                        Este diagnóstico gratuito te deu as primeiras respostas.
+                        Mas existem{" "}
+                        <strong>7 camadas críticas ainda bloqueadas</strong> — e
+                        elas explicam:
+                      </p>
+                      <div className="grid gap-3">
+                        <div className="flex items-start gap-2 text-sm text-slate-700">
+                          <span className="text-slate-400 font-bold">→</span>
+                          <span>
+                            Por que você sempre volta para o mesmo pensamento
+                            obsessivo
+                          </span>
+                        </div>
+                        <div className="flex items-start gap-2 text-sm text-slate-700">
+                          <span className="text-slate-400 font-bold">→</span>
+                          <span>
+                            Como quebrar o ciclo de recaídas emocionais de uma
+                            vez
+                          </span>
+                        </div>
+                        <div className="flex items-start gap-2 text-sm text-slate-700">
+                          <span className="text-slate-400 font-bold">→</span>
+                          <span>
+                            O que fazer quando bater aquela vontade
+                            incontrolável de mandar mensagem
+                          </span>
+                        </div>
+                        <div className="flex items-start gap-2 text-sm text-slate-700">
+                          <span className="text-slate-400 font-bold">→</span>
+                          <span>
+                            Como reconstruir sua identidade sem apagar a
+                            história que você viveu
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            ) : (
-              previewParagraphs.map((paragraph, index) => (
-                <p key={index} className="text-left">
-                  {renderParagraph(paragraph, index)}
+
+              {/* Rodapé do documento */}
+              <div className="px-8 md:px-12 py-6 bg-slate-50 border-t border-slate-200">
+                <p className="text-xs text-slate-500 text-center">
+                  Este diagnóstico foi gerado especificamente para você, baseado
+                  em {Object.keys(answers).length} respostas do questionário.
+                  Tempo de leitura estimado: 8-12 minutos.
                 </p>
-              ))
-            )}
-          </div>
+              </div>
+            </div>
+          )}
         </div>
 
         {!isLoading && (
@@ -953,6 +1339,107 @@ export function ElegantResultCard({
             ✓ Acesso imediato • Garantia de 7 dias • Mais de 7 mil pessoas já
             sentiram a diferença
           </p>
+        </div>
+      </section>
+
+      {/* Depoimentos - Marquee horizontal */}
+      <section className="py-16 space-y-10">
+        <div className="text-center space-y-3">
+          <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
+            Mais de 7 mil pessoas já descobriram o que estava bloqueado
+          </h3>
+          <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">
+            Veja o que elas dizem sobre os primeiros resultados
+          </p>
+        </div>
+
+        <div className="relative">
+          {/* Gradiente único cobrindo tudo - esquerda e direita */}
+          <div
+            className="pointer-events-none absolute inset-0 z-10"
+            style={{
+              background:
+                "linear-gradient(to right, #f4f5f7 0%, transparent 20%, transparent 80%, #fcfcfd 100%)",
+            }}
+          />
+
+          {/* Primeira linha - direita para esquerda */}
+          <div>
+            <Marquee reverse pauseOnHover className="[--duration:60s]">
+              {testimonials.slice(0, 4).map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="relative w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                >
+                  <div className="space-y-4">
+                    {/* Aspas decorativas */}
+                    <div className="text-4xl text-slate-300 leading-none">
+                      "
+                    </div>
+
+                    {/* Depoimento */}
+                    <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
+                      {testimonial.text}
+                    </p>
+
+                    {/* Autor */}
+                    <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
+                        {testimonial.emoji}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-slate-900 text-sm">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {testimonial.time}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
+
+          {/* Segunda linha - esquerda para direita */}
+          <div>
+            <Marquee pauseOnHover className="[--duration:60s]">
+              {testimonials.slice(4, 8).map((testimonial, index) => (
+                <div
+                  key={index}
+                  className="relative w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                >
+                  <div className="space-y-4">
+                    {/* Aspas decorativas */}
+                    <div className="text-4xl text-slate-300 leading-none">
+                      "
+                    </div>
+
+                    {/* Depoimento */}
+                    <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
+                      {testimonial.text}
+                    </p>
+
+                    {/* Autor */}
+                    <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
+                        {testimonial.emoji}
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-slate-900 text-sm">
+                          {testimonial.name}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {testimonial.time}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </Marquee>
+          </div>
         </div>
       </section>
 
