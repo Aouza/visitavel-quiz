@@ -28,6 +28,11 @@ export function ElegantResultCard({
   const [reportPreview, setReportPreview] = useState<string>("");
   const [isLoading, setIsLoading] = useState(true);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const isProduction = process.env.NODE_ENV === "production";
+  const forceReportApi =
+    process.env.NEXT_PUBLIC_FORCE_REPORT_API === "true" || isProduction;
+  const useMockReport =
+    process.env.NEXT_PUBLIC_USE_MOCK_REPORT === "true" || !forceReportApi;
   const answersKey = useMemo(() => JSON.stringify(answers), [answers]);
   const scoresKey = useMemo(() => JSON.stringify(scores), [scores]);
   const answersPayload = useMemo(
@@ -38,6 +43,20 @@ export function ElegantResultCard({
     () => JSON.parse(scoresKey) as Record<Segment, number>,
     [scoresKey]
   );
+  const previewCacheKey = useMemo(
+    () => `report-preview:${segment}:${answersKey}:${scoresKey}`,
+    [segment, answersKey, scoresKey]
+  );
+  const emotionalPreview = useMemo(
+    () => [
+      "Você ainda sente a presença dele porque, sempre que o vazio aparece, sua mente corre para quem um dia segurou sua mão nos momentos mais difíceis. Essa lembrança não é fraqueza: é a forma que o seu coração encontrou para manter viva a ideia de que **laços intensos** precisam durar para terem valido a pena.",
+      "Seu padrão emocional não é apego cego; é uma busca obstinada por sentido. Você se doa com profundidade, testa se o outro enxerga sua entrega e, quando percebe distância, tenta decifrar onde foi que deixou escapar um sinal. Você merece **respostas honestas**, não mais tentativas infindáveis.",
+      "Existe uma parte sua que aprendeu a medir o amor pelo esforço que coloca para salvar histórias. Esse impulso te fez suportar mais do que deveria e hoje cria uma névoa entre o que você sente e o que você precisa. Entender esse ponto escondido é o primeiro passo para reconstruir **sua força de dentro para fora**.",
+      "Seu corpo tem dado pistas: a tensão no peito quando a mensagem não chega, o suspiro curto antes de dormir, a energia que some quando você pensa em recomeçar. Esses sintomas emocionais não são aleatórios — são códigos que o seu sistema nervoso envia pedindo **mudança, não resistência**.",
+      "Você está começando a enxergar a raiz do seu padrão. Reconhecer o que te prende já te coloca além do ciclo. Mas há algo mais profundo que o relatório completo revela — e é isso que muda tudo.",
+    ],
+    []
+  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -45,6 +64,26 @@ export function ElegantResultCard({
     async function fetchPreview() {
       setIsLoading(true);
       setReportPreview("");
+
+      // Se estiver em modo mock ou cache em sessionStorage, evitar nova chamada
+      if (typeof window !== "undefined") {
+        const cachedPreview = window.sessionStorage.getItem(previewCacheKey);
+        if (cachedPreview) {
+          setReportPreview(cachedPreview);
+          setIsLoading(false);
+          return;
+        }
+      }
+
+      if (useMockReport) {
+        const mock = emotionalPreview.join("\n\n");
+        setReportPreview(mock);
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem(previewCacheKey, mock);
+        }
+        setIsLoading(false);
+        return;
+      }
 
       const birthdate =
         typeof (answersPayload as Record<string, unknown>).birthdate ===
@@ -77,12 +116,21 @@ export function ElegantResultCard({
         }
 
         const data = await response.json();
-        setReportPreview(data.report ?? "");
+        const preview = data.report ?? "";
+        setReportPreview(preview);
+        if (typeof window !== "undefined" && preview) {
+          window.sessionStorage.setItem(previewCacheKey, preview);
+        }
       } catch (error) {
         if ((error as Error).name === "AbortError") {
           return;
         }
         console.error("Erro ao gerar preview:", error);
+        const fallback = emotionalPreview.join("\n\n");
+        setReportPreview(fallback);
+        if (typeof window !== "undefined") {
+          window.sessionStorage.setItem(previewCacheKey, fallback);
+        }
       } finally {
         if (!controller.signal.aborted) {
           setIsLoading(false);
@@ -94,7 +142,16 @@ export function ElegantResultCard({
 
     return () => controller.abort();
     // answersKey e scoresKey garantem dependências estáveis
-  }, [segment, answersKey, scoresKey, answersPayload, scoresPayload]);
+  }, [
+    segment,
+    answersKey,
+    scoresKey,
+    answersPayload,
+    scoresPayload,
+    emotionalPreview,
+    previewCacheKey,
+    useMockReport,
+  ]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -108,17 +165,6 @@ export function ElegantResultCard({
     const lockedZone = document.getElementById("zona-bloqueada");
     lockedZone?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
-
-  const emotionalPreview = useMemo(
-    () => [
-      "Você ainda sente a presença dele porque, sempre que o vazio aparece, sua mente corre para quem um dia segurou sua mão nos momentos mais difíceis. Essa lembrança não é fraqueza: é a forma que o seu coração encontrou para manter viva a ideia de que **laços intensos** precisam durar para terem valido a pena.",
-      "Seu padrão emocional não é apego cego; é uma busca obstinada por sentido. Você se doa com profundidade, testa se o outro enxerga sua entrega e, quando percebe distância, tenta decifrar onde foi que deixou escapar um sinal. Você merece **respostas honestas**, não mais tentativas infindáveis.",
-      "Existe uma parte sua que aprendeu a medir o amor pelo esforço que coloca para salvar histórias. Esse impulso te fez suportar mais do que deveria e hoje cria uma névoa entre o que você sente e o que você precisa. Entender esse ponto escondido é o primeiro passo para reconstruir **sua força de dentro para fora**.",
-      "Seu corpo tem dado pistas: a tensão no peito quando a mensagem não chega, o suspiro curto antes de dormir, a energia que some quando você pensa em recomeçar. Esses sintomas emocionais não são aleatórios — são códigos que o seu sistema nervoso envia pedindo **mudança, não resistência**.",
-      "Você está começando a enxergar a raiz do seu padrão. Reconhecer o que te prende já te coloca além do ciclo. Mas há algo mais profundo que o relatório completo revela — e é isso que muda tudo.",
-    ],
-    []
-  );
 
   const previewParagraphs = useMemo(() => {
     if (reportPreview.trim().length === 0) {
