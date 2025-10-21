@@ -9,7 +9,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
-import { ArrowRight, Loader2, Lock } from "lucide-react";
+import { ArrowRight, Loader2 } from "lucide-react";
 
 interface ElegantResultCardProps {
   segment: Segment;
@@ -173,78 +173,120 @@ export function ElegantResultCard({
 
     const sanitized = reportPreview.trim();
 
-    const parts = sanitized.split(/\n\s*\n/).map((paragraph) => paragraph.trim());
+    const parts = sanitized
+      .split(/\n\s*\n/)
+      .map((paragraph) => paragraph.trim());
     return parts.filter(Boolean);
   }, [reportPreview, emotionalPreview]);
 
   const lockedSections = [
     {
       icon: "💞",
-      title: "Ciclos de Recaída e Libertação",
+      title: "Por que você não consegue parar de pensar nessa pessoa",
       summary:
-        "Por que você volta para a mesma história e como cortar o movimento de recaída.",
-      veil:
-        "Mostra o momento exato em que você começa a ceder, quais mensagens fazem você reabrir a conversa e o passo claro para interromper antes de responder.",
-      badge: "⚡ Atenção urgente para evitar recaídas emocionais.",
-      loss:
-        "Sem desbloquear, você repete o looping sem perceber o gatilho principal.",
+        "O vínculo ainda está ativo por dentro — e o cérebro não recebeu o 'sinal de fim'.",
+      veil: "Vamos te mostrar como o corpo e a mente se mantêm presos num laço emocional invisível, e o que fazer pra cortar esse elo sem precisar bloquear ou reprimir. Você vai conseguir parar de stalkear e de esperar mensagem.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você continua preso(a) ao ciclo de espera passiva.",
       unlocks: [
-        "Linha do tempo das recaídas com exemplos práticos e o que sentir em cada fase.",
-        "Checklist de sinais no corpo e na mente para agir antes de mandar mensagem.",
-        "Frase-guia para encerrar sem culpa e seguir firme após o primeiro dia.",
+        "Resultado: alívio imediato da obsessão mental e das vontades impulsivas.",
       ],
       aura: "from-rose-200/70 via-fuchsia-200/50 to-amber-100/40",
+      cta: "Quero entender o que me prende",
     },
     {
       icon: "🧠",
-      title: "Seu Mapa Emocional Profundo",
+      title: "Por que sua cabeça não desliga",
       summary:
-        "Como você se protege quando ama e onde você se abandona sem notar.",
-      veil:
-        "Explica as regras que você criou para ser escolhido(a), o quanto se cobra e como transformar isso em pedido claro por cuidado.",
-      badge: "✨ Inclui exercícios guiados para reorganizar mente e corpo.",
-      loss:
-        "Sem desbloquear, você continua aceitando migalhas achando que é o normal.",
+        "Isso não é falta de controle. É o seu cérebro tentando resolver algo que ainda ficou em aberto.",
+      veil: "Vamos te explicar a lógica por trás do pensamento repetitivo, e te ensinar um método simples pra interromper o loop mental. Você vai conseguir dormir em paz sem ficar repassando tudo.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você fica no looping mental sem saber como parar.",
       unlocks: [
-        "Perfil das suas defesas emocionais com tradução simples do que cada uma tenta evitar.",
-        "Mapa dos acordos silenciosos que você repete e como quebrar cada um.",
-        "Exercícios rápidos para pedir apoio sem sentir que está pesando.",
+        "Resultado: clareza mental e sensação de paz — como se o ruído interno finalmente diminuísse.",
       ],
       aura: "from-sky-200/70 via-indigo-200/60 to-purple-200/40",
+      cta: "Quero parar de pensar nisso o tempo todo",
     },
     {
       icon: "🌙",
-      title: "Caminho de Cura e Recomeço",
+      title: "Por que a falta dói tanto (abstinência emocional)",
       summary:
-        "O passo a passo para sair do luto e montar uma rotina de recomeço.",
-      veil:
-        "Mostra o que fazer nos próximos 7 dias, como falar com quem precisa ouvir e quais limites mantêm você firme.",
-      badge: "🌱 Ativa em você a sensação de recomeço possível.",
-      loss:
-        "Sem desbloquear, você fica preso(a) entre saudade e medo de seguir sozinho(a).",
+        "Não é carência — é química emocional. O corpo ainda espera o mesmo padrão de conexão.",
+      veil: "Vamos te mostrar por que o corpo reage como se estivesse em crise de abstinência, e o que fazer pra equilibrar essa resposta física. Você vai conseguir lidar com a saudade sem recaídas.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "A abstinência emocional continua controlando você.",
       unlocks: [
-        "Sequência de 7 dias com tarefas simples de manhã, tarde e noite.",
-        "Roteiro de conversa para encerrar pendências ou pedir espaço.",
-        "Lista de limites práticos para proteger sua energia sem afastar quem você gosta.",
+        "Resultado: sensação real de leveza e autocontrole nas horas de saudade.",
       ],
       aura: "from-emerald-200/70 via-teal-200/50 to-lime-100/40",
+      cta: "Quero aprender a lidar com a falta",
+    },
+    {
+      icon: "⚡",
+      title: "Por que o fim abalou sua autoestima",
+      summary:
+        "O término não destrói só o vínculo — abala a forma como você se enxerga.",
+      veil: "Vamos te ajudar a entender como o fim ativa feridas antigas de rejeição, e como reconstruir a percepção do seu valor sem depender de aprovação. Você vai parar de sentir que não foi suficiente.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você continua se culpando e duvidando do próprio valor.",
+      unlocks: [
+        "Resultado: retomada da autoconfiança e fim da sensação de 'fui substituído(a)'.",
+      ],
+      aura: "from-amber-200/70 via-yellow-200/50 to-orange-100/40",
+      cta: "Quero recuperar minha confiança",
+    },
+    {
+      icon: "🌑",
+      title: "Por que ele parece bem e você ainda sofre",
+      summary:
+        "Cada pessoa processa o fim de um jeito, e o que parece indiferença pode ser fuga.",
+      veil: "Vamos te mostrar as fases emocionais ocultas do outro lado, e por que comparar o seu tempo de cura só atrasa o seu próprio. Você vai parar de se sentir injustiçado(a) por ele estar bem.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você continua se comparando e se culpando por 'estar atrasado(a)'.",
+      unlocks: ["Resultado: liberação imediata da culpa e da comparação."],
+      aura: "from-slate-200/70 via-gray-200/60 to-zinc-100/40",
+      cta: "Quero parar de me comparar",
+    },
+    {
+      icon: "🕯",
+      title: "Como encerrar de verdade (sem humilhação)",
+      summary: "O fechamento real vem com compreensão, não com esquecimento.",
+      veil: "Vamos te ensinar um método prático de encerramento emocional, pra liberar o vínculo sem apagar memórias e sem sentir vergonha do que viveu. Você vai conseguir fechar esse ciclo com dignidade.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você fica na sensação de história mal resolvida.",
+      unlocks: [
+        "Resultado: paz interna e sensação de capítulo encerrado — sem recaídas.",
+      ],
+      aura: "from-teal-200/70 via-emerald-200/50 to-green-100/40",
+      cta: "Quero encerrar esse ciclo de vez",
     },
     {
       icon: "🔮",
-      title: "Sinais e Oportunidades Futuras",
-      summary:
-        "Os sinais que mostram se é recaída ou chance de verdade para seguir.",
-      veil:
-        "Traduz coincidências, mensagens e encontros e mostra como responder sem cair em cilada.",
-      badge: "🕰 Atualizações incluídas sempre que o relatório ganhar novos sinais.",
-      loss:
-        "Sem desbloquear, você confunde qualquer sinal com destino e perde chances reais de avanço.",
+      title: "Como voltar a se sentir bem (recuperar prazer)",
+      summary: "Falta reconstruir rotina, energia e presença.",
+      veil: "Vamos te ajudar a reativar sua vitalidade emocional e recuperar o prazer nas pequenas coisas (sono, foco, vontade de viver). Você vai voltar a comer, dormir e sentir vontade de sair.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você fica sabendo o que fazer mas sem ação real.",
       unlocks: [
-        "Radar de sinais verdes, amarelos e vermelhos com exemplos do dia a dia.",
-        "Plano de ação para reencontros, novos contatinhos e convites do passado.",
-        "Atualizações contínuas com novos alertas e oportunidades da comunidade.",
+        "Resultado: leveza no corpo e sensação de estar voltando pra si mesmo.",
       ],
-      aura: "from-violet-200/70 via-fuchsia-200/60 to-blue-200/40",
+      aura: "from-sky-200/70 via-cyan-200/50 to-blue-100/40",
+      cta: "Quero começar minha recuperação",
+    },
+    {
+      icon: "🌅",
+      title: "O que vem depois da dor (reconstruir identidade)",
+      summary:
+        "Agora é hora de entender o sentido do que viveu e transformar isso em força.",
+      veil: "Vamos te mostrar o aprendizado oculto por trás do fim — e como ele pode se tornar o seu ponto de virada. Você vai recuperar sua identidade e saber quem é sem essa pessoa.",
+      badge: "🔓 Conteúdo exclusivo",
+      loss: "Você carrega o peso sem extrair o aprendizado.",
+      unlocks: [
+        "Resultado: clareza, maturidade e um sentimento novo de paz com o passado.",
+      ],
+      aura: "from-orange-200/70 via-rose-200/50 to-pink-100/40",
+      cta: "Quero entender o que vem depois",
     },
   ];
 
@@ -280,10 +322,13 @@ export function ElegantResultCard({
           </div>
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
-              Você ainda pensa nessa história porque faltam respostas diretas. Aqui começa a explicação.
+              Você ainda pensa nessa história porque faltam respostas diretas.
+              Aqui começa a explicação.
             </h1>
             <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed">
-              Tudo o que você vê a seguir é montado a partir das suas respostas. A ideia é simples: explicar seu padrão, mostrar o que trava e entregar o que fazer depois.
+              Tudo o que você vê a seguir é montado a partir das suas respostas.
+              A ideia é simples: explicar seu padrão, mostrar o que trava e
+              entregar o que fazer depois.
             </p>
             <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5">
@@ -291,7 +336,8 @@ export function ElegantResultCard({
                 {content.headline}
               </span>
               <span className="italic">
-                Mais de 7 mil pessoas já usaram este relatório para entender o próprio padrão antes de mudar de rota.
+                Mais de 7 mil pessoas já usaram este relatório para entender o
+                próprio padrão antes de mudar de rota.
               </span>
             </div>
           </div>
@@ -315,9 +361,7 @@ export function ElegantResultCard({
             {isLoading ? (
               <div className="flex flex-col items-center gap-4 py-10 text-center text-slate-500">
                 <Loader2 className="h-9 w-9 animate-spin text-slate-400" />
-                <p>
-                  Estamos decodificando os dados do seu padrão emocional...
-                </p>
+                <p>Estamos decodificando os dados do seu padrão emocional...</p>
               </div>
             ) : (
               previewParagraphs.map((paragraph, index) => (
@@ -343,6 +387,211 @@ export function ElegantResultCard({
             </button>
           </div>
         )}
+
+        {/* Novas seções adaptadas */}
+        {!isLoading && (
+          <div className="space-y-16 pt-12">
+            {/* Bloco 1 — O que você já ganhou */}
+            <div className="space-y-8">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
+                  <span className="text-sm font-semibold text-emerald-700">
+                    ✅ Você já entendeu o início do seu processo
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-2xl mx-auto">
+                  Com o diagnóstico gratuito, você descobriu:
+                </h3>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-3 max-w-4xl mx-auto">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                      <span className="text-white text-base font-bold">1</span>
+                    </div>
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-base mb-2">
+                    Por que sua mente não desliga
+                  </h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Não é fraqueza — é um mecanismo emocional que fica ativado
+                    quando a história termina sem respostas claras.
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                      <span className="text-white text-base font-bold">2</span>
+                    </div>
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-base mb-2">
+                    Por que o ciclo sempre volta
+                  </h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Você repete um padrão inconsciente que te prende à mesma
+                    história.
+                  </p>
+                </div>
+
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                      <span className="text-white text-base font-bold">3</span>
+                    </div>
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-base mb-2">
+                    Onde exatamente está travado
+                  </h4>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    O primeiro ponto que precisa ser resolvido para sair dessa
+                    fase.
+                  </p>
+                </div>
+              </div>
+
+              <div className="text-center pt-4">
+                <div className="inline-flex items-start gap-3 px-8 py-4 bg-amber-50 border border-amber-200 rounded-2xl max-w-2xl">
+                  <span className="text-2xl mt-0.5">⚡</span>
+                  <div className="text-left">
+                    <p className="text-slate-900 text-base font-semibold mb-1">
+                      Mas é só o início do caminho: Existem 7 outras camadas
+                      ainda bloqueadas que explicam por que você não avança.
+                    </p>
+                    <p className="text-sm text-slate-600">
+                      Isso é só <strong>1 parte</strong> do quebra-cabeça. O
+                      relatório completo te ajuda a resolver essas{" "}
+                      <strong>7 outras camadas críticas</strong> que mantêm você
+                      preso.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bloco 2 — O que ainda falta */}
+            <div className="space-y-8">
+              <div className="text-center space-y-3">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-200">
+                  <span className="text-sm font-semibold text-red-700">
+                    💣 Essas são as partes que ainda te prendem
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
+                  Você ainda não sabe, mas precisa descobrir
+                </h3>
+                <p className="text-sm text-slate-600 max-w-2xl mx-auto">
+                  (Desbloqueadas só com o relatório completo)
+                </p>
+              </div>
+
+              <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
+                {[
+                  {
+                    title: "Abstinência Emocional",
+                    desc: "Seu corpo sente falta como uma dependência. Você precisa aprender a aliviar sem recaídas.",
+                  },
+                  {
+                    title: "Autoestima Abalada",
+                    desc: "O fim fez você duvidar do seu valor. Precisa reconstruir a confiança antes de tentar seguir.",
+                  },
+                  {
+                    title: "Comparação com o Outro",
+                    desc: "Ver o outro bem dói porque parece injusto. Mas há uma explicação — e um jeito de parar.",
+                  },
+                  {
+                    title: "Encerramento Real",
+                    desc: "Você tenta seguir, mas ainda sente que algo ficou aberto. Precisa fechar sem apagar a história.",
+                  },
+                  {
+                    title: "Reconstrução e Recomeço",
+                    desc: "Você entendeu tudo, mas ainda não voltou a sentir prazer e rotina.",
+                  },
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="h-2.5 w-2.5 rounded-full bg-slate-400"></div>
+                      <h4 className="font-bold text-slate-900 text-sm">
+                        {item.title}
+                      </h4>
+                    </div>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      {item.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Bloco 3 — Por que o relatório completo */}
+            <div className="space-y-8">
+              <div className="text-center space-y-4">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200">
+                  <span className="text-sm font-semibold text-slate-700">
+                    💎 Por que o relatório completo é a solução
+                  </span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
+                  O relatório completo te mostra o resto da história que ainda
+                  falta entender
+                </h3>
+                <p className="text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                  Quando você vê tudo, o sofrimento começa a fazer sentido — e
+                  para de te controlar.
+                </p>
+              </div>
+
+              <div className="max-w-2xl mx-auto space-y-4">
+                <p className="text-sm font-semibold text-slate-900">
+                  ⚡ Ele foi feito pra quem:
+                </p>
+
+                <div className="space-y-3">
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span className="text-base mt-0.5">✓</span>
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">
+                        Sente que entende tudo, mas continua voltando
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Já tentou "seguir em frente", mas não consegue.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200">
+                    <span className="text-base mt-0.5">✓</span>
+                    <div>
+                      <p className="font-semibold text-slate-900 text-sm">
+                        Quer clareza prática e emocional pra sair desse ciclo
+                      </p>
+                      <p className="text-sm text-slate-600">
+                        Não quer mais palpites — quer soluções que funcionam.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-3 p-4 rounded-xl bg-emerald-50 border border-emerald-200">
+                    <span className="text-base mt-0.5">💬</span>
+                    <div>
+                      <p className="font-semibold text-emerald-900 text-sm">
+                        Resultado: agir com clareza e controle
+                      </p>
+                      <p className="text-sm text-emerald-700">
+                        Você deixa de "esperar o tempo curar" e passa a agir com
+                        clareza e controle.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
 
       {/* 3. Transição e conteúdo bloqueado */}
@@ -352,95 +601,184 @@ export function ElegantResultCard({
             próximo nível
           </p>
           <h3 className="text-2xl md:text-3xl font-medium text-slate-900">
-            O que você ainda não sabe — mas precisa descobrir.
+            Você já entendeu parte da lógica. Agora libere o restante e veja o
+            que realmente está por trás do que você sente.
           </h3>
           <p className="text-sm md:text-base text-slate-600 max-w-2xl">
-            Essas são as camadas ocultas que o relatório completo revela. Elas funcionam como uma travessia: cada bloco destrava uma visão nova sobre quem você é quando ama.
+            Essas são as 8 camadas que explicam por completo o padrão que te
+            mantém preso. Cada uma detalha uma resposta direta e um caminho de
+            ação.
           </p>
         </header>
 
-        <div className="space-y-12">
+        <div className="space-y-4">
           {lockedSections.map((section) => (
             <article
               key={section.title}
-              className="group relative overflow-hidden rounded-[36px] border border-slate-200 bg-white px-8 md:px-12 py-12 shadow-sm transition-all duration-500"
+              className="group relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50 px-6 py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-md"
             >
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-              <div
-                className={`pointer-events-none absolute -top-32 right-0 h-64 w-64 rounded-full blur-[110px] opacity-40 transition-opacity duration-500 group-hover:opacity-70 bg-gradient-to-br ${section.aura}`}
-              />
-              <div
-                className={`pointer-events-none absolute -bottom-24 left-10 h-56 w-56 rounded-full blur-[120px] opacity-30 transition-opacity duration-500 group-hover:opacity-60 bg-gradient-to-br ${section.aura}`}
-              />
-              <div className="relative space-y-6">
-                <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                  <div className="space-y-4">
-                    <div className="flex items-center gap-3 text-sm uppercase tracking-[0.25em] text-slate-400">
-                      <span className="text-2xl">{section.icon}</span>
-                      <span>camada bloqueada</span>
-                    </div>
-                    <h4 className="text-xl md:text-2xl font-semibold text-slate-900">
-                      {section.title}
-                    </h4>
-                    <p className="text-base text-slate-600 max-w-xl">
-                      {section.summary}
-                    </p>
-                    <p className="text-sm text-slate-600 max-w-xl">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-rose-500">
-                        Sem desbloquear
-                      </span>
-                      <span className="mt-2 block text-slate-600">
-                        {section.loss}
-                      </span>
-                    </p>
-                  </div>
-                  <span className="text-xs font-medium uppercase tracking-[0.3em] text-slate-400">
-                    {section.badge}
-                  </span>
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 text-3xl mt-1 opacity-50 grayscale">
+                  {section.icon}
                 </div>
 
-                <div className="relative mt-4 overflow-hidden rounded-[28px] border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-slate-50 px-6 md:px-8 py-8">
-                  <div className="absolute inset-0 bg-white/75 transition duration-500 group-hover:bg-white/90" />
-                  <div className="relative space-y-6 text-slate-600">
-                    <p className="text-sm md:text-base leading-relaxed">
-                      {section.veil}
-                    </p>
-                    <div className="space-y-3">
-                      <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
-                        Você desbloqueia
-                      </span>
-                      <ul className="space-y-2 text-sm md:text-base text-slate-600">
-                        {section.unlocks.map((item) => (
-                          <li
-                            key={item}
-                            className="flex items-start gap-3 leading-relaxed"
-                          >
-                            <span className="mt-1 inline-flex h-2.5 w-2.5 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white">
-                              •
-                            </span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-                      <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
-                        Conteúdo disponível no relatório completo
-                      </span>
-                      <Button
-                        onClick={onPrimaryAction}
-                        variant="outline"
-                        className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-white px-5 py-2 text-sm font-medium text-slate-800 transition hover:border-slate-400 hover:bg-slate-100"
-                      >
-                        <Lock className="h-4 w-4" />
-                        Quero ver o que está por trás
-                      </Button>
-                    </div>
-                  </div>
+                <div className="flex-1 space-y-3">
+                  <h4 className="text-lg md:text-xl font-semibold text-slate-800 leading-snug">
+                    {section.title}
+                  </h4>
+                  <p className="text-sm md:text-base text-slate-600 leading-relaxed">
+                    {section.veil}
+                  </p>
+                </div>
+
+                <div className="flex-shrink-0">
+                  <Button
+                    onClick={onPrimaryAction}
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md"
+                  >
+                    <span className="text-sm">🔓</span>
+                    Desbloquear
+                  </Button>
                 </div>
               </div>
             </article>
           ))}
+        </div>
+      </section>
+
+      {/* Benefícios do relatório completo */}
+      <section className="space-y-8">
+        <div className="text-center space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
+            <span className="text-sm font-semibold text-emerald-700">
+              ✅ O que você conquista com o relatório completo
+            </span>
+          </div>
+          <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
+            Quando você terminar de ler o relatório completo, você terá:
+          </h3>
+        </div>
+
+        <div className="grid gap-4 md:grid-cols-2 max-w-5xl mx-auto">
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🛡️</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Controle total sobre seus impulsos
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai parar de stalkear, de esperar mensagem e de ter
+                recaídas digitais. Vai conseguir resistir à vontade de olhar
+                status ou mandar aquela mensagem.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">😌</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Paz mental e sono reparador
+              </h4>
+              <p className="text-sm text-slate-600">
+                Sua cabeça vai desligar. Você vai conseguir dormir sem ficar
+                repassando tudo, sem aquele ruído mental constante te
+                perseguindo.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">💪</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Autoestima e confiança recuperadas
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai parar de se sentir "insuficiente" ou "substituído(a)".
+                Vai recuperar sua confiança e parar de duvidar do seu valor.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🧘</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Liberdade da comparação e da culpa
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai parar de se comparar com o outro lado, de sentir
+                injustiça por ele estar bem enquanto você sofre. Vai se liberar
+                dessa culpa.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🌱</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Prazer e vitalidade de volta
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai voltar a sentir fome, a dormir bem, a ter vontade de
+                sair e treinar. Vai recuperar o prazer nas pequenas coisas da
+                vida.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🔒</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Ciclo encerrado com dignidade
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai conseguir fechar esse capítulo de verdade, sem
+                vergonha, sem se humilhar, sem apagar memórias. Com paz e
+                compreensão.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🎯</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Clareza sobre quem você é
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai recuperar sua identidade, saber quem você é sem essa
+                pessoa, e transformar essa dor em aprendizado real.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+            <span className="text-2xl mt-0.5">🚀</span>
+            <div>
+              <h4 className="font-semibold text-slate-900 text-base mb-1">
+                Poder de agir (não apenas entender)
+              </h4>
+              <p className="text-sm text-slate-600">
+                Você vai ter um plano de ação prático, passos claros do que
+                fazer. Não vai mais ficar só entendendo — vai finalmente agir.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="text-center pt-6">
+          <Button
+            onClick={onPrimaryAction}
+            size="lg"
+            className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
+          >
+            <span className="text-xl">🔓</span>
+            Desbloquear todas as 8 camadas agora
+          </Button>
         </div>
       </section>
 
@@ -450,10 +788,13 @@ export function ElegantResultCard({
           decisão
         </p>
         <h4 className="text-3xl font-semibold text-slate-900">
-          Você já viu que esta leitura descreve o que você vive. Agora destrave o restante e mude o cenário com clareza.
+          Você já viu que esta leitura descreve o que você vive. Agora destrave
+          o restante e mude o cenário com clareza.
         </h4>
         <p className="text-base text-slate-600 max-w-2xl mx-auto">
-          Desbloqueie o relatório completo e avance pelas camadas que revelam seus ciclos, forças ocultas, caminhos de cura e sinais do próximo capítulo.
+          Desbloqueie o relatório completo e avance pelas camadas que revelam
+          seus ciclos, forças ocultas, caminhos de cura e sinais do próximo
+          capítulo.
         </p>
         <Button
           onClick={onPrimaryAction}
