@@ -49,11 +49,11 @@ export function ElegantResultCard({
   );
   const emotionalPreview = useMemo(
     () => [
-      "Você ainda sente a presença dele porque, sempre que o vazio aparece, sua mente corre para quem um dia segurou sua mão nos momentos mais difíceis. Essa lembrança não é fraqueza: é a forma que o seu coração encontrou para manter viva a ideia de que **laços intensos** precisam durar para terem valido a pena.",
-      "Seu padrão emocional não é apego cego; é uma busca obstinada por sentido. Você se doa com profundidade, testa se o outro enxerga sua entrega e, quando percebe distância, tenta decifrar onde foi que deixou escapar um sinal. Você merece **respostas honestas**, não mais tentativas infindáveis.",
-      "Existe uma parte sua que aprendeu a medir o amor pelo esforço que coloca para salvar histórias. Esse impulso te fez suportar mais do que deveria e hoje cria uma névoa entre o que você sente e o que você precisa. Entender esse ponto escondido é o primeiro passo para reconstruir **sua força de dentro para fora**.",
-      "Seu corpo tem dado pistas: a tensão no peito quando a mensagem não chega, o suspiro curto antes de dormir, a energia que some quando você pensa em recomeçar. Esses sintomas emocionais não são aleatórios — são códigos que o seu sistema nervoso envia pedindo **mudança, não resistência**.",
-      "Você está começando a enxergar a raiz do seu padrão. Reconhecer o que te prende já te coloca além do ciclo. Mas há algo mais profundo que o relatório completo revela — e é isso que muda tudo.",
+      "Você volta a pensar nele toda vez que bate o vazio porque sua mente ainda não entendeu onde a história travou. Isso não é fraqueza; é um pedido por resposta clara.",
+      "Seu jeito de amar não é apego cego. Você quer saber se o esforço vale. Quando não enxerga retorno, acaba se culpando. Você precisa de respostas simples, não de tentativas no escuro.",
+      "Você aprendeu a salvar relação sozinho(a) e passou do seu limite muitas vezes. Por isso hoje fica sem energia e sem voz. Identificar esse ponto é o primeiro passo para recuperar força.",
+      "Seu corpo já avisou: aperto no peito, sono ruim, mente acelerada. Esses sinais pedem mudança real, não insistência.",
+      "Você já começou a ver onde o ciclo prende você. O relatório completo mostra o gatilho principal, o momento da virada e o plano direto para sair desse looping.",
     ],
     []
   );
@@ -182,37 +182,69 @@ export function ElegantResultCard({
       icon: "💞",
       title: "Ciclos de Recaída e Libertação",
       summary:
-        "Por que você sempre retorna — e o que o universo tenta te mostrar quando isso acontece.",
+        "Por que você volta para a mesma história e como cortar o movimento de recaída.",
       veil:
-        "Decodifica os gatilhos que antecedem a recaída emocional, o limite invisível que você ultrapassa e o gesto que encerra o ciclo sem culpa.",
+        "Mostra o momento exato em que você começa a ceder, quais mensagens fazem você reabrir a conversa e o passo claro para interromper antes de responder.",
       badge: "⚡ Atenção urgente para evitar recaídas emocionais.",
+      loss:
+        "Sem desbloquear, você repete o looping sem perceber o gatilho principal.",
+      unlocks: [
+        "Linha do tempo das recaídas com exemplos práticos e o que sentir em cada fase.",
+        "Checklist de sinais no corpo e na mente para agir antes de mandar mensagem.",
+        "Frase-guia para encerrar sem culpa e seguir firme após o primeiro dia.",
+      ],
+      aura: "from-rose-200/70 via-fuchsia-200/50 to-amber-100/40",
     },
     {
       icon: "🧠",
       title: "Seu Mapa Emocional Profundo",
       summary:
-        "Como você se protege quando ama — e quais códigos antigos continuam guiando suas escolhas.",
+        "Como você se protege quando ama e onde você se abandona sem notar.",
       veil:
-        "Revela os acordos silenciosos que você faz para merecer cuidado, os traços herdados que moldam sua entrega e o ponto em que autocuidado vira autossabotagem.",
+        "Explica as regras que você criou para ser escolhido(a), o quanto se cobra e como transformar isso em pedido claro por cuidado.",
       badge: "✨ Inclui exercícios guiados para reorganizar mente e corpo.",
+      loss:
+        "Sem desbloquear, você continua aceitando migalhas achando que é o normal.",
+      unlocks: [
+        "Perfil das suas defesas emocionais com tradução simples do que cada uma tenta evitar.",
+        "Mapa dos acordos silenciosos que você repete e como quebrar cada um.",
+        "Exercícios rápidos para pedir apoio sem sentir que está pesando.",
+      ],
+      aura: "from-sky-200/70 via-indigo-200/60 to-purple-200/40",
     },
     {
       icon: "🌙",
       title: "Caminho de Cura e Recomeço",
       summary:
-        "O roteiro íntimo para recuperar clareza, força e autonomia após esse fim.",
+        "O passo a passo para sair do luto e montar uma rotina de recomeço.",
       veil:
-        "Entrega rituais de aterramento, conversas que reorganizam sua narrativa e limites que protegem sem erguer muros.",
+        "Mostra o que fazer nos próximos 7 dias, como falar com quem precisa ouvir e quais limites mantêm você firme.",
       badge: "🌱 Ativa em você a sensação de recomeço possível.",
+      loss:
+        "Sem desbloquear, você fica preso(a) entre saudade e medo de seguir sozinho(a).",
+      unlocks: [
+        "Sequência de 7 dias com tarefas simples de manhã, tarde e noite.",
+        "Roteiro de conversa para encerrar pendências ou pedir espaço.",
+        "Lista de limites práticos para proteger sua energia sem afastar quem você gosta.",
+      ],
+      aura: "from-emerald-200/70 via-teal-200/50 to-lime-100/40",
     },
     {
       icon: "🔮",
       title: "Sinais e Oportunidades Futuras",
       summary:
-        "Os sinais que anunciam o próximo capítulo — e como acolher o que chega sem repetir o passado.",
+        "Os sinais que mostram se é recaída ou chance de verdade para seguir.",
       veil:
-        "Mostra quais coincidências são chamados reais, como diferenciar recaída de oportunidade e quais encontros sustentam sua expansão.",
+        "Traduz coincidências, mensagens e encontros e mostra como responder sem cair em cilada.",
       badge: "🕰 Atualizações incluídas sempre que o relatório ganhar novos sinais.",
+      loss:
+        "Sem desbloquear, você confunde qualquer sinal com destino e perde chances reais de avanço.",
+      unlocks: [
+        "Radar de sinais verdes, amarelos e vermelhos com exemplos do dia a dia.",
+        "Plano de ação para reencontros, novos contatinhos e convites do passado.",
+        "Atualizações contínuas com novos alertas e oportunidades da comunidade.",
+      ],
+      aura: "from-violet-200/70 via-fuchsia-200/60 to-blue-200/40",
     },
   ];
 
@@ -248,10 +280,10 @@ export function ElegantResultCard({
           </div>
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
-              Você ainda sente o eco do que viveu. Agora, a lógica emocional por trás disso começa a ser revelada.
+              Você ainda pensa nessa história porque faltam respostas diretas. Aqui começa a explicação.
             </h1>
             <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed">
-              Nada aqui é genérico. Cada insight foi construído a partir da forma como você respondeu, do peso das suas memórias e dos sinais que o seu corpo ainda carrega. Respire fundo: você está entrando em uma leitura feita sob medida para a sua história.
+              Tudo o que você vê a seguir é montado a partir das suas respostas. A ideia é simples: explicar seu padrão, mostrar o que trava e entregar o que fazer depois.
             </p>
             <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5">
@@ -259,7 +291,7 @@ export function ElegantResultCard({
                 {content.headline}
               </span>
               <span className="italic">
-                “Milhares de pessoas já desbloquearam esse relatório e descobriram a raiz emocional do próprio padrão.”
+                Mais de 7 mil pessoas já usaram este relatório para entender o próprio padrão antes de mudar de rota.
               </span>
             </div>
           </div>
@@ -300,7 +332,7 @@ export function ElegantResultCard({
         {!isLoading && (
           <div className="space-y-4 text-center md:text-left">
             <p className="text-sm uppercase tracking-[0.3em] text-slate-400">
-              Mas há algo que ainda não foi revelado — e ele muda tudo.
+              O que prende você de verdade ainda está bloqueado.
             </p>
             <button
               type="button"
@@ -334,6 +366,12 @@ export function ElegantResultCard({
               className="group relative overflow-hidden rounded-[36px] border border-slate-200 bg-white px-8 md:px-12 py-12 shadow-sm transition-all duration-500"
             >
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_70%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+              <div
+                className={`pointer-events-none absolute -top-32 right-0 h-64 w-64 rounded-full blur-[110px] opacity-40 transition-opacity duration-500 group-hover:opacity-70 bg-gradient-to-br ${section.aura}`}
+              />
+              <div
+                className={`pointer-events-none absolute -bottom-24 left-10 h-56 w-56 rounded-full blur-[120px] opacity-30 transition-opacity duration-500 group-hover:opacity-60 bg-gradient-to-br ${section.aura}`}
+              />
               <div className="relative space-y-6">
                 <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
                   <div className="space-y-4">
@@ -347,6 +385,14 @@ export function ElegantResultCard({
                     <p className="text-base text-slate-600 max-w-xl">
                       {section.summary}
                     </p>
+                    <p className="text-sm text-slate-600 max-w-xl">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-rose-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-rose-500">
+                        Sem desbloquear
+                      </span>
+                      <span className="mt-2 block text-slate-600">
+                        {section.loss}
+                      </span>
+                    </p>
                   </div>
                   <span className="text-xs font-medium uppercase tracking-[0.3em] text-slate-400">
                     {section.badge}
@@ -354,11 +400,29 @@ export function ElegantResultCard({
                 </div>
 
                 <div className="relative mt-4 overflow-hidden rounded-[28px] border border-slate-200 bg-gradient-to-br from-slate-50 via-white to-slate-50 px-6 md:px-8 py-8">
-                  <div className="absolute inset-0 bg-white/70 transition duration-500 group-hover:bg-white/85" />
+                  <div className="absolute inset-0 bg-white/75 transition duration-500 group-hover:bg-white/90" />
                   <div className="relative space-y-6 text-slate-600">
                     <p className="text-sm md:text-base leading-relaxed">
                       {section.veil}
                     </p>
+                    <div className="space-y-3">
+                      <span className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-emerald-600">
+                        Você desbloqueia
+                      </span>
+                      <ul className="space-y-2 text-sm md:text-base text-slate-600">
+                        {section.unlocks.map((item) => (
+                          <li
+                            key={item}
+                            className="flex items-start gap-3 leading-relaxed"
+                          >
+                            <span className="mt-1 inline-flex h-2.5 w-2.5 flex-shrink-0 items-center justify-center rounded-full bg-emerald-500 text-[10px] font-bold text-white">
+                              •
+                            </span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                       <span className="text-xs uppercase tracking-[0.3em] text-slate-400">
                         Conteúdo disponível no relatório completo
@@ -386,7 +450,7 @@ export function ElegantResultCard({
           decisão
         </p>
         <h4 className="text-3xl font-semibold text-slate-900">
-          Você já sentiu o quanto essa leitura fala sobre você. Agora veja o que está escondido — e o que ainda pode ser transformado.
+          Você já viu que esta leitura descreve o que você vive. Agora destrave o restante e mude o cenário com clareza.
         </h4>
         <p className="text-base text-slate-600 max-w-2xl mx-auto">
           Desbloqueie o relatório completo e avance pelas camadas que revelam seus ciclos, forças ocultas, caminhos de cura e sinais do próximo capítulo.
