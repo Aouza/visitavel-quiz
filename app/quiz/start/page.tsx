@@ -23,6 +23,7 @@ export default function QuizStartPage() {
     name: "",
     email: "",
     whatsapp: "",
+    gender: "", // "M" ou "F"
   });
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -42,8 +43,13 @@ export default function QuizStartPage() {
     setIsSubmitting(true);
 
     try {
-      // Salvar lead
-      saveLeadInfo(formData.name, formData.email, formData.whatsapp);
+      // Salvar lead com gênero
+      saveLeadInfo(
+        formData.name,
+        formData.email,
+        formData.whatsapp,
+        formData.gender
+      );
 
       // Track captura
       trackLeadSubmitted(formData.email);
@@ -130,6 +136,68 @@ export default function QuizStartPage() {
                   className="h-12 text-base"
                   disabled={isSubmitting}
                 />
+              </div>
+
+              <div className="space-y-3">
+                <Label className="text-sm font-medium">
+                  Como você se identifica?
+                </Label>
+                <div className="grid grid-cols-2 gap-2">
+                  <label
+                    htmlFor="gender-f"
+                    className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                      formData.gender === "F"
+                        ? "border-slate-900 bg-slate-50 shadow-sm"
+                        : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      id="gender-f"
+                      name="gender"
+                      value="F"
+                      checked={formData.gender === "F"}
+                      onChange={(e) =>
+                        setFormData({ ...formData, gender: e.target.value })
+                      }
+                      required
+                      disabled={isSubmitting}
+                      className="sr-only"
+                    />
+                    <span className="text-lg">👩</span>
+                    <span className="font-medium text-sm text-slate-900">Feminino</span>
+                  </label>
+
+                  <label
+                    htmlFor="gender-m"
+                    className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                      formData.gender === "M"
+                        ? "border-slate-900 bg-slate-50 shadow-sm"
+                        : "border-slate-200 hover:border-slate-300 hover:bg-slate-50"
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      id="gender-m"
+                      name="gender"
+                      value="M"
+                      checked={formData.gender === "M"}
+                      onChange={(e) =>
+                        setFormData({ ...formData, gender: e.target.value })
+                      }
+                      required
+                      disabled={isSubmitting}
+                      className="sr-only"
+                    />
+                    <span className="text-lg">👨</span>
+                    <span className="font-medium text-sm text-slate-900">
+                      Masculino
+                    </span>
+                  </label>
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Isso nos ajuda a personalizar melhor a experiência para você
+                </p>
               </div>
 
               <div className="space-y-2">

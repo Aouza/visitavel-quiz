@@ -25,8 +25,10 @@ export interface UTMParams {
 }
 
 export interface LeadInfo {
+  name: string;
   email: string;
   whatsapp: string;
+  gender: string; // "M" ou "F"
   capturedAt: string;
 }
 
@@ -112,9 +114,21 @@ export function captureUTMsFromURL(): UTMParams {
 }
 
 // Lead Info
-export function saveLeadInfo(lead: LeadInfo): void {
+export function saveLeadInfo(
+  name: string,
+  email: string,
+  whatsapp: string,
+  gender: string
+): void {
   if (typeof window === "undefined") return;
   try {
+    const lead: LeadInfo = {
+      name,
+      email,
+      whatsapp,
+      gender,
+      capturedAt: new Date().toISOString(),
+    };
     localStorage.setItem(LEAD_STORAGE_KEY, JSON.stringify(lead));
   } catch (error) {
     console.error("Error saving lead info:", error);

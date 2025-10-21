@@ -45,11 +45,14 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
     control,
     formState: { errors },
     watch,
+    setValue,
   } = useForm<LeadFormData>({
     resolver: zodResolver(leadSchema),
     defaultValues: {
+      name: "",
       email: "",
       whatsapp: "",
+      gender: undefined,
       consent: false,
     },
   });
@@ -65,8 +68,10 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
       const utms = getUTMs();
 
       const payload = {
+        name: data.name,
         email: data.email,
         whatsapp: normalizedWhatsApp,
+        gender: data.gender,
         consent: data.consent,
         utms,
         referrer: utms.referrer || document.referrer,
@@ -88,11 +93,7 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
       }
 
       // Salvar lead localmente
-      saveLeadInfo({
-        email: data.email,
-        whatsapp: normalizedWhatsApp,
-        capturedAt: new Date().toISOString(),
-      });
+      saveLeadInfo(data.name, data.email, normalizedWhatsApp, data.gender);
 
       // Track sucesso
       trackLeadSubmitted(data.email);
@@ -123,6 +124,70 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
+          {/* Nome */}
+          <div className="space-y-2">
+            <Label htmlFor="name">Nome *</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Como podemos te chamar?"
+              autoComplete="name"
+              {...register("name")}
+              aria-invalid={errors.name ? "true" : "false"}
+              aria-describedby={errors.name ? "name-error" : undefined}
+            />
+            {errors.name && (
+              <p id="name-error" className="text-sm text-red-600" role="alert">
+                {errors.name.message}
+              </p>
+            )}
+          </div>
+
+          {/* Gênero */}
+          <div className="space-y-2">
+            <Label>Como você se identifica? *</Label>
+            <div className="grid grid-cols-2 gap-3">
+              <label
+                className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                  watch("gender") === "F"
+                    ? "border-slate-900 bg-slate-50"
+                    : "border-slate-200 hover:border-slate-300"
+                }`}
+              >
+                <input
+                  type="radio"
+                  value="F"
+                  {...register("gender")}
+                  className="sr-only"
+                />
+                <span className="text-xl">👩</span>
+                <span className="font-medium text-sm">Feminino</span>
+              </label>
+
+              <label
+                className={`flex items-center justify-center gap-2 p-3 rounded-lg border-2 cursor-pointer transition-all ${
+                  watch("gender") === "M"
+                    ? "border-slate-900 bg-slate-50"
+                    : "border-slate-200 hover:border-slate-300"
+                }`}
+              >
+                <input
+                  type="radio"
+                  value="M"
+                  {...register("gender")}
+                  className="sr-only"
+                />
+                <span className="text-xl">👨</span>
+                <span className="font-medium text-sm">Masculino</span>
+              </label>
+            </div>
+            {errors.gender && (
+              <p className="text-sm text-red-600" role="alert">
+                {errors.gender.message}
+              </p>
+            )}
+          </div>
+
           {/* Email */}
           <div className="space-y-2">
             <Label htmlFor="email">E-mail *</Label>

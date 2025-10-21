@@ -9,12 +9,16 @@ import { QUESTIONS } from "./questions";
 
 // Schema para captura de lead
 export const leadSchema = z.object({
+  name: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
   email: z.string().min(1, "E-mail é obrigatório").email("E-mail inválido"),
   whatsapp: z
     .string()
     .min(10, "WhatsApp deve ter pelo menos 10 dígitos")
     .max(16, "WhatsApp deve ter no máximo 16 dígitos")
     .regex(/^\d+$/, "WhatsApp deve conter apenas números"),
+  gender: z.enum(["M", "F"], {
+    errorMap: () => ({ message: "Selecione uma opção" }),
+  }),
   consent: z.boolean().refine((val) => val === true, {
     message: "Você precisa concordar para continuar",
   }),

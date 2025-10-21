@@ -46,8 +46,8 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "checagens",
-    title: "Com que frequência você checa redes sociais ou fotos do(a) ex?",
-    helper: "Seja honesto(a), isso nos ajuda a entender melhor",
+    title: "Com que frequência você checa redes sociais ou fotos do seu ex?",
+    helper: "Seja honesto, isso nos ajuda a entender melhor",
     type: "likert",
     options: [
       { value: "nunca", label: "🚫 Nunca ou raramente", weight: 0 },
@@ -87,14 +87,18 @@ export const QUESTIONS: Question[] = [
       { value: "normal", label: "🍽️ Está normal", weight: 0 },
       { value: "diminuiu", label: "😕 Diminuiu bastante", weight: 2 },
       { value: "aumentou", label: "🍕 Aumentou (como compensação)", weight: 2 },
-      { value: "sem_apetite", label: "😔 Perdi totalmente o apetite", weight: 3 },
+      {
+        value: "sem_apetite",
+        label: "😔 Perdi totalmente o apetite",
+        weight: 3,
+      },
     ],
     mapTo: "devastacao",
     required: true,
   },
   {
     id: "impulso_contato",
-    title: "Você sente impulso de entrar em contato com seu(sua) ex?",
+    title: "Você sente impulso de entrar em contato com seu ex?",
     type: "likert",
     options: [
       { value: "nao", label: "✅ Não, já superei isso", weight: 0 },
@@ -104,7 +108,11 @@ export const QUESTIONS: Question[] = [
         weight: 1,
       },
       { value: "frequente", label: "😔 Sim, com frequência", weight: 2 },
-      { value: "constante", label: "😰 O tempo todo, é muito difícil", weight: 3 },
+      {
+        value: "constante",
+        label: "😰 O tempo todo, é muito difícil",
+        weight: 3,
+      },
     ],
     mapTo: "abstinencia",
     required: true,
@@ -121,7 +129,11 @@ export const QUESTIONS: Question[] = [
         label: "🤷 Um pouco, mas sei que teve problemas",
         weight: 1,
       },
-      { value: "bastante", label: "💭 Sim, só lembro das coisas boas", weight: 2 },
+      {
+        value: "bastante",
+        label: "💭 Sim, só lembro das coisas boas",
+        weight: 2,
+      },
       {
         value: "totalmente",
         label: "🌟 Totalmente, acho que foi perfeito",
@@ -167,12 +179,16 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "reflexao",
-    title: "Você tem refletido sobre si mesmo(a) e seus padrões?",
+    title: "Você tem refletido sobre si mesmo e seus padrões?",
     type: "single",
     options: [
       { value: "nao", label: "🙈 Não tenho pensado nisso", weight: 0 },
       { value: "comecando", label: "🤔 Estou começando a refletir", weight: 2 },
-      { value: "bastante", label: "💭 Sim, tenho refletido bastante", weight: 3 },
+      {
+        value: "bastante",
+        label: "💭 Sim, tenho refletido bastante",
+        weight: 3,
+      },
       { value: "mudancas", label: "✨ Já estou fazendo mudanças", weight: 1 },
     ],
     mapTo: "interiorizacao",
@@ -189,7 +205,11 @@ export const QUESTIONS: Question[] = [
         label: "😕 É muito difícil, mas às vezes consigo",
         weight: 2,
       },
-      { value: "aos_poucos", label: "🌱 Aos poucos estou conseguindo", weight: 1 },
+      {
+        value: "aos_poucos",
+        label: "🌱 Aos poucos estou conseguindo",
+        weight: 1,
+      },
       { value: "sim", label: "😊 Sim, consigo me ver feliz", weight: 0 },
     ],
     mapTo: "superacao",
@@ -210,12 +230,12 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "novas_conexoes",
-    title: "Você está aberto(a) a conhecer novas pessoas?",
+    title: "Você está aberto a conhecer novas pessoas?",
     helper:
       "Não necessariamente para relacionamento, mas para novas amizades e conexões",
     type: "single",
     options: [
-      { value: "nao", label: "💔 Não, só penso nele(a)", weight: 3 },
+      { value: "nao", label: "💔 Não, só penso nessa pessoa", weight: 3 },
       {
         value: "ainda_nao",
         label: "⏳ Ainda não, preciso de mais tempo",
@@ -224,7 +244,7 @@ export const QUESTIONS: Question[] = [
       { value: "comecando", label: "🌱 Estou começando a me abrir", weight: 1 },
       {
         value: "sim",
-        label: "✨ Sim, estou aberto(a) a novas conexões",
+        label: "✨ Sim, estou aberto a novas conexões",
         weight: 0,
       },
     ],
@@ -242,7 +262,7 @@ export const QUESTIONS: Question[] = [
   },
   {
     id: "exBirthdate",
-    title: "Qual é a data de nascimento do(a) seu/sua ex?",
+    title: "Qual é a data de nascimento do seu ex?",
     helper:
       "Opcional - permite uma análise mais profunda da dinâmica do relacionamento",
     type: "date",
