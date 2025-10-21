@@ -10,7 +10,7 @@ export type Option = {
   weight?: number;
 };
 
-export type QuestionType = "likert" | "single" | "multi" | "boolean";
+export type QuestionType = "likert" | "single" | "multi" | "boolean" | "date";
 
 export type Segment =
   | "devastacao"
@@ -230,5 +230,23 @@ export const QUESTIONS: Question[] = [
     ],
     mapTo: "superacao",
     required: true,
+  },
+  {
+    id: "birthdate",
+    title: "Qual é a sua data de nascimento?",
+    helper:
+      "Opcional - nos ajuda a criar recomendações mais específicas para você",
+    type: "date",
+    options: [],
+    required: false,
+  },
+  {
+    id: "exBirthdate",
+    title: "Qual é a data de nascimento do(a) seu/sua ex?",
+    helper:
+      "Opcional - permite uma análise mais profunda da dinâmica do relacionamento",
+    type: "date",
+    options: [],
+    required: false,
   },
 ];

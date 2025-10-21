@@ -7,6 +7,7 @@
 
 import { Controller, Control } from "react-hook-form";
 import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { type Question } from "@/lib/questions";
@@ -27,6 +28,11 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
         {question.helper && (
           <p className="text-sm text-muted-foreground">{question.helper}</p>
         )}
+        {!question.required && (
+          <p className="text-xs text-muted-foreground italic">
+            Esta pergunta é opcional - você pode pular se preferir
+          </p>
+        )}
       </div>
 
       <Controller
@@ -34,6 +40,22 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
         control={control}
         rules={{ required: question.required }}
         render={({ field }) => {
+          // Date input
+          if (question.type === "date") {
+            return (
+              <div className="space-y-3">
+                <Input
+                  type="date"
+                  value={field.value as string}
+                  onChange={field.onChange}
+                  max={new Date().toISOString().split("T")[0]}
+                  className="max-w-md"
+                  aria-label={question.title}
+                />
+              </div>
+            );
+          }
+
           // Single choice (Radio)
           if (question.type === "single" || question.type === "likert") {
             return (

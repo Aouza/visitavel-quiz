@@ -66,13 +66,17 @@ export function QuizStepper() {
 
   const currentQuestion = QUESTIONS[currentStep];
   const currentAnswer = answers[currentQuestion.id];
+
+  // Perguntas opcionais podem ser puladas
   const isAnswered =
-    currentAnswer !== undefined &&
-    currentAnswer !== "" &&
-    (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true);
+    !currentQuestion.required ||
+    (currentAnswer !== undefined &&
+      currentAnswer !== "" &&
+      (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true));
 
   const handleNext = () => {
-    if (!isAnswered) return;
+    // Perguntas opcionais podem ser puladas
+    if (!isAnswered && currentQuestion.required) return;
 
     // Track step
     trackQuizStep(currentStep + 1, QUESTIONS.length);
@@ -194,7 +198,7 @@ export function QuizStepper() {
               )
             ) : (
               <>
-                Próximo
+                {!currentQuestion.required && !isAnswered ? "Pular" : "Próximo"}
                 <ArrowRight className="w-4 h-4" />
               </>
             )}

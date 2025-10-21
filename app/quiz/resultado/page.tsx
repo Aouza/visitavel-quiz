@@ -1,6 +1,6 @@
 /**
  * @file: app/quiz/resultado/page.tsx
- * @responsibility: Página de resultado do quiz
+ * @responsibility: Página de resultado do quiz (resumo básico + CTAs)
  */
 
 "use client";
