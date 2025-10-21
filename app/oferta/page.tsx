@@ -7,23 +7,15 @@
 
 import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { Card, CardContent } from "@/components/ui/card";
 import { PricingCards } from "@/components/PricingCards";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
-import {
-  trackOfferViewed,
-  trackOrderBumpView,
-  trackOrderBumpClick,
-} from "@/lib/analytics";
-import { Check, Gift } from "lucide-react";
+import { trackOfferViewed } from "@/lib/analytics";
+import { Shield, Clock, Heart } from "lucide-react";
 
 function OfertaContent() {
   const searchParams = useSearchParams();
   const [segment, setSegment] = useState<Segment | null>(null);
-  const [orderBump, setOrderBump] = useState(false);
 
   useEffect(() => {
     const seg = searchParams.get("seg") as Segment;
@@ -43,217 +35,220 @@ function OfertaContent() {
     }
   }, [searchParams]);
 
-  const handleOrderBumpChange = (checked: boolean) => {
-    setOrderBump(checked);
-    if (checked) {
-      trackOrderBumpClick();
-    }
-  };
-
   const content = segment ? getSegmentContent(segment) : null;
 
   return (
-    <div className="container mx-auto px-4 py-12 space-y-12">
-      {/* Topbar com resultado */}
-      {content && (
-        <Card className="border-2 border-primary">
-          <CardContent className="pt-6">
-            <div className="flex flex-col md:flex-row items-center gap-4">
-              <div className="text-4xl">{content.icon}</div>
-              <div className="flex-1 text-center md:text-left">
-                <h2 className={`text-2xl font-bold ${content.color} mb-2`}>
-                  Seu resultado: {content.headline}
+    <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 space-y-20">
+        {/* Header com resultado */}
+        {content && (
+          <section className="space-y-6">
+            <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
+              <span className="h-px w-12 bg-slate-200" />
+              Seu diagnóstico
+            </div>
+            <div className="flex items-start gap-6">
+              <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl">
+                {content.icon}
+              </div>
+              <div className="space-y-3">
+                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
+                  {content.headline}
                 </h2>
-                <p className="text-muted-foreground">
-                  {content.description.substring(0, 150)}...
+                <p className="text-base md:text-lg text-slate-600 leading-relaxed max-w-2xl">
+                  {content.description}
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      )}
+          </section>
+        )}
 
-      {/* Hero da Oferta */}
-      <div className="text-center space-y-6 max-w-3xl mx-auto">
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-          Acelere sua recuperação com o Kit Anti-Recaída
-        </h1>
-        <p className="text-xl text-muted-foreground">
-          Mais de 80% das pessoas que tentam superar um término sozinhas acabam
-          tendo recaídas. Não deixe isso acontecer com você.
-        </p>
-      </div>
+        {/* Hero da Oferta */}
+        <section className="space-y-8 text-center">
+          <div className="space-y-6">
+            <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
+              Agora você tem clareza do problema.
+              <br />É hora de resolver de vez.
+            </h1>
+            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              O relatório completo te mostra o <strong>caminho exato</strong>{" "}
+              para sair do ciclo de recaídas e recuperar o controle da sua vida
+              emocional.
+            </p>
+          </div>
+        </section>
 
-      {/* Benefícios */}
-      <div className="max-w-4xl mx-auto">
-        <Card>
-          <CardContent className="pt-6">
-            <h2 className="text-2xl font-semibold mb-6 text-center">
-              O que você ganha com o Kit Anti-Recaída:
+        {/* Benefícios */}
+        <section className="space-y-10">
+          <div className="space-y-3 text-center">
+            <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              o que você recebe
+            </span>
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
+              O relatório completo desbloqueia 8 camadas essenciais
             </h2>
-            <div className="grid md:grid-cols-2 gap-6">
-              {[
-                {
-                  title: "Plano de ação diário",
-                  description:
-                    "Saiba exatamente o que fazer a cada dia pelos próximos 30 dias",
-                },
-                {
-                  title: "Protocolo anti-recaída",
-                  description:
-                    "Técnicas comprovadas para quando bater o impulso de voltar",
-                },
-                {
-                  title: "Suporte em grupo VIP",
-                  description:
-                    "Acesso ao grupo exclusivo no WhatsApp com outras pessoas na mesma jornada",
-                },
-                {
-                  title: "Ferramentas práticas",
-                  description:
-                    "Templates, exercícios e checklists prontos para usar",
-                },
-                {
-                  title: "Meditações guiadas",
-                  description:
-                    "Áudios exclusivos para momentos de crise e ansiedade",
-                },
-                {
-                  title: "Atualizações vitalícias",
-                  description:
-                    "Receba novos conteúdos e ferramentas sem custo adicional",
-                },
-              ].map((benefit, index) => (
-                <div key={index} className="flex gap-3">
-                  <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-semibold mb-1">{benefit.title}</h3>
-                    <p className="text-sm text-muted-foreground">
-                      {benefit.description}
-                    </p>
-                  </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            {[
+              {
+                icon: "💬",
+                title: "Por que você ainda pensa nessa pessoa",
+                description:
+                  "Entenda o mecanismo emocional que mantém a obsessão ativa",
+              },
+              {
+                icon: "🧠",
+                title: "Como parar o pensamento obsessivo",
+                description: "Método prático para interromper o loop mental",
+              },
+              {
+                icon: "🌙",
+                title: "Como lidar com a abstinência emocional",
+                description: "Equilibre a química emocional sem recaídas",
+              },
+              {
+                icon: "⚡",
+                title: "Como recuperar sua autoestima",
+                description:
+                  "Reconstrua sua confiança sem depender de aprovação",
+              },
+              {
+                icon: "🌑",
+                title: "Por que ele parece bem e você não",
+                description: "Entenda as fases ocultas e pare de se comparar",
+              },
+              {
+                icon: "🕯",
+                title: "Como encerrar de verdade",
+                description: "Fechamento emocional real, sem humilhação",
+              },
+              {
+                icon: "🔮",
+                title: "Como voltar a se sentir bem",
+                description:
+                  "Reative sua vitalidade e recupere o prazer de viver",
+              },
+              {
+                icon: "🌅",
+                title: "O que vem depois da dor",
+                description:
+                  "Transforme o aprendizado em força e reconstrua sua identidade",
+              },
+            ].map((benefit, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <span className="text-2xl mt-0.5 flex-shrink-0">
+                  {benefit.icon}
+                </span>
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-1 text-base">
+                    {benefit.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    {benefit.description}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Pricing */}
-      <div className="space-y-6">
-        <div className="text-center space-y-2">
-          <h2 className="text-3xl font-bold">Escolha seu plano</h2>
-          <p className="text-muted-foreground">
-            Todos os planos incluem garantia de 7 dias
-          </p>
-        </div>
-
-        <PricingCards segment={segment || undefined} />
-      </div>
-
-      {/* Order Bump */}
-      <div
-        className="max-w-2xl mx-auto"
-        onMouseEnter={() => trackOrderBumpView()}
-      >
-        <Card className="border-2 border-orange-500 bg-orange-50 dark:bg-orange-950">
-          <CardContent className="pt-6">
-            <div className="flex items-start gap-4">
-              <Checkbox
-                id="order-bump"
-                checked={orderBump}
-                onCheckedChange={handleOrderBumpChange}
-                className="mt-1"
-              />
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <Gift className="w-5 h-5 text-orange-600" />
-                  <Label
-                    htmlFor="order-bump"
-                    className="text-lg font-bold cursor-pointer"
-                  >
-                    🔥 Oferta especial: Acesso antecipado ao Grupo Anti-Recaída
-                  </Label>
-                </div>
-                <p className="text-sm mb-3">
-                  Entre no grupo VIP HOJE mesmo (normalmente liberado após 48h)
-                  e receba suporte imediato de pessoas que já superaram. Apenas
-                  R$ 27 extras.
-                </p>
-                <ul className="space-y-1 text-sm">
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-orange-600" />
-                    Acesso imediato ao grupo
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-orange-600" />
-                    Lives semanais exclusivas
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <Check className="w-4 h-4 text-orange-600" />
-                    Suporte 24/7 da comunidade
-                  </li>
-                </ul>
               </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+            ))}
+          </div>
+        </section>
 
-      {/* Garantia */}
-      <div className="text-center max-w-2xl mx-auto space-y-4">
-        <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary text-primary-foreground text-3xl font-bold">
-          7d
-        </div>
-        <h3 className="text-2xl font-bold">Garantia incondicional de 7 dias</h3>
-        <p className="text-muted-foreground">
-          Se você não sentir que o Kit Anti-Recaída está te ajudando, basta
-          enviar um e-mail em até 7 dias e devolvemos 100% do seu investimento,
-          sem perguntas.
-        </p>
-      </div>
+        {/* Pricing */}
+        <section className="space-y-10">
+          <div className="space-y-3 text-center">
+            <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              escolha seu plano
+            </span>
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
+              Desbloqueie o relatório completo agora
+            </h2>
+            <p className="text-sm text-slate-600">
+              Garantia incondicional de 7 dias • Acesso imediato
+            </p>
+          </div>
 
-      {/* FAQ rápido */}
-      <div className="max-w-2xl mx-auto space-y-6">
-        <h2 className="text-2xl font-bold text-center mb-8">
-          Perguntas frequentes
-        </h2>
+          <PricingCards segment={segment || undefined} />
+        </section>
 
-        <div className="space-y-4">
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="font-semibold mb-2">
+        {/* Garantia */}
+        <section className="text-center space-y-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-slate-900 text-white text-2xl font-bold">
+            <Shield className="w-10 h-10" />
+          </div>
+          <div className="space-y-3">
+            <h3 className="text-2xl font-semibold text-slate-900">
+              Garantia incondicional de 7 dias
+            </h3>
+            <p className="text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
+              Se você não sentir que o relatório está te ajudando, basta enviar
+              um e-mail em até 7 dias e devolvemos 100% do seu investimento, sem
+              perguntas.
+            </p>
+          </div>
+        </section>
+
+        {/* FAQ rápido */}
+        <section className="space-y-8">
+          <div className="space-y-3 text-center">
+            <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
+              perguntas frequentes
+            </span>
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
+              Dúvidas comuns
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200">
+              <h3 className="font-semibold text-slate-900 mb-2 text-base">
                 Quando vou receber o acesso?
               </h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-slate-600 leading-relaxed">
                 Imediatamente após a confirmação do pagamento. Você receberá um
                 e-mail com todos os acessos.
               </p>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="font-semibold mb-2">Quanto tempo tenho acesso?</h3>
-              <p className="text-sm text-muted-foreground">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200">
+              <h3 className="font-semibold text-slate-900 mb-2 text-base">
+                Quanto tempo tenho acesso?
+              </h3>
+              <p className="text-sm text-slate-600 leading-relaxed">
                 O acesso é vitalício. Você pode consultar os materiais sempre
                 que precisar.
               </p>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardContent className="pt-6">
-              <h3 className="font-semibold mb-2">
+            <div className="p-6 rounded-2xl bg-white border border-slate-200">
+              <h3 className="font-semibold text-slate-900 mb-2 text-base">
                 Funciona para qualquer tipo de término?
               </h3>
-              <p className="text-sm text-muted-foreground">
-                Sim! O Kit foi desenvolvido para ajudar em diferentes cenários
-                de término, independente da duração do relacionamento.
+              <p className="text-sm text-slate-600 leading-relaxed">
+                Sim! O relatório foi desenvolvido para ajudar em diferentes
+                cenários de término, independente da duração do relacionamento.
               </p>
-            </CardContent>
-          </Card>
-        </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Trust badges finais */}
+        <section className="flex flex-wrap items-center justify-center gap-8 text-sm text-slate-600 pt-8 border-t border-slate-200">
+          <div className="flex items-center gap-2">
+            <Clock className="w-4 h-4" />
+            <span>Acesso imediato</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Shield className="w-4 h-4" />
+            <span>Garantia de 7 dias</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Heart className="w-4 h-4" />
+            <span>+7 mil vidas transformadas</span>
+          </div>
+        </section>
       </div>
     </div>
   );

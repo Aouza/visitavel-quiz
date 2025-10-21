@@ -115,54 +115,62 @@ export function PricingCards({ segment }: PricingCardsProps) {
   return (
     <div className="grid md:grid-cols-3 gap-6 w-full max-w-6xl mx-auto">
       {PLANS.map((plan) => (
-        <Card
+        <div
           key={plan.id}
-          className={`relative flex flex-col ${
-            plan.recommended ? "border-primary border-2 shadow-lg" : ""
+          className={`relative flex flex-col rounded-[28px] border bg-white shadow-sm transition-all duration-300 hover:shadow-lg ${
+            plan.recommended
+              ? "border-2 border-slate-900 shadow-md scale-105"
+              : "border-slate-200"
           }`}
         >
           {plan.badge && (
-            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary text-primary-foreground px-4 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
-              <Star className="w-3 h-3" />
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-4 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1">
+              <Star className="w-3 h-3 fill-white" />
               {plan.badge}
             </div>
           )}
 
-          <CardHeader className="text-center pb-4">
-            <CardTitle className="text-xl">{plan.name}</CardTitle>
-            <CardDescription>{plan.description}</CardDescription>
-            <div className="mt-4">
-              <span className="text-4xl font-bold">{plan.price}</span>
+          <div className="text-center p-8 pb-6">
+            <h3 className="text-xl font-semibold text-slate-900 mb-2">
+              {plan.name}
+            </h3>
+            <p className="text-sm text-slate-600 mb-6">{plan.description}</p>
+            <div>
+              <span className="text-4xl font-bold text-slate-900">
+                {plan.price}
+              </span>
               {plan.priceNumeric > 0 && (
-                <span className="text-sm text-muted-foreground ml-1">
-                  /único
-                </span>
+                <span className="text-sm text-slate-500 ml-1">/único</span>
               )}
             </div>
-          </CardHeader>
+          </div>
 
-          <CardContent className="flex-grow">
+          <div className="flex-grow px-8 pb-6">
             <ul className="space-y-3">
               {plan.features.map((feature, index) => (
                 <li key={index} className="flex items-start gap-2 text-sm">
-                  <Check className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                  <span>{feature}</span>
+                  <Check className="w-4 h-4 text-slate-700 mt-0.5 flex-shrink-0" />
+                  <span className="text-slate-700 leading-relaxed">
+                    {feature}
+                  </span>
                 </li>
               ))}
             </ul>
-          </CardContent>
+          </div>
 
-          <CardFooter>
-            <Button
-              size="lg"
-              variant={plan.recommended ? "default" : "outline"}
-              className="w-full"
+          <div className="p-8 pt-4">
+            <button
               onClick={() => handleCheckoutClick(plan)}
+              className={`w-full px-6 py-3.5 rounded-full font-semibold text-sm transition-all ${
+                plan.recommended
+                  ? "bg-slate-900 text-white hover:bg-slate-800 hover:shadow-md"
+                  : "border-2 border-slate-300 text-slate-700 hover:border-slate-400 hover:bg-slate-50"
+              }`}
             >
               {plan.priceNumeric === 0 ? "Já recebi" : "Quero este plano"}
-            </Button>
-          </CardFooter>
-        </Card>
+            </button>
+          </div>
+        </div>
       ))}
     </div>
   );
