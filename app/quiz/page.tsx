@@ -8,14 +8,12 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { LeadModal } from "@/components/LeadModal";
 import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
 import { trackQuizView, trackQuizCTAClick } from "@/lib/analytics";
 import { Check, Heart } from "lucide-react";
 
 export default function QuizPage() {
-  const [showLeadModal, setShowLeadModal] = useState(false);
   const [hasLead, setHasLead] = useState(false);
   const [isStarting, setIsStarting] = useState(false);
 
@@ -29,6 +27,14 @@ export default function QuizPage() {
 
     // Track visualização
     trackQuizView();
+
+    // Se tem lead E veio de ?autostart=1, iniciar automaticamente
+    const urlParams = new URLSearchParams(window.location.search);
+    const shouldAutoStart = urlParams.get("autostart") === "1";
+
+    if (leadInfo && shouldAutoStart) {
+      setIsStarting(true);
+    }
   }, []);
 
   const handleStartClick = () => {
@@ -38,15 +44,9 @@ export default function QuizPage() {
       // Já tem lead, ir direto pro quiz
       setIsStarting(true);
     } else {
-      // Abrir modal de captura
-      setShowLeadModal(true);
+      // Redirecionar para página de captura
+      window.location.href = "/quiz/start";
     }
-  };
-
-  const handleLeadSuccess = () => {
-    setShowLeadModal(false);
-    setHasLead(true);
-    setIsStarting(true);
   };
 
   // Se já iniciou o quiz, mostrar o stepper
@@ -165,13 +165,6 @@ export default function QuizPage() {
           </p>
         </div>
       </div>
-
-      {/* Lead Modal */}
-      <LeadModal
-        open={showLeadModal}
-        onOpenChange={setShowLeadModal}
-        onSuccess={handleLeadSuccess}
-      />
     </>
   );
 }
