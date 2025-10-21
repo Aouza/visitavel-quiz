@@ -182,9 +182,9 @@ export function ElegantResultCard({
   const lockedSections = [
     {
       icon: "💞",
-      title: "Por que você não consegue parar de pensar nessa pessoa",
+      title: "Por que você ainda pensa nessa pessoa",
       summary:
-        "O vínculo ainda está ativo por dentro — e o cérebro não recebeu o 'sinal de fim'.",
+        "Ainda há vínculo emocional ativo. Você sente falta porque sua mente acredita que algo ficou inacabado.",
       veil: "Vamos te mostrar como o corpo e a mente se mantêm presos num laço emocional invisível, e o que fazer pra cortar esse elo sem precisar bloquear ou reprimir. Você vai conseguir parar de stalkear e de esperar mensagem.",
       badge: "🔓 Conteúdo exclusivo",
       loss: "Você continua preso(a) ao ciclo de espera passiva.",
@@ -330,6 +330,11 @@ export function ElegantResultCard({
               A ideia é simples: explicar seu padrão, mostrar o que trava e
               entregar o que fazer depois.
             </p>
+            <p className="text-base md:text-lg text-slate-700 max-w-3xl leading-relaxed font-medium">
+              Você não está preso por fraqueza — está preso por lógica
+              emocional. E essa lógica é o que o relatório completo vai te
+              mostrar.
+            </p>
             <div className="flex flex-wrap items-center gap-3 text-sm text-slate-500">
               <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-4 py-1.5">
                 <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
@@ -396,7 +401,7 @@ export function ElegantResultCard({
               <div className="text-center space-y-3">
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
                   <span className="text-sm font-semibold text-emerald-700">
-                    ✅ Você já entendeu o início do seu processo
+                    ✅ Você já descobriu 3 verdades sobre o seu processo
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-2xl mx-auto">
@@ -412,7 +417,7 @@ export function ElegantResultCard({
                     </div>
                   </div>
                   <h4 className="font-bold text-slate-900 text-base mb-2">
-                    Por que sua mente não desliga
+                    Sua mente ainda procura sentido
                   </h4>
                   <p className="text-sm text-slate-600 leading-relaxed">
                     Não é fraqueza — é um mecanismo emocional que fica ativado
@@ -427,7 +432,7 @@ export function ElegantResultCard({
                     </div>
                   </div>
                   <h4 className="font-bold text-slate-900 text-base mb-2">
-                    Por que o ciclo sempre volta
+                    O vínculo ainda está ativo
                   </h4>
                   <p className="text-sm text-slate-600 leading-relaxed">
                     Você repete um padrão inconsciente que te prende à mesma
@@ -442,11 +447,11 @@ export function ElegantResultCard({
                     </div>
                   </div>
                   <h4 className="font-bold text-slate-900 text-base mb-2">
-                    Onde exatamente está travado
+                    Você não tem culpa
                   </h4>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    O primeiro ponto que precisa ser resolvido para sair dessa
-                    fase.
+                    Seu cérebro está tentando te proteger. O primeiro ponto que
+                    precisa ser resolvido para sair dessa fase.
                   </p>
                 </div>
               </div>
@@ -456,13 +461,13 @@ export function ElegantResultCard({
                   <span className="text-2xl mt-0.5">⚡</span>
                   <div className="text-left">
                     <p className="text-slate-900 text-base font-semibold mb-1">
-                      Mas é só o início do caminho: Existem 7 outras camadas
-                      ainda bloqueadas que explicam por que você não avança.
+                      Mas isso é só o começo: Existem 8 processos emocionais
+                      críticos ainda ativos — e eles explicam por que a dor
+                      volta mesmo quando parece que você está bem.
                     </p>
                     <p className="text-sm text-slate-600">
-                      Isso é só <strong>1 parte</strong> do quebra-cabeça. O
-                      relatório completo te ajuda a resolver essas{" "}
-                      <strong>7 outras camadas críticas</strong> que mantêm você
+                      O relatório completo te ajuda a entender e resolver esses{" "}
+                      <strong>8 processos emocionais</strong> que mantêm você
                       preso.
                     </p>
                   </div>
@@ -473,75 +478,161 @@ export function ElegantResultCard({
             {/* Bloco 2 — O que ainda falta */}
             <div className="space-y-8">
               <div className="text-center space-y-3">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 border border-red-200">
-                  <span className="text-sm font-semibold text-red-700">
-                    💣 Essas são as partes que ainda te prendem
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rose-100 border-2 border-rose-300">
+                  <span className="text-sm font-bold text-rose-700">
+                    ⚠️ 8 processos emocionais ainda ativos no seu inconsciente
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
-                  Você ainda não sabe, mas precisa descobrir
+                  Esses processos internos ainda estão ativos e continuam te
+                  puxando pro mesmo ciclo
                 </h3>
                 <p className="text-sm text-slate-600 max-w-2xl mx-auto">
-                  (Desbloqueadas só com o relatório completo)
+                  (Você só consegue entender e resolver com o relatório
+                  completo)
                 </p>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-                {[
-                  {
-                    title: "Abstinência Emocional",
-                    desc: "Seu corpo sente falta como uma dependência. Você precisa aprender a aliviar sem recaídas.",
-                  },
-                  {
-                    title: "Autoestima Abalada",
-                    desc: "O fim fez você duvidar do seu valor. Precisa reconstruir a confiança antes de tentar seguir.",
-                  },
-                  {
-                    title: "Comparação com o Outro",
-                    desc: "Ver o outro bem dói porque parece injusto. Mas há uma explicação — e um jeito de parar.",
-                  },
-                  {
-                    title: "Encerramento Real",
-                    desc: "Você tenta seguir, mas ainda sente que algo ficou aberto. Precisa fechar sem apagar a história.",
-                  },
-                  {
-                    title: "Reconstrução e Recomeço",
-                    desc: "Você entendeu tudo, mas ainda não voltou a sentir prazer e rotina.",
-                  },
-                ].map((item, index) => (
-                  <div
-                    key={index}
-                    className="rounded-2xl border border-slate-200 bg-white p-6 space-y-3"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="h-2.5 w-2.5 rounded-full bg-slate-400"></div>
-                      <h4 className="font-bold text-slate-900 text-sm">
-                        {item.title}
-                      </h4>
-                    </div>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      {item.desc}
-                    </p>
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      1. Abstinência emocional ativa
+                    </h4>
                   </div>
-                ))}
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Seu corpo sente a ausência como se fosse uma crise de
+                    abstinência. Você precisa entender como desativar esse
+                    processo sem recaídas.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      2. Autoestima fragmentada
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    O fim abalou a forma como você se enxerga. Precisa
+                    reconstruir essa percepção antes de conseguir seguir.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      3. Comparação destrutiva
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Ver o outro bem enquanto você ainda sofre machuca porque os
+                    tempos de cura não são iguais. Precisa desativar essa
+                    comparação.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      4. Fechamento incompleto
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Você quer soltar, mas sente que apagar a história é injusto.
+                    Precisa criar um encerramento interno real, sem se humilhar.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      5. Paralisação da reconstrução
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Você já entendeu tudo, mas ainda está travado e sem energia
+                    para reconstruir rotina e voltar a sentir prazer.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      6. Pensamento obsessivo recorrente
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Sua mente volta sempre para a mesma pessoa e a mesma
+                    história. Precisa interromper esse loop mental que não te
+                    deixa em paz.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      7. Injustiça emocional percebida
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Ver o outro bem enquanto você sofre parece injusto. Precisa
+                    entender os tempos diferentes de processamento emocional.
+                  </p>
+                </div>
+
+                <div className="rounded-2xl border-2 border-rose-200 bg-rose-50/30 p-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="h-2.5 w-2.5 rounded-full bg-rose-500"></div>
+                    <h4 className="font-bold text-slate-900 text-sm">
+                      8. Identidade fragmentada pós-término
+                    </h4>
+                  </div>
+                  <p className="text-sm text-slate-600 leading-relaxed">
+                    Você não sabe mais quem é sem essa pessoa. Precisa
+                    reconstruir sua identidade e transformar a dor em
+                    aprendizado.
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Bloco 3 — Por que o relatório completo */}
             <div className="space-y-8">
               <div className="text-center space-y-4">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 border border-slate-200">
-                  <span className="text-sm font-semibold text-slate-700">
-                    💎 Por que o relatório completo é a solução
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 border-2 border-emerald-300">
+                  <span className="text-sm font-bold text-emerald-700">
+                    💎 A solução está no relatório completo
                   </span>
                 </div>
-                <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
-                  O relatório completo te mostra o resto da história que ainda
-                  falta entender
+                <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight">
+                  O relatório completo te mostra o que o diagnóstico gratuito
+                  não conseguiu revelar
                 </h3>
-                <p className="text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                  Quando você vê tudo, o sofrimento começa a fazer sentido — e
-                  para de te controlar.
+                <div className="max-w-2xl mx-auto space-y-3 text-left">
+                  <p className="text-base text-slate-700 leading-relaxed">
+                    <strong>Por que o seu corpo ainda reage</strong> como se a
+                    relação não tivesse acabado.
+                  </p>
+                  <p className="text-base text-slate-700 leading-relaxed">
+                    <strong>Por que cada tentativa de seguir em frente</strong>{" "}
+                    ativa o mesmo padrão.
+                  </p>
+                  <p className="text-base text-slate-700 leading-relaxed">
+                    <strong>E o que exatamente precisa mudar</strong> pra você
+                    se sentir em paz de verdade.
+                  </p>
+                </div>
+                <p className="text-lg font-semibold text-emerald-700 pt-4">
+                  Você não precisa mais adivinhar o que sente. Agora você pode
+                  entender — e sair do ciclo.
                 </p>
               </div>
 
@@ -615,9 +706,9 @@ export function ElegantResultCard({
           {lockedSections.map((section) => (
             <article
               key={section.title}
-              className="group relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50 px-6 py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-md"
+              className="group relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50/80 px-6 py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:bg-slate-50"
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="flex-shrink-0 text-3xl mt-1 opacity-50 grayscale">
                   {section.icon}
                 </div>
@@ -627,17 +718,17 @@ export function ElegantResultCard({
                     {section.title}
                   </h4>
                   <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-                    {section.veil}
+                    {section.summary}
                   </p>
                 </div>
 
                 <div className="flex-shrink-0">
                   <Button
                     onClick={onPrimaryAction}
-                    className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md"
+                    className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
                   >
                     <span className="text-sm">🔓</span>
-                    Desbloquear
+                    {section.cta || "Desbloquear"}
                   </Button>
                 </div>
               </div>
@@ -646,125 +737,94 @@ export function ElegantResultCard({
         </div>
       </section>
 
-      {/* Benefícios do relatório completo */}
+      {/* Benefícios do relatório completo - Transformação pessoal */}
       <section className="space-y-8">
         <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
-            <span className="text-sm font-semibold text-emerald-700">
-              ✅ O que você conquista com o relatório completo
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 border-2 border-emerald-300">
+            <span className="text-sm font-bold text-emerald-700">
+              💪 Quando você terminar, vai sentir diferença de verdade
             </span>
           </div>
-          <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-3xl mx-auto">
-            Quando você terminar de ler o relatório completo, você terá:
+          <h3 className="text-2xl md:text-3xl font-semibold text-slate-900 max-w-3xl mx-auto">
+            É isso que você conquista com o relatório completo:
           </h3>
         </div>
 
         <div className="grid gap-4 md:grid-cols-2 max-w-5xl mx-auto">
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
             <span className="text-2xl mt-0.5">🛡️</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Controle total sobre seus impulsos
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Controle total sobre seus impulsos emocionais
               </h4>
               <p className="text-sm text-slate-600">
-                Você vai parar de stalkear, de esperar mensagem e de ter
-                recaídas digitais. Vai conseguir resistir à vontade de olhar
-                status ou mandar aquela mensagem.
+                Você para de stalkear, de esperar mensagem e de ter recaídas
+                digitais. Finalmente tem o controle do dedo — não o impulso.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
             <span className="text-2xl mt-0.5">😌</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Paz mental e sono reparador
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Paz mental e clareza pra não voltar pro ciclo
               </h4>
               <p className="text-sm text-slate-600">
-                Sua cabeça vai desligar. Você vai conseguir dormir sem ficar
-                repassando tudo, sem aquele ruído mental constante te
-                perseguindo.
+                Sua cabeça desliga. Você dorme sem ficar repassando tudo, sem
+                aquele ruído mental que te perseguia.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
             <span className="text-2xl mt-0.5">💪</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Autoestima e confiança recuperadas
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Autoestima firme e sem comparação
               </h4>
               <p className="text-sm text-slate-600">
-                Você vai parar de se sentir "insuficiente" ou "substituído(a)".
-                Vai recuperar sua confiança e parar de duvidar do seu valor.
+                Você para de se sentir "insuficiente" ou "substituído(a)".
+                Recupera sua confiança sem depender de ninguém.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
-            <span className="text-2xl mt-0.5">🧘</span>
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+            <span className="text-2xl mt-0.5">🔓</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Liberdade da comparação e da culpa
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Liberação real do vínculo com o passado
               </h4>
               <p className="text-sm text-slate-600">
-                Você vai parar de se comparar com o outro lado, de sentir
-                injustiça por ele estar bem enquanto você sofre. Vai se liberar
-                dessa culpa.
+                Para de se comparar, de sentir injustiça por ele estar bem. Você
+                se libera dessa culpa de verdade.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
             <span className="text-2xl mt-0.5">🌱</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Prazer e vitalidade de volta
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Capacidade de sentir prazer e rotina novamente
               </h4>
               <p className="text-sm text-slate-600">
-                Você vai voltar a sentir fome, a dormir bem, a ter vontade de
-                sair e treinar. Vai recuperar o prazer nas pequenas coisas da
-                vida.
+                Volta a comer, dormir, sentir vontade de sair. Recupera o prazer
+                nas pequenas coisas da vida.
               </p>
             </div>
           </div>
 
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
-            <span className="text-2xl mt-0.5">🔒</span>
+          <div className="flex items-start gap-3 p-5 rounded-xl bg-emerald-50 border-2 border-emerald-200">
+            <span className="text-2xl mt-0.5">✨</span>
             <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Ciclo encerrado com dignidade
+              <h4 className="font-bold text-slate-900 text-base mb-1">
+                Certeza de que superou — sem fingir, de verdade
               </h4>
               <p className="text-sm text-slate-600">
-                Você vai conseguir fechar esse capítulo de verdade, sem
-                vergonha, sem se humilhar, sem apagar memórias. Com paz e
-                compreensão.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
-            <span className="text-2xl mt-0.5">🎯</span>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Clareza sobre quem você é
-              </h4>
-              <p className="text-sm text-slate-600">
-                Você vai recuperar sua identidade, saber quem você é sem essa
-                pessoa, e transformar essa dor em aprendizado real.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex items-start gap-3 p-5 rounded-xl bg-white border border-slate-200">
-            <span className="text-2xl mt-0.5">🚀</span>
-            <div>
-              <h4 className="font-semibold text-slate-900 text-base mb-1">
-                Poder de agir (não apenas entender)
-              </h4>
-              <p className="text-sm text-slate-600">
-                Você vai ter um plano de ação prático, passos claros do que
-                fazer. Não vai mais ficar só entendendo — vai finalmente agir.
+                Fecha o ciclo com dignidade, sem apagar memórias, sem vergonha.
+                Com paz e compreensão real.
               </p>
             </div>
           </div>
@@ -774,10 +834,10 @@ export function ElegantResultCard({
           <Button
             onClick={onPrimaryAction}
             size="lg"
-            className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
+            className="inline-flex items-center gap-3 rounded-full bg-emerald-600 px-12 py-4 text-lg font-bold text-white transition-all hover:bg-emerald-700 hover:shadow-xl hover:scale-105"
           >
-            <span className="text-xl">🔓</span>
-            Desbloquear todas as 8 camadas agora
+            <span className="text-2xl">🔓</span>
+            Desbloquear e ver o restante agora →
           </Button>
         </div>
       </section>
@@ -788,8 +848,8 @@ export function ElegantResultCard({
           decisão
         </p>
         <h4 className="text-3xl font-semibold text-slate-900">
-          Você já viu que esta leitura descreve o que você vive. Agora destrave
-          o restante e mude o cenário com clareza.
+          Você já viu que essa leitura te descreve. Agora descubra o que ainda
+          te prende — e como finalmente sair desse ciclo.
         </h4>
         <p className="text-base text-slate-600 max-w-2xl mx-auto">
           Desbloqueie o relatório completo e avance pelas camadas que revelam
@@ -803,7 +863,7 @@ export function ElegantResultCard({
         >
           <span className="absolute inset-0 bg-gradient-to-r from-white/[0.08] via-white/[0.16] to-white/[0.08] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="relative flex items-center gap-2">
-            🔓 Desbloquear meu Relatório Completo
+            🔓 Desbloquear e ver o restante agora
             <ArrowRight className="h-5 w-5 transition-transform duration-500 group-hover:translate-x-1" />
           </span>
         </Button>
