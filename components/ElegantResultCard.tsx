@@ -382,26 +382,27 @@ export function ElegantResultCard({
   );
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto space-y-24 pb-32 text-slate-900">
+    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-4 text-slate-900">
       {/* 1. Header / abertura - PRIMEIRO IMPACTO */}
-      <section className="space-y-8">
+      <section className="space-y-6 md:space-y-8">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
-          <span className="h-px w-12 bg-slate-200" />
+          <span className="h-px w-8 md:w-12 bg-slate-200" />
           Análise personalizada
         </div>
-        <div className="flex items-start gap-6">
-          <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl">
+        <div className="flex items-start gap-4 md:gap-6">
+          <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl flex-shrink-0">
             {content.icon}
           </div>
-          <div className="space-y-8">
-            <div className="space-y-6">
-              <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
+          <div className="space-y-6 md:space-y-8 w-full">
+            <div className="space-y-4 md:space-y-6">
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight text-slate-900">
                 Você ainda pensa nessa história porque seu cérebro ainda está
                 preso no ciclo.
-                <br />
+                <br className="hidden md:inline" />
+                <span className="md:hidden"> </span>
                 Mas agora você pode entender — e sair dele.
               </h1>
-              <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed">
+              <p className="text-base md:text-lg lg:text-xl text-slate-600 max-w-3xl leading-relaxed">
                 Tudo o que você sente tem uma explicação. E o{" "}
                 <strong>Relatório Completo</strong> te mostra o que a análise
                 gratuita ainda não conseguiu revelar:{" "}
@@ -411,16 +412,18 @@ export function ElegantResultCard({
             </div>
 
             {/* CTA acima da dobra */}
-            <div className="pt-4">
+            <div className="pt-2 md:pt-4">
               <Button
                 onClick={() => handleUnlockClick("hero_top")}
                 size="lg"
-                className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
               >
-                Quero ver o relatório completo agora
-                <ArrowRight className="h-5 w-5" />
+                <span className="text-center">
+                  Quero ver o relatório completo agora
+                </span>
+                <ArrowRight className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0" />
               </Button>
-              <p className="text-xs text-slate-500 mt-3">
+              <p className="text-xs text-slate-500 mt-3 text-center md:text-left">
                 ✓ Acesso imediato • Garantia de 7 dias • Já ajudou +7 mil
                 pessoas
               </p>
@@ -430,19 +433,19 @@ export function ElegantResultCard({
       </section>
 
       {/* 2. Relatório gratuito */}
-      <section className="space-y-10">
-        <header className="space-y-5">
+      <section className="space-y-6 md:space-y-10">
+        <header className="space-y-4 md:space-y-5">
           {/* Tarja verde de validação */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
-            <span className="text-sm font-semibold text-emerald-700">
+          <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full bg-emerald-50 border border-emerald-200">
+            <span className="text-xs md:text-sm font-semibold text-emerald-700">
               ✅ Análise gratuita concluída
             </span>
           </div>
-          <div className="space-y-3">
-            <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight">
+          <div className="space-y-2 md:space-y-3">
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-slate-900 leading-tight">
               Aqui está a sua leitura pessoal
             </h2>
-            <p className="text-base md:text-lg text-slate-600 max-w-3xl leading-relaxed">
+            <p className="text-sm md:text-base lg:text-lg text-slate-600 max-w-3xl leading-relaxed">
               Baseado nas suas respostas, esta análise identifica o padrão de
               comportamento que está te mantendo preso.{" "}
               <strong>Leia com atenção</strong> — ela foi montada
@@ -451,7 +454,7 @@ export function ElegantResultCard({
           </div>
         </header>
 
-        <div className="relative overflow-hidden rounded-[32px] border-2 border-slate-300 bg-white shadow-lg">
+        <div className="relative overflow-hidden rounded-2xl md:rounded-[32px] border-2 border-slate-300 bg-white shadow-lg">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.06),_transparent_70%)]" />
 
           {isLoading ? (
@@ -535,7 +538,7 @@ export function ElegantResultCard({
             // RENDERIZAÇÃO DO JSON ESTRUTURADO
             <div className="relative">
               {/* Conteúdo do relatório - Design de documento profissional */}
-              <div className="px-8 md:px-12 py-10 space-y-8">
+              <div className="px-4 md:px-8 lg:px-12 py-6 md:py-10 space-y-6 md:space-y-8">
                 {/* Badge de qualidade no topo */}
                 <div className="flex justify-center pb-2">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
@@ -546,14 +549,14 @@ export function ElegantResultCard({
                 </div>
 
                 {reportPreview.header && (
-                  <div className="space-y-4 text-center">
-                    <p className="text-sm uppercase tracking-[0.35em] text-slate-400">
+                  <div className="space-y-3 md:space-y-4 text-center">
+                    <p className="text-xs md:text-sm uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
                       Etapa identificada: {reportPreview.header.segment}
                     </p>
-                    <h2 className="text-3xl md:text-4xl font-semibold text-slate-900">
+                    <h2 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-slate-900 leading-tight">
                       {reportPreview.header.title}
                     </h2>
-                    <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-sm md:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                       {reportPreview.header.subtitle}
                     </p>
                   </div>
@@ -643,37 +646,46 @@ export function ElegantResultCard({
                     return null;
                   }
                   return (
-                    <div className="space-y-5 pb-8 border-b border-slate-200">
-                      <h3 className="text-2xl font-bold text-slate-900">
+                    <div className="space-y-4 md:space-y-5 pb-6 md:pb-8 border-b border-slate-200">
+                      <h3 className="text-xl md:text-2xl font-bold text-slate-900">
                         O que você sente agora
                       </h3>
-                      <div className="grid md:grid-cols-3 gap-6">
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                        <div className="rounded-xl md:rounded-2xl border border-slate-200 bg-slate-50 p-4 md:p-5 space-y-2">
                           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
                             Mente
                           </p>
                           {mind.map((item, index) => (
-                            <p key={index} className="text-sm text-slate-700">
+                            <p
+                              key={index}
+                              className="text-sm text-slate-700 leading-relaxed"
+                            >
                               {item}
                             </p>
                           ))}
                         </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                        <div className="rounded-xl md:rounded-2xl border border-slate-200 bg-slate-50 p-4 md:p-5 space-y-2">
                           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
                             Corpo
                           </p>
                           {body.map((item, index) => (
-                            <p key={index} className="text-sm text-slate-700">
+                            <p
+                              key={index}
+                              className="text-sm text-slate-700 leading-relaxed"
+                            >
                               {item}
                             </p>
                           ))}
                         </div>
-                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                        <div className="rounded-xl md:rounded-2xl border border-slate-200 bg-slate-50 p-4 md:p-5 space-y-2">
                           <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
                             Coração
                           </p>
                           {heart.map((item, index) => (
-                            <p key={index} className="text-sm text-slate-700">
+                            <p
+                              key={index}
+                              className="text-sm text-slate-700 leading-relaxed"
+                            >
                               {item}
                             </p>
                           ))}
@@ -1400,12 +1412,12 @@ export function ElegantResultCard({
       </section>
 
       {/* 3. Transição e conteúdo bloqueado */}
-      <section id="zona-bloqueada" className="space-y-12">
-        <header className="space-y-3">
-          <p className="text-xs uppercase tracking-[0.35em] text-slate-400">
+      <section id="zona-bloqueada" className="space-y-8 md:space-y-12">
+        <header className="space-y-2 md:space-y-3">
+          <p className="text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
             próximo nível
           </p>
-          <h3 className="text-2xl md:text-3xl font-medium text-slate-900">
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 leading-tight">
             Você já entendeu parte da lógica. Agora libere o restante e veja o
             que realmente está por trás do que você sente.
           </h3>
@@ -1416,33 +1428,37 @@ export function ElegantResultCard({
           </p>
         </header>
 
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {lockedSections.map((section) => (
             <article
               key={section.title}
-              className="group relative overflow-hidden rounded-2xl border-2 border-slate-300 bg-slate-50/80 px-6 py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:bg-slate-50"
+              className="group relative overflow-hidden rounded-xl md:rounded-2xl border-2 border-slate-300 bg-slate-50/80 p-4 md:px-6 md:py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:bg-slate-50"
             >
-              <div className="flex items-start gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="flex-shrink-0 text-3xl mt-1 opacity-50 grayscale">
-                  {section.icon}
+              <div className="flex flex-col md:flex-row md:items-start gap-3 md:gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                <div className="flex items-start gap-3 md:gap-4 flex-1">
+                  <div className="flex-shrink-0 text-2xl md:text-3xl mt-0.5 md:mt-1 opacity-50 grayscale">
+                    {section.icon}
+                  </div>
+
+                  <div className="flex-1 space-y-2 md:space-y-3">
+                    <h4 className="text-base md:text-lg lg:text-xl font-semibold text-slate-800 leading-snug">
+                      {section.title}
+                    </h4>
+                    <p className="text-xs md:text-sm lg:text-base text-slate-600 leading-relaxed">
+                      {section.summary}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex-1 space-y-3">
-                  <h4 className="text-lg md:text-xl font-semibold text-slate-800 leading-snug">
-                    {section.title}
-                  </h4>
-                  <p className="text-sm md:text-base text-slate-600 leading-relaxed">
-                    {section.summary}
-                  </p>
-                </div>
-
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 w-full md:w-auto">
                   <Button
                     onClick={() => handleUnlockClick("card_locked")}
-                    className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
+                    className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 md:gap-2 rounded-full bg-slate-800 px-4 md:px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
                   >
                     <span className="text-sm">🔓</span>
-                    {section.cta || "Desbloquear"}
+                    <span className="truncate">
+                      {section.cta || "Desbloquear"}
+                    </span>
                   </Button>
                 </div>
               </div>
@@ -1558,16 +1574,16 @@ export function ElegantResultCard({
         </div>
 
         {/* CTA forte com urgência */}
-        <div className="text-center pt-6">
+        <div className="text-center pt-4 md:pt-6">
           <Button
             onClick={() => handleUnlockClick("bloco_3_cta")}
             size="lg"
-            className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-12 py-4 text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-12 py-4 text-base md:text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
           >
             Quero Sentir Essa Diferença Agora
-            <ArrowRight className="h-5 w-5" />
+            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
-          <p className="text-xs text-slate-500 mt-4">
+          <p className="text-xs text-slate-500 mt-3 md:mt-4 px-2">
             ✓ Acesso imediato • Garantia de 7 dias • Mais de 7 mil pessoas já
             sentiram a diferença
           </p>
@@ -1676,12 +1692,12 @@ export function ElegantResultCard({
       </section>
 
       {/* 4. CTA final com motivação emocional */}
-      <section className="space-y-8 text-center">
-        <div className="space-y-4">
-          <h4 className="text-3xl md:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight">
+      <section className="space-y-6 md:space-y-8 text-center">
+        <div className="space-y-3 md:space-y-4">
+          <h4 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight px-2">
             Agora que você já entendeu parte da lógica, não pare aqui.
           </h4>
-          <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm md:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed px-4">
             O relatório completo é o que faz você realmente sair do ciclo — com
             orientações claras, ações práticas e resultados em poucos dias.
           </p>
@@ -1690,17 +1706,17 @@ export function ElegantResultCard({
         <Button
           onClick={() => handleUnlockClick("final_cta")}
           size="lg"
-          className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-slate-900 px-12 py-5 text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
+          className="w-full md:w-auto group relative inline-flex items-center justify-center gap-2 md:gap-3 overflow-hidden rounded-full bg-slate-900 px-8 md:px-12 py-4 md:py-5 text-base md:text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-white/[0.08] via-white/[0.16] to-white/[0.08] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="relative flex items-center gap-2">
             Liberar Relatório Completo Agora
-            <ArrowRight className="h-6 w-6 transition-transform duration-500 group-hover:translate-x-1" />
+            <ArrowRight className="h-5 w-5 md:h-6 md:w-6 transition-transform duration-500 group-hover:translate-x-1" />
           </span>
         </Button>
 
         {/* Microprovas simbólicas */}
-        <div className="pt-8 space-y-3 text-sm text-slate-600">
+        <div className="pt-6 md:pt-8 space-y-2 md:space-y-3 text-xs md:text-sm text-slate-600 px-4">
           <p className="flex items-center justify-center gap-2">
             ✓ Mais de 7.000 pessoas já descobriram o que estava por trás da dor
           </p>
@@ -1715,27 +1731,26 @@ export function ElegantResultCard({
       </section>
 
       {/* Espaço final para evitar overlap com CTA sticky */}
-      <div className="h-10 md:h-16" />
+      <div className="h-20 md:h-24" />
 
       {showStickyCTA && (
-        <div className="fixed inset-x-4 bottom-6 z-50 md:inset-x-auto md:left-1/2 md:w-[480px] md:-translate-x-1/2">
-          <div className="relative overflow-hidden rounded-[28px] border border-slate-200 bg-white/95 shadow-lg backdrop-blur">
+        <div className="fixed inset-x-0 bottom-0 z-50 md:left-1/2 md:right-auto md:w-[500px] md:-translate-x-1/2 md:bottom-6 md:inset-x-auto">
+          <div className="relative overflow-hidden border-t-2 md:border-2 md:rounded-2xl border-slate-300 bg-white shadow-2xl">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.08),_transparent_70%)] opacity-0 transition-opacity duration-500 hover:opacity-100" />
-            <div className="relative flex flex-col gap-3 px-6 py-5 md:flex-row md:items-center md:gap-4">
-              <div className="flex-1 text-left">
-                <p className="text-sm font-semibold text-slate-900">
-                  Pronto(a) para atravessar o véu do que ainda está oculto?
+            <div className="relative flex flex-col gap-3 px-4 py-4 md:px-6 md:py-5 md:flex-row md:items-center md:gap-4">
+              <div className="flex-1 min-w-0">
+                <p className="text-sm md:text-base font-bold text-slate-900 leading-tight mb-1">
+                  Ver relatório completo
                 </p>
-                <p className="text-xs text-slate-500">
-                  Relatório completo liberado imediatamente após o desbloqueio.
+                <p className="text-xs text-slate-600 leading-snug">
+                  Desbloqueie todas as 8 camadas agora
                 </p>
               </div>
               <Button
                 onClick={() => handleUnlockClick("sticky_cta")}
-                size="sm"
-                className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
+                className="w-full md:w-auto flex-shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-slate-900 px-6 py-3 md:py-2.5 text-sm font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-lg whitespace-nowrap"
               >
-                🔓 Quero liberar agora
+                Acessar agora
               </Button>
             </div>
           </div>

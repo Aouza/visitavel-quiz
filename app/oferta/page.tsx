@@ -39,7 +39,7 @@ function OfertaContent() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <div className="max-w-6xl mx-auto px-4 py-16 md:py-24 space-y-20">
+      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
         {/* Header com resultado */}
         {content && (
           <section className="space-y-6">
@@ -64,13 +64,14 @@ function OfertaContent() {
         )}
 
         {/* Hero da Oferta */}
-        <section className="space-y-8 text-center">
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
+        <section className="space-y-6 md:space-y-8 text-center">
+          <div className="space-y-4 md:space-y-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight text-slate-900 px-2">
               Agora você tem clareza do problema.
-              <br />É hora de resolver de vez.
+              <br className="hidden md:inline" />
+              <span className="md:hidden"> </span>É hora de resolver de vez.
             </h1>
-            <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg lg:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed px-4">
               O relatório completo te mostra o <strong>caminho exato</strong>{" "}
               para sair do ciclo de recaídas e recuperar o controle da sua vida
               interior.

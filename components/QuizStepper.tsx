@@ -298,9 +298,9 @@ export function QuizStepper() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50 min-h-screen">
-      <div className="w-full max-w-3xl mx-auto px-4 py-12 md:py-16">
+      <div className="w-full max-w-3xl mx-auto px-4 py-6 md:py-12 lg:py-16">
         {/* Progress Header */}
-        <div className="mb-12">
+        <div className="mb-6 md:mb-12">
           <ProgressHeader
             currentStep={currentStep + 1}
             totalSteps={QUESTIONS.length}
@@ -308,9 +308,9 @@ export function QuizStepper() {
         </div>
 
         {/* Question Card */}
-        <div className="relative overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-sm mb-8">
+        <div className="relative overflow-hidden rounded-2xl md:rounded-[32px] border border-slate-200 bg-white shadow-sm mb-6 md:mb-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.04),_transparent_70%)]" />
-          <div className="relative px-6 md:px-10 py-10 md:py-12 min-h-[400px]">
+          <div className="relative px-5 md:px-6 lg:px-10 py-8 md:py-10 lg:py-12 min-h-[300px] md:min-h-[400px]">
             <QuizQuestion
               question={currentQuestion}
               control={control}
@@ -320,25 +320,25 @@ export function QuizStepper() {
         </div>
 
         {/* Navigation */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-          <div className="flex gap-3 order-2 sm:order-1">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-between items-stretch sm:items-center">
+          <div className="flex gap-2 md:gap-3 order-2 sm:order-1">
             <button
               type="button"
               onClick={handleBack}
               disabled={currentStep === 0}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-700 border border-slate-300 rounded-full hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+              className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-slate-700 border border-slate-300 rounded-full hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
             >
-              <ArrowLeft className="w-4 h-4" />
-              Voltar
+              <ArrowLeft className="w-3 h-3 md:w-4 md:h-4" />
+              <span className="hidden sm:inline">Voltar</span>
             </button>
 
             <button
               type="button"
               onClick={handleSaveAndContinueLater}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition"
+              className="inline-flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-2 text-xs md:text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-slate-50 rounded-full transition"
               title="Salvar progresso"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-3 h-3 md:w-4 md:h-4" />
               <span className="hidden sm:inline">Salvar</span>
             </button>
           </div>
@@ -347,7 +347,7 @@ export function QuizStepper() {
             type="button"
             onClick={handleNext}
             disabled={!isAnswered || isSubmitting}
-            className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-8 py-6 text-base font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto order-1 sm:order-2"
+            className="inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-6 md:px-8 py-4 md:py-6 text-sm md:text-base font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed w-full sm:w-auto order-1 sm:order-2"
           >
             {currentStep === QUESTIONS.length - 1 ? (
               isSubmitting ? (
@@ -368,7 +368,7 @@ export function QuizStepper() {
         </div>
 
         {/* Hint */}
-        <p className="text-center text-xs text-slate-400 mt-6">
+        <p className="text-center text-xs text-slate-400 mt-4 md:mt-6 px-2">
           💡 Seu progresso é salvo automaticamente
         </p>
       </div>

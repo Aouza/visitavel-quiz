@@ -89,21 +89,21 @@ export default function QuizPage() {
   // Landing page
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <div className="max-w-4xl mx-auto px-4 py-16 md:py-24 space-y-20">
+      <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
         {/* Hero */}
-        <section className="space-y-8">
-          <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
-            <span className="h-px w-12 bg-slate-200" />
+        <section className="space-y-6 md:space-y-8">
+          <div className="flex items-center gap-2 md:gap-3 text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
+            <span className="h-px w-8 md:w-12 bg-slate-200" />
             Mapa emocional gratuito
           </div>
 
-          <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight text-slate-900">
+          <div className="space-y-4 md:space-y-6">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight text-slate-900">
               Você sente que já era pra ter superado, mas ainda pensa nessa
               pessoa todos os dias?
             </h1>
 
-            <div className="space-y-4 text-lg md:text-xl text-slate-600 leading-relaxed max-w-3xl">
+            <div className="space-y-3 md:space-y-4 text-base md:text-lg lg:text-xl text-slate-600 leading-relaxed max-w-3xl">
               <p>
                 Esse teste mostra{" "}
                 <strong className="text-slate-900">
@@ -121,16 +121,16 @@ export default function QuizPage() {
               </p>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-4 md:pt-6">
               <Button
                 size="lg"
                 onClick={handleStartClick}
-                className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-6 text-lg font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-10 py-5 md:py-6 text-base md:text-lg font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
               >
                 Começar mapeamento gratuito
-                <ArrowRight className="h-5 w-5" />
+                <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
               </Button>
-              <p className="text-sm text-slate-500 mt-4">
+              <p className="text-xs md:text-sm text-slate-500 mt-3 md:mt-4 text-center md:text-left">
                 ⏱️ Leva apenas 2 minutos • Resultado na hora • 100% gratuito
               </p>
             </div>
@@ -138,38 +138,42 @@ export default function QuizPage() {
         </section>
 
         {/* O que você vai descobrir */}
-        <section className="space-y-10">
-          <div className="space-y-3">
-            <span className="text-xs uppercase tracking-[0.35em] text-slate-400">
+        <section className="space-y-6 md:space-y-10">
+          <div className="space-y-2 md:space-y-3">
+            <span className="text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
               o que você vai descobrir
             </span>
-            <h2 className="text-2xl md:text-3xl font-medium text-slate-900">
+            <h2 className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-900">
               Respostas diretas para o que você sente agora
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-5">
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
-              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                <span className="text-white text-lg font-bold">1</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-white border border-slate-200 shadow-sm">
+              <div className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-900 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg font-bold">
+                  1
+                </span>
               </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-slate-900 text-base">
+              <div className="space-y-1 md:space-y-2">
+                <h3 className="font-semibold text-slate-900 text-sm md:text-base">
                   Por que você ainda pensa nessa pessoa todo dia
                 </h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
+                <p className="text-xs md:text-sm text-slate-600 leading-relaxed">
                   Não é fraqueza. É um padrão de comportamento que fica ativo
                   quando algo termina sem respostas claras.
                 </p>
               </div>
             </div>
 
-            <div className="flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
-              <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                <span className="text-white text-lg font-bold">2</span>
+            <div className="flex items-start gap-3 md:gap-4 p-5 md:p-6 rounded-xl md:rounded-2xl bg-white border border-slate-200 shadow-sm">
+              <div className="flex-shrink-0 w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-900 flex items-center justify-center">
+                <span className="text-white text-base md:text-lg font-bold">
+                  2
+                </span>
               </div>
-              <div className="space-y-2">
-                <h3 className="font-semibold text-slate-900 text-base">
+              <div className="space-y-1 md:space-y-2">
+                <h3 className="font-semibold text-slate-900 text-sm md:text-base">
                   Em que fase do pós-término você está agora
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
@@ -401,12 +405,12 @@ export default function QuizPage() {
         </section>
 
         {/* CTA Final */}
-        <section className="text-center space-y-6 py-8">
-          <div className="space-y-4">
-            <h2 className="text-3xl font-semibold text-slate-900">
+        <section className="text-center space-y-5 md:space-y-6 py-6 md:py-8">
+          <div className="space-y-3 md:space-y-4">
+            <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 px-2">
               Pronto para entender o que realmente te prende?
             </h2>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto px-4">
               São apenas 2 minutos. Você vai receber sua análise completa na
               hora — e finalmente ter clareza do que fazer.
             </p>
@@ -415,13 +419,13 @@ export default function QuizPage() {
           <Button
             size="lg"
             onClick={handleStartClick}
-            className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-12 py-6 text-lg font-bold text-white transition hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-10 md:px-12 py-5 md:py-6 text-base md:text-lg font-bold text-white transition hover:bg-slate-800 hover:shadow-xl hover:scale-105"
           >
             Começar mapeamento agora
-            <ArrowRight className="h-6 w-6" />
+            <ArrowRight className="h-5 w-5 md:h-6 md:w-6" />
           </Button>
 
-          <p className="text-sm text-slate-500">
+          <p className="text-xs md:text-sm text-slate-500">
             ⏱️ 2 minutos • Resultado imediato • Totalmente gratuito
           </p>
         </section>

@@ -8,7 +8,6 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ElegantResultCard } from "@/components/ElegantResultCard";
-import { QuizDebugReport } from "@/components/QuizDebugReport";
 import { type Segment } from "@/lib/questions";
 import { trackPageView } from "@/lib/analytics";
 import { loadQuizProgress, loadQuizResult } from "@/lib/storage";
@@ -94,13 +93,6 @@ function ResultContent() {
           onPrimaryAction={handlePrimaryAction}
         />
       </div>
-
-      {/* Debug Report - só aparece em desenvolvimento */}
-      <QuizDebugReport
-        answers={quizData.answers}
-        scores={quizData.scores}
-        segment={segment}
-      />
     </div>
   );
 }
