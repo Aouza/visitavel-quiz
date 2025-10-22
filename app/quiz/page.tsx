@@ -25,17 +25,21 @@ export default function QuizPage() {
     const leadInfo = getLeadInfo();
     setHasLead(!!leadInfo);
 
-    // Track visualização (GA4)
+    // Track visualização (GA4) - sempre executa
     trackQuizView();
 
-    // Track visualização (Meta - quiz_view)
-    trackMetaEvent({
-      eventName: "quiz_view",
-      customData: {
-        page: "landing",
-        has_lead: leadInfo ? 1 : 0,
-      },
-    });
+    // Track visualização (Meta - quiz_view) - proteção contra duplicação
+    const alreadyTracked = sessionStorage.getItem("quiz_view_tracked");
+    if (!alreadyTracked) {
+      trackMetaEvent({
+        eventName: "quiz_view",
+        customData: {
+          page: "landing",
+          has_lead: leadInfo ? 1 : 0,
+        },
+      });
+      sessionStorage.setItem("quiz_view_tracked", "true");
+    }
 
     // Se tem lead E veio de ?autostart=1, iniciar automaticamente
     const urlParams = new URLSearchParams(window.location.search);
