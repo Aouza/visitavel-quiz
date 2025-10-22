@@ -39,6 +39,7 @@ export const EventNames = {
   QUIZ_COMPLETED: "quiz_completed",
 
   // Lead
+  LEAD_START_VIEW: "lead_start_view",
   LEAD_SUBMITTED: "lead_submitted",
   LEAD_ERROR: "lead_error",
 
@@ -169,6 +170,10 @@ export function trackQuizCompleted(
   } catch (error) {
     console.error("[Analytics] Error setting Clarity tags:", error);
   }
+}
+
+export function trackLeadStartView(): void {
+  track(EventNames.LEAD_START_VIEW);
 }
 
 export function trackLeadSubmitted(email: string): void {

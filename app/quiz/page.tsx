@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
 import { trackQuizView, trackQuizCTAClick, gtagEvent } from "@/lib/analytics";
-import { trackMetaEvent } from "@/lib/track-meta-event";
+import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { Check, ArrowRight } from "lucide-react";
 
 export default function QuizPage() {
@@ -29,17 +29,13 @@ export default function QuizPage() {
     trackQuizView();
 
     // Track visualização (Meta - quiz_view) - proteção contra duplicação
-    const alreadyTracked = sessionStorage.getItem("quiz_view_tracked");
-    if (!alreadyTracked) {
-      trackMetaEvent({
-        eventName: "quiz_view",
-        customData: {
-          page: "landing",
-          has_lead: leadInfo ? 1 : 0,
-        },
-      });
-      sessionStorage.setItem("quiz_view_tracked", "true");
-    }
+    trackMetaEventOnce("quiz_view", {
+      eventName: "quiz_view",
+      customData: {
+        page: "landing",
+        has_lead: leadInfo ? 1 : 0,
+      },
+    });
 
     // Se tem lead E veio de ?autostart=1, iniciar automaticamente
     const urlParams = new URLSearchParams(window.location.search);
@@ -59,8 +55,8 @@ export default function QuizPage() {
       source: "landing_page",
     });
 
-    // Track Meta - quiz_start
-    trackMetaEvent({
+    // Track Meta - quiz_start (permite múltiplos cliques por sessão)
+    trackMetaEventOnce(`quiz_start_${Date.now()}`, {
       eventName: "quiz_start",
       customData: {
         source: "landing_cta",

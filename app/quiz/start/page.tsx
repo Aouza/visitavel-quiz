@@ -12,9 +12,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { saveLeadInfo, getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
-import { trackLeadSubmitted } from "@/lib/analytics";
+import {
+  saveLeadInfo,
+  getLeadInfo,
+  captureUTMsFromURL,
+  getUTMs,
+} from "@/lib/storage";
+import { trackLeadSubmitted, trackLeadStartView } from "@/lib/analytics";
 import { trackMetaEvent } from "@/lib/track-meta-event";
+import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { Loader2, Heart, ArrowRight, Shield, Clock } from "lucide-react";
 
 export default function QuizStartPage() {
@@ -36,7 +42,26 @@ export default function QuizStartPage() {
     const leadInfo = getLeadInfo();
     if (leadInfo) {
       router.push("/quiz");
+      return;
     }
+
+    // Obter UTMs para contexto
+    const utms = getUTMs();
+
+    // Track visualização do formulário de lead (GA4) - sempre executa
+    trackLeadStartView();
+
+    // Track visualização do formulário (Meta - lead_form_view) - proteção contra duplicação
+    trackMetaEventOnce("lead_form_view", {
+      eventName: "lead_form_view",
+      customData: {
+        page: "quiz_start",
+        form_type: "lead_capture",
+        utm_source: utms.utm_source || "direct",
+        utm_medium: utms.utm_medium || "none",
+        has_referrer: utms.referrer ? 1 : 0,
+      },
+    });
   }, [router]);
 
   const handleSubmit = async (e: React.FormEvent) => {

@@ -21,7 +21,7 @@ import {
   saveQuizResult,
 } from "@/lib/storage";
 import { trackQuizCompleted } from "@/lib/analytics";
-import { trackMetaEvent } from "@/lib/track-meta-event";
+import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 
 const extractEmojiFromOption = (option?: Option) => {
@@ -162,7 +162,6 @@ export function QuizStepper() {
       return;
     }
 
-
     if (currentStep < QUESTIONS.length - 1) {
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -268,8 +267,8 @@ export function QuizStepper() {
         JSON.stringify(currentAnswers).substring(0, 50)
       );
 
-      // Track conclusão (Meta - quiz_complete)
-      trackMetaEvent({
+      // Track conclusão (Meta - quiz_complete) - proteção contra duplicação
+      trackMetaEventOnce("quiz_complete", {
         eventName: "quiz_complete",
         customData: {
           segment: result.segment,

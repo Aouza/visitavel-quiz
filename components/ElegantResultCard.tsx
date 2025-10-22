@@ -12,7 +12,7 @@ import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
 import { getLeadInfo } from "@/lib/storage";
 import { gtagEvent, trackViewReportLocked } from "@/lib/analytics";
-import { trackMetaEvent } from "@/lib/track-meta-event";
+import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { ReportFreePayload } from "@/types/report-free";
 
@@ -114,8 +114,8 @@ export function ElegantResultCard({
         location,
       });
 
-      // Track Meta - InitiateCheckout (intenção de interesse)
-      trackMetaEvent({
+      // Track Meta - InitiateCheckout (intenção de interesse) - proteção contra duplicação
+      trackMetaEventOnce(`initiate_checkout_${location}`, {
         eventName: "InitiateCheckout",
         customData: {
           segment,
