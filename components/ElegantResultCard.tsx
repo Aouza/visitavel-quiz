@@ -1033,786 +1033,790 @@ export function ElegantResultCard({
             </div>
           )}
         </div>
+      </section>
 
-        {!isLoading &&
-          typeof reportPreview === "object" &&
-          reportPreview !== null && (
-            <div className="text-center space-y-4 pt-8">
-              <div className="h-px w-24 bg-slate-200 mx-auto" />
-              <p className="text-sm text-slate-500 italic">
-                Isso é apenas a primeira camada do seu padrão emocional
-              </p>
-              <button
-                type="button"
-                onClick={handleScrollToLocked}
-                className="inline-flex items-center gap-2 text-base font-semibold text-slate-700 underline decoration-slate-300 underline-offset-8 transition hover:text-slate-900 hover:decoration-slate-500"
-              >
-                Ver o que ainda está oculto →
-              </button>
-            </div>
-          )}
-
-        {/* Loading das seções extras */}
-        {!isLoading &&
-          !showAdditionalSections &&
-          typeof reportPreview === "object" &&
-          reportPreview !== null && (
-            <div className="flex flex-col items-center gap-4 py-12 text-center">
-              <div className="flex items-center gap-2 text-slate-500">
-                <Loader2 className="h-4 w-4 animate-spin" />
-                <span className="text-sm font-medium">
-                  Gerando próximos passos personalizados...
-                </span>
-              </div>
-              <p className="text-xs text-slate-400 max-w-md">
-                Com base na sua análise, estamos preparando orientações
-                específicas para sua jornada
-              </p>
-            </div>
-          )}
-
-        {/* Novas seções adaptadas - Revelação progressiva */}
-        {!isLoading && showAdditionalSections && (
-          <div className="space-y-16 pt-12 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
-            {/* Título de conexão */}
-            <div className="text-center space-y-3">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
-                <span className="text-sm font-semibold text-blue-700">
-                  ✨ Análise completa gerada
-                </span>
-              </div>
-              <h3 className="text-xl md:text-2xl font-bold text-slate-800">
-                Com base na sua análise, aqui estão seus próximos passos
-              </h3>
-              <p className="text-slate-600 max-w-2xl mx-auto">
-                Suas respostas revelaram padrões específicos. Agora você tem um
-                mapa completo para sua jornada.
-              </p>
-            </div>
-
-            {/* Bloco 1 — O que você já ganhou */}
-            <div className="space-y-8">
-              <div className="text-center space-y-3">
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
-                  <span className="text-sm font-semibold text-emerald-700">
-                    ✅ Você já descobriu 3 verdades sobre o seu processo
-                  </span>
-                </div>
-                <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-2xl mx-auto">
-                  Com a análise gratuita, você descobriu:
-                </h3>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-3 max-w-4xl mx-auto">
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                      <span className="text-white text-base font-bold">1</span>
-                    </div>
-                  </div>
-                  <h4 className="font-bold text-slate-900 text-base mb-2">
-                    Sua mente ainda procura sentido
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Não é fraqueza — é um padrão de comportamento que fica
-                    ativado quando a história termina sem respostas claras.
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                      <span className="text-white text-base font-bold">2</span>
-                    </div>
-                  </div>
-                  <h4 className="font-bold text-slate-900 text-base mb-2">
-                    O vínculo ainda está ativo
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Você repete um padrão inconsciente que te prende à mesma
-                    história.
-                  </p>
-                </div>
-
-                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
-                      <span className="text-white text-base font-bold">3</span>
-                    </div>
-                  </div>
-                  <h4 className="font-bold text-slate-900 text-base mb-2">
-                    Você não tem culpa
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Seu cérebro está tentando te proteger. O primeiro ponto que
-                    precisa ser resolvido para sair dessa fase.
-                  </p>
-                </div>
-              </div>
-
-              <div className="text-center pt-6">
-                <div className="relative max-w-2xl mx-auto">
-                  {/* Destaque visual suave */}
-                  <div className="relative overflow-hidden rounded-3xl border-2 border-slate-300 bg-gradient-to-br from-slate-50 via-amber-50/30 to-slate-50 p-8 shadow-lg">
-                    {/* Brilho sutil */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent" />
-
-                    <div className="relative space-y-5">
-                      {/* Badge de alerta suave */}
-                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 text-white">
-                        <span className="text-lg">⚡</span>
-                        <span className="text-xs font-bold uppercase tracking-wider">
-                          Apenas 1 de 8 revelada
-                        </span>
-                      </div>
-
-                      {/* Headline impactante */}
-                      <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight">
-                        Mas isso é só o começo
-                      </h3>
-
-                      {/* Counter visual */}
-                      <div className="flex items-center justify-center gap-2">
-                        <div className="h-2 w-2 rounded-full bg-emerald-500" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                        <div className="h-2 w-2 rounded-full bg-slate-300" />
-                      </div>
-
-                      {/* Copy emocional */}
-                      <p className="text-base md:text-lg text-slate-700 leading-relaxed max-w-xl mx-auto">
-                        Existem{" "}
-                        <strong className="text-slate-900">
-                          7 processos emocionais críticos ainda ocultos
-                        </strong>{" "}
-                        — e eles explicam por que a dor volta mesmo quando
-                        parece que você está bem.
-                      </p>
-
-                      {/* CTA interno */}
-                      <div className="pt-2">
-                        <p className="text-sm font-semibold text-slate-800">
-                          O relatório completo desbloqueia todos os 8 processos
-                          →
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bloco 2 — O que ainda falta - REDESIGN MODERNO */}
-            <div className="space-y-10">
-              {/* Header emocional com gradiente */}
-              <div className="relative text-center space-y-6 p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-rose-50/20">
-                <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/50 to-transparent" />
-
-                <div className="relative space-y-4">
-                  <h3 className="text-2xl md:text-4xl font-bold text-slate-900 max-w-3xl mx-auto leading-tight">
-                    Mesmo sabendo que acabou, esses gatilhos ainda te fazem
-                    reviver tudo de novo.
-                  </h3>
-                  <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                    É por isso que, mesmo tentando seguir, você volta pro mesmo
-                    ponto — um ciclo de pensamentos, recaídas e arrependimentos.
-                  </p>
-
-                  {/* Badge de alerta integrado */}
-                  <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500 text-white shadow-lg">
-                    <span className="text-base">⚠️</span>
-                    <span className="text-xs font-bold uppercase tracking-wider">
-                      8 processos ativos no inconsciente
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Grid moderno com glassmorphism */}
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    01
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      01
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Desejo intenso de reconexão
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Seu corpo sente a ausência como se fosse uma crise de
-                      vínculo rompido.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    02
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      02
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Autoestima fragmentada
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      O fim abalou a forma como você se enxerga.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    03
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      03
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Comparação destrutiva
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Ver o outro bem enquanto você sofre machuca.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    04
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      04
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Fechamento incompleto
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Você quer soltar, mas sente que apagar é injusto.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    05
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      05
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Paralisação da reconstrução
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Travado e sem energia para reconstruir rotina.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    06
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      06
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Pensamento obsessivo recorrente
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Sua mente volta sempre para a mesma pessoa.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    07
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      07
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Injustiça emocional percebida
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Ver o outro bem enquanto você sofre parece injusto.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
-                  <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
-                    08
-                  </div>
-                  <div className="relative space-y-3">
-                    <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
-                      08
-                    </div>
-                    <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Identidade fragmentada
-                    </h4>
-                    <p className="text-xs text-slate-600 leading-relaxed">
-                      Você não sabe mais quem é sem essa pessoa.
-                    </p>
-                    <div className="flex items-center gap-1.5 pt-1">
-                      <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
-                      <span className="text-xs font-medium text-slate-500">
-                        Bloqueado
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Bloco 3 — Por que o relatório completo (REORGANIZADO) */}
-            <div className="space-y-8">
-              {/* Header */}
-              <div className="text-center space-y-4">
-                <h3 className="text-3xl md:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight">
-                  O relatório completo te mostra como sair disso — passo a passo
-                </h3>
-                <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-                  Em poucos minutos, você entende a origem dos seus gatilhos e o
-                  que fazer hoje para começar a se sentir melhor.
-                </p>
-              </div>
-
-              {/* 3 Pilares - com ícones emocionais */}
-              <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-4">
-                <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-center h-20">
-                    <div className="text-5xl">💡</div>
-                  </div>
-                  <h4 className="font-semibold text-slate-900 text-lg">
-                    Clareza do problema
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Você vê exatamente o que te prende e por que sua mente ainda
-                    não desligou
-                  </p>
-                </div>
-
-                <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-center h-20">
-                    <div className="text-5xl">🧭</div>
-                  </div>
-                  <h4 className="font-semibold text-slate-900 text-lg">
-                    Passos práticos
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    O que fazer hoje para começar a mudar, com ações claras e
-                    diretas
-                  </p>
-                </div>
-
-                <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
-                  <div className="flex items-center justify-center h-20">
-                    <div className="text-5xl">🌱</div>
-                  </div>
-                  <h4 className="font-semibold text-slate-900 text-lg">
-                    Controle real
-                  </h4>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    Você age com clareza, em vez de só esperar o tempo passar
-                  </p>
-                </div>
-              </div>
-
-              {/* CTA */}
-              <div className="text-center pt-6">
-                <Button
-                  onClick={() => handleUnlockClick("bloco_2_cta")}
-                  size="lg"
-                  className="w-full md:w-auto inline-flex items-center gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
-                >
-                  Desbloquear Relatório Completo Agora
-                  <ArrowRight className="h-5 w-5" />
-                </Button>
-                <p className="text-xs text-slate-500 mt-4 px-2">
-                  ✓ Acesso imediato • Resultados em 3-7 dias • +7 mil pessoas já
-                  transformaram sua dor em clareza
-                </p>
-              </div>
-            </div>
+      {!isLoading &&
+        !hasError &&
+        typeof reportPreview === "object" &&
+        reportPreview !== null && (
+          <div className="text-center space-y-4 pt-8">
+            <div className="h-px w-24 bg-slate-200 mx-auto" />
+            <p className="text-sm text-slate-500 italic">
+              Isso é apenas a primeira camada do seu padrão emocional
+            </p>
+            <button
+              type="button"
+              onClick={handleScrollToLocked}
+              className="inline-flex items-center gap-2 text-base font-semibold text-slate-700 underline decoration-slate-300 underline-offset-8 transition hover:text-slate-900 hover:decoration-slate-500"
+            >
+              Ver o que ainda está oculto →
+            </button>
           </div>
         )}
-      </section>
 
-      {/* 3. Transição e conteúdo bloqueado */}
-      <section id="zona-bloqueada" className="space-y-8 md:space-y-12">
-        <header className="space-y-2 md:space-y-3">
-          <p className="text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
-            próximo nível
-          </p>
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 leading-tight">
-            Você já entendeu parte da lógica. Agora libere o restante e veja o
-            que realmente está por trás do que você sente.
-          </h3>
-          <p className="text-sm md:text-base text-slate-600 max-w-2xl">
-            Essas são as 8 camadas que explicam por completo o padrão que te
-            mantém preso. Cada uma detalha uma resposta direta e um caminho de
-            ação.
-          </p>
-        </header>
+      {/* Loading das seções extras - Só mostra quando relatório está pronto mas seções ainda não */}
+      {!isLoading &&
+        !hasError &&
+        !showAdditionalSections &&
+        typeof reportPreview === "object" &&
+        reportPreview !== null && (
+          <div className="flex flex-col items-center gap-4 py-12 text-center">
+            <div className="flex items-center gap-2 text-slate-500">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span className="text-sm font-medium">
+                Gerando próximos passos personalizados...
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 max-w-md">
+              Com base na sua análise, estamos preparando orientações
+              específicas para sua jornada
+            </p>
+          </div>
+        )}
 
-        <div className="space-y-3 md:space-y-4">
-          {lockedSections.map((section) => (
-            <article
-              key={section.title}
-              className="group relative overflow-hidden rounded-xl md:rounded-2xl border-2 border-slate-300 bg-slate-50/80 p-4 md:px-6 md:py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:bg-slate-50"
-            >
-              <div className="flex flex-col md:flex-row md:items-start gap-3 md:gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="flex items-start gap-3 md:gap-4 flex-1">
-                  <div className="flex-shrink-0 text-2xl md:text-3xl mt-0.5 md:mt-1 opacity-50 grayscale">
-                    {section.icon}
-                  </div>
+      {/* Novas seções adaptadas - Revelação progressiva */}
+      {!isLoading && !hasError && showAdditionalSections && (
+        <div className="space-y-16 pt-12 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+          {/* Título de conexão */}
+          <div className="text-center space-y-3">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
+              <span className="text-sm font-semibold text-blue-700">
+                ✨ Análise completa gerada
+              </span>
+            </div>
+            <h3 className="text-xl md:text-2xl font-bold text-slate-800">
+              Com base na sua análise, aqui estão seus próximos passos
+            </h3>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Suas respostas revelaram padrões específicos. Agora você tem um
+              mapa completo para sua jornada.
+            </p>
+          </div>
 
-                  <div className="flex-1 space-y-2 md:space-y-3">
-                    <h4 className="text-base md:text-lg lg:text-xl font-semibold text-slate-800 leading-snug">
-                      {section.title}
-                    </h4>
-                    <p className="text-xs md:text-sm lg:text-base text-slate-600 leading-relaxed">
-                      {section.summary}
-                    </p>
+          {/* Bloco 1 — O que você já ganhou */}
+          <div className="space-y-8">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
+                <span className="text-sm font-semibold text-emerald-700">
+                  ✅ Você já descobriu 3 verdades sobre o seu processo
+                </span>
+              </div>
+              <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-2xl mx-auto">
+                Com a análise gratuita, você descobriu:
+              </h3>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3 max-w-4xl mx-auto">
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                    <span className="text-white text-base font-bold">1</span>
                   </div>
                 </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">
+                  Sua mente ainda procura sentido
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Não é fraqueza — é um padrão de comportamento que fica ativado
+                  quando a história termina sem respostas claras.
+                </p>
+              </div>
 
-                <div className="flex-shrink-0 w-full md:w-auto">
-                  <Button
-                    onClick={() => handleUnlockClick("card_locked")}
-                    className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 md:gap-2 rounded-full bg-slate-800 px-4 md:px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
-                  >
-                    <span className="text-sm">🔓</span>
-                    <span className="truncate">
-                      {section.cta || "Desbloquear"}
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                    <span className="text-white text-base font-bold">2</span>
+                  </div>
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">
+                  O vínculo ainda está ativo
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Você repete um padrão inconsciente que te prende à mesma
+                  história.
+                </p>
+              </div>
+
+              <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
+                    <span className="text-white text-base font-bold">3</span>
+                  </div>
+                </div>
+                <h4 className="font-bold text-slate-900 text-base mb-2">
+                  Você não tem culpa
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Seu cérebro está tentando te proteger. O primeiro ponto que
+                  precisa ser resolvido para sair dessa fase.
+                </p>
+              </div>
+            </div>
+
+            <div className="text-center pt-6">
+              <div className="relative max-w-2xl mx-auto">
+                {/* Destaque visual suave */}
+                <div className="relative overflow-hidden rounded-3xl border-2 border-slate-300 bg-gradient-to-br from-slate-50 via-amber-50/30 to-slate-50 p-8 shadow-lg">
+                  {/* Brilho sutil */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent" />
+
+                  <div className="relative space-y-5">
+                    {/* Badge de alerta suave */}
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-800 text-white">
+                      <span className="text-lg">⚡</span>
+                      <span className="text-xs font-bold uppercase tracking-wider">
+                        Apenas 1 de 8 revelada
+                      </span>
+                    </div>
+
+                    {/* Headline impactante */}
+                    <h3 className="text-2xl md:text-3xl font-bold text-slate-900 leading-tight">
+                      Mas isso é só o começo
+                    </h3>
+
+                    {/* Counter visual */}
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="h-2 w-2 rounded-full bg-emerald-500" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                      <div className="h-2 w-2 rounded-full bg-slate-300" />
+                    </div>
+
+                    {/* Copy emocional */}
+                    <p className="text-base md:text-lg text-slate-700 leading-relaxed max-w-xl mx-auto">
+                      Existem{" "}
+                      <strong className="text-slate-900">
+                        7 processos emocionais críticos ainda ocultos
+                      </strong>{" "}
+                      — e eles explicam por que a dor volta mesmo quando parece
+                      que você está bem.
+                    </p>
+
+                    {/* CTA interno */}
+                    <div className="pt-2">
+                      <p className="text-sm font-semibold text-slate-800">
+                        O relatório completo desbloqueia todos os 8 processos →
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bloco 2 — O que ainda falta - REDESIGN MODERNO */}
+          <div className="space-y-10">
+            {/* Header emocional com gradiente */}
+            <div className="relative text-center space-y-6 p-8 rounded-3xl bg-gradient-to-br from-slate-50 to-rose-50/20">
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/50 to-transparent" />
+
+              <div className="relative space-y-4">
+                <h3 className="text-2xl md:text-4xl font-bold text-slate-900 max-w-3xl mx-auto leading-tight">
+                  Mesmo sabendo que acabou, esses gatilhos ainda te fazem
+                  reviver tudo de novo.
+                </h3>
+                <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                  É por isso que, mesmo tentando seguir, você volta pro mesmo
+                  ponto — um ciclo de pensamentos, recaídas e arrependimentos.
+                </p>
+
+                {/* Badge de alerta integrado */}
+                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-red-500 text-white shadow-lg">
+                  <span className="text-base">⚠️</span>
+                  <span className="text-xs font-bold uppercase tracking-wider">
+                    8 processos ativos no inconsciente
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Grid moderno com glassmorphism */}
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  01
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    01
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Desejo intenso de reconexão
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Seu corpo sente a ausência como se fosse uma crise de
+                    vínculo rompido.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
                     </span>
-                  </Button>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* Transformação em 3-7 dias - EMOTIONAL IMPACT */}
-      <section className="space-y-10">
-        <div className="text-center space-y-4">
-          <h3 className="text-3xl md:text-4xl font-bold text-slate-900 max-w-3xl mx-auto leading-tight">
-            Em 3 a 7 dias você começa a sentir a diferença
-          </h3>
-          <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
-            Não é mágica — é você entendendo o que te prende e fazendo diferente
-          </p>
-        </div>
-
-        {/* Grid de transformações - ESTILO VERCEL */}
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                🔁
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Sua mente desacelera
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Os pensamentos obsessivos perdem força e você volta a ter
-                  espaço mental pra respirar
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                📵
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Você para de agir por impulso
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Ganha clareza pra não cair nas recaídas e finalmente parar o
-                  vai e volta que te esgota
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                😴
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Dorme melhor e acorda mais leve
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Sua mente entende que a história acabou e finalmente descansa
-                  — sem aquele peso no peito
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                🧩
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Entende por que tudo aconteceu
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Para de se culpar e troca a dor por clareza — você vê o padrão
-                  por trás de tudo
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                🔒
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Para de se torturar com o outro
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Desativa os gatilhos de comparação e volta a focar em você —
-                  no seu tempo e na sua vida
-                </p>
-              </div>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
-              <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
-                🌱
-              </div>
-              <div className="space-y-2">
-                <h4 className="font-bold text-slate-900 text-base">
-                  Volta a sentir vontade de viver pra si
-                </h4>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  Reconecta com sua essência e começa a reconstruir sua vida —
-                  sem precisar apagar o passado
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA forte com urgência */}
-        <div className="text-center pt-4 md:pt-6">
-          <Button
-            onClick={() => handleUnlockClick("bloco_3_cta")}
-            size="lg"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-12 py-4 text-base md:text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
-          >
-            Quero Sentir Essa Diferença Agora
-            <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-          </Button>
-          <p className="text-xs text-slate-500 mt-3 md:mt-4 px-2">
-            ✓ Acesso imediato • Garantia de 7 dias • Mais de 7 mil pessoas já
-            sentiram a diferença
-          </p>
-        </div>
-      </section>
-
-      {/* Depoimentos - Marquee horizontal */}
-      <section className="py-16 space-y-10">
-        <div className="text-center space-y-3">
-          <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
-            Mais de 7 mil pessoas já descobriram o que estava bloqueado
-          </h3>
-          <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">
-            Veja o que elas dizem sobre os primeiros resultados
-          </p>
-        </div>
-
-        <div className="relative">
-          {/* Gradiente único cobrindo tudo - esquerda e direita */}
-          <div
-            className="pointer-events-none absolute inset-0 z-10"
-            style={{
-              background:
-                "linear-gradient(to right, #f4f5f7 0%, transparent 20%, transparent 80%, #fcfcfd 100%)",
-            }}
-          />
-
-          {/* Primeira linha - direita para esquerda */}
-          <div>
-            <Marquee reverse pauseOnHover className="[--duration:60s]">
-              {testimonials.slice(0, 4).map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
-                >
-                  <div className="space-y-4">
-                    {/* Aspas decorativas */}
-                    <div className="text-4xl text-slate-300 leading-none">
-                      "
-                    </div>
-
-                    {/* Depoimento */}
-                    <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
-                      {testimonial.text}
-                    </p>
-
-                    {/* Autor */}
-                    <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
-                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
-                        {testimonial.emoji}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-slate-900 text-sm">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {testimonial.time}
-                        </p>
-                      </div>
-                    </div>
                   </div>
                 </div>
-              ))}
-            </Marquee>
-          </div>
+              </div>
 
-          {/* Segunda linha - esquerda para direita */}
-          <div>
-            <Marquee pauseOnHover className="[--duration:60s]">
-              {testimonials.slice(4, 8).map((testimonial, index) => (
-                <div
-                  key={index}
-                  className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
-                >
-                  <div className="space-y-4">
-                    {/* Aspas decorativas */}
-                    <div className="text-4xl text-slate-300 leading-none">
-                      "
-                    </div>
-
-                    {/* Depoimento */}
-                    <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
-                      {testimonial.text}
-                    </p>
-
-                    {/* Autor */}
-                    <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
-                      <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
-                        {testimonial.emoji}
-                      </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-slate-900 text-sm">
-                          {testimonial.name}
-                        </p>
-                        <p className="text-xs text-slate-500">
-                          {testimonial.time}
-                        </p>
-                      </div>
-                    </div>
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  02
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    02
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Autoestima fragmentada
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    O fim abalou a forma como você se enxerga.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
                   </div>
                 </div>
-              ))}
-            </Marquee>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  03
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    03
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Comparação destrutiva
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Ver o outro bem enquanto você sofre machuca.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  04
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    04
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Fechamento incompleto
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Você quer soltar, mas sente que apagar é injusto.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  05
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    05
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Paralisação da reconstrução
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Travado e sem energia para reconstruir rotina.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  06
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    06
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Pensamento obsessivo recorrente
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Sua mente volta sempre para a mesma pessoa.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  07
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    07
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Injustiça emocional percebida
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Ver o outro bem enquanto você sofre parece injusto.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="group relative overflow-hidden rounded-2xl border-2 border-red-200/50 bg-gradient-to-br from-red-50 to-rose-50 backdrop-blur-sm p-5 transition-all duration-300 hover:scale-[1.02] hover:shadow-xl hover:border-red-300">
+                <div className="absolute top-2 right-2 text-6xl font-black text-red-900/5 select-none">
+                  08
+                </div>
+                <div className="relative space-y-3">
+                  <div className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-red-600 text-white text-xs font-bold">
+                    08
+                  </div>
+                  <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
+                    Identidade fragmentada
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    Você não sabe mais quem é sem essa pessoa.
+                  </p>
+                  <div className="flex items-center gap-1.5 pt-1">
+                    <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
+                    <span className="text-xs font-medium text-slate-500">
+                      Bloqueado
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* 4. CTA final com motivação emocional */}
-      <section className="space-y-6 md:space-y-8 text-center">
-        <div className="space-y-3 md:space-y-4">
-          <h4 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight px-2">
-            Agora que você já entendeu parte da lógica, não pare aqui.
-          </h4>
-          <p className="text-sm md:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed px-4">
-            O relatório completo é o que faz você realmente sair do ciclo — com
-            orientações claras, ações práticas e resultados em poucos dias.
-          </p>
-        </div>
+          {/* Bloco 3 — Por que o relatório completo (REORGANIZADO) */}
+          <div className="space-y-8">
+            {/* Header */}
+            <div className="text-center space-y-4">
+              <h3 className="text-3xl md:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight">
+                O relatório completo te mostra como sair disso — passo a passo
+              </h3>
+              <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                Em poucos minutos, você entende a origem dos seus gatilhos e o
+                que fazer hoje para começar a se sentir melhor.
+              </p>
+            </div>
 
-        <Button
-          onClick={() => handleUnlockClick("final_cta")}
-          size="lg"
-          className="w-full md:w-auto group relative inline-flex items-center justify-center gap-2 md:gap-3 overflow-hidden rounded-full bg-slate-900 px-8 md:px-12 py-4 md:py-5 text-base md:text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-white/[0.08] via-white/[0.16] to-white/[0.08] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
-          <span className="relative flex items-center gap-2">
-            Liberar Relatório Completo Agora
-            <ArrowRight className="h-5 w-5 md:h-6 md:w-6 transition-transform duration-500 group-hover:translate-x-1" />
-          </span>
-        </Button>
+            {/* 3 Pilares - com ícones emocionais */}
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto pt-4">
+              <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
+                <div className="flex items-center justify-center h-20">
+                  <div className="text-5xl">💡</div>
+                </div>
+                <h4 className="font-semibold text-slate-900 text-lg">
+                  Clareza do problema
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Você vê exatamente o que te prende e por que sua mente ainda
+                  não desligou
+                </p>
+              </div>
 
-        {/* Microprovas simbólicas */}
-        <div className="pt-6 md:pt-8 space-y-2 md:space-y-3 text-xs md:text-sm text-slate-600 px-4">
-          <p className="flex items-center justify-center gap-2">
-            ✓ Mais de 7.000 pessoas já descobriram o que estava por trás da dor
-          </p>
-          <p className="flex items-center justify-center gap-2">
-            ✓ 92% disseram que o relatório descreveu exatamente o que estavam
-            vivendo
-          </p>
-          <p className="flex items-center justify-center gap-2">
-            ✓ Em média, os primeiros resultados aparecem entre 3 e 5 dias
-          </p>
+              <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
+                <div className="flex items-center justify-center h-20">
+                  <div className="text-5xl">🧭</div>
+                </div>
+                <h4 className="font-semibold text-slate-900 text-lg">
+                  Passos práticos
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  O que fazer hoje para começar a mudar, com ações claras e
+                  diretas
+                </p>
+              </div>
+
+              <div className="text-center p-6 rounded-2xl bg-white border border-slate-200 space-y-4">
+                <div className="flex items-center justify-center h-20">
+                  <div className="text-5xl">🌱</div>
+                </div>
+                <h4 className="font-semibold text-slate-900 text-lg">
+                  Controle real
+                </h4>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Você age com clareza, em vez de só esperar o tempo passar
+                </p>
+              </div>
+            </div>
+
+            {/* CTA */}
+            <div className="text-center pt-6">
+              <Button
+                onClick={() => handleUnlockClick("bloco_2_cta")}
+                size="lg"
+                className="w-full md:w-auto inline-flex items-center gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+              >
+                Desbloquear Relatório Completo Agora
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+              <p className="text-xs text-slate-500 mt-4 px-2">
+                ✓ Acesso imediato • Resultados em 3-7 dias • +7 mil pessoas já
+                transformaram sua dor em clareza
+              </p>
+            </div>
+          </div>
+
+          {/* 3. Transição e conteúdo bloqueado */}
+          <section id="zona-bloqueada" className="space-y-8 md:space-y-12">
+            <header className="space-y-2 md:space-y-3">
+              <p className="text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">
+                próximo nível
+              </p>
+              <h3 className="text-xl md:text-2xl lg:text-3xl font-medium text-slate-900 leading-tight">
+                Você já entendeu parte da lógica. Agora libere o restante e veja
+                o que realmente está por trás do que você sente.
+              </h3>
+              <p className="text-sm md:text-base text-slate-600 max-w-2xl">
+                Essas são as 8 camadas que explicam por completo o padrão que te
+                mantém preso. Cada uma detalha uma resposta direta e um caminho
+                de ação.
+              </p>
+            </header>
+
+            <div className="space-y-3 md:space-y-4">
+              {lockedSections.map((section) => (
+                <article
+                  key={section.title}
+                  className="group relative overflow-hidden rounded-xl md:rounded-2xl border-2 border-slate-300 bg-slate-50/80 p-4 md:px-6 md:py-6 shadow-sm transition-all duration-300 hover:border-slate-400 hover:shadow-lg hover:bg-slate-50"
+                >
+                  <div className="flex flex-col md:flex-row md:items-start gap-3 md:gap-4 opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="flex items-start gap-3 md:gap-4 flex-1">
+                      <div className="flex-shrink-0 text-2xl md:text-3xl mt-0.5 md:mt-1 opacity-50 grayscale">
+                        {section.icon}
+                      </div>
+
+                      <div className="flex-1 space-y-2 md:space-y-3">
+                        <h4 className="text-base md:text-lg lg:text-xl font-semibold text-slate-800 leading-snug">
+                          {section.title}
+                        </h4>
+                        <p className="text-xs md:text-sm lg:text-base text-slate-600 leading-relaxed">
+                          {section.summary}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex-shrink-0 w-full md:w-auto">
+                      <Button
+                        onClick={() => handleUnlockClick("card_locked")}
+                        className="w-full md:w-auto inline-flex items-center justify-center gap-1.5 md:gap-2 rounded-full bg-slate-800 px-4 md:px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
+                      >
+                        <span className="text-sm">🔓</span>
+                        <span className="truncate">
+                          {section.cta || "Desbloquear"}
+                        </span>
+                      </Button>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Transformação em 3-7 dias - EMOTIONAL IMPACT */}
+          <section className="space-y-10">
+            <div className="text-center space-y-4">
+              <h3 className="text-3xl md:text-4xl font-bold text-slate-900 max-w-3xl mx-auto leading-tight">
+                Em 3 a 7 dias você começa a sentir a diferença
+              </h3>
+              <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">
+                Não é mágica — é você entendendo o que te prende e fazendo
+                diferente
+              </p>
+            </div>
+
+            {/* Grid de transformações - ESTILO VERCEL */}
+            <div className="max-w-5xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-6">
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    🔁
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Sua mente desacelera
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Os pensamentos obsessivos perdem força e você volta a ter
+                      espaço mental pra respirar
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    📵
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Você para de agir por impulso
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Ganha clareza pra não cair nas recaídas e finalmente parar
+                      o vai e volta que te esgota
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    😴
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Dorme melhor e acorda mais leve
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Sua mente entende que a história acabou e finalmente
+                      descansa — sem aquele peso no peito
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    🧩
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Entende por que tudo aconteceu
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Para de se culpar e troca a dor por clareza — você vê o
+                      padrão por trás de tudo
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    🔒
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Para de se torturar com o outro
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Desativa os gatilhos de comparação e volta a focar em você
+                      — no seu tempo e na sua vida
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-6 rounded-2xl bg-slate-50 space-y-4">
+                  <div className="w-12 h-12 rounded-full bg-slate-900 flex items-center justify-center text-2xl">
+                    🌱
+                  </div>
+                  <div className="space-y-2">
+                    <h4 className="font-bold text-slate-900 text-base">
+                      Volta a sentir vontade de viver pra si
+                    </h4>
+                    <p className="text-sm text-slate-600 leading-relaxed">
+                      Reconecta com sua essência e começa a reconstruir sua vida
+                      — sem precisar apagar o passado
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* CTA forte com urgência */}
+            <div className="text-center pt-4 md:pt-6">
+              <Button
+                onClick={() => handleUnlockClick("bloco_3_cta")}
+                size="lg"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-12 py-4 text-base md:text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+              >
+                Quero Sentir Essa Diferença Agora
+                <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
+              </Button>
+              <p className="text-xs text-slate-500 mt-3 md:mt-4 px-2">
+                ✓ Acesso imediato • Garantia de 7 dias • Mais de 7 mil pessoas
+                já sentiram a diferença
+              </p>
+            </div>
+          </section>
+
+          {/* Depoimentos - Marquee horizontal */}
+          <section className="py-16 space-y-10">
+            <div className="text-center space-y-3">
+              <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
+                Mais de 7 mil pessoas já descobriram o que estava bloqueado
+              </h3>
+              <p className="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">
+                Veja o que elas dizem sobre os primeiros resultados
+              </p>
+            </div>
+
+            <div className="relative">
+              {/* Gradiente único cobrindo tudo - esquerda e direita */}
+              <div
+                className="pointer-events-none absolute inset-0 z-10"
+                style={{
+                  background:
+                    "linear-gradient(to right, #f4f5f7 0%, transparent 20%, transparent 80%, #fcfcfd 100%)",
+                }}
+              />
+
+              {/* Primeira linha - direita para esquerda */}
+              <div>
+                <Marquee reverse pauseOnHover className="[--duration:60s]">
+                  {testimonials.slice(0, 4).map((testimonial, index) => (
+                    <div
+                      key={index}
+                      className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                    >
+                      <div className="space-y-4">
+                        {/* Aspas decorativas */}
+                        <div className="text-4xl text-slate-300 leading-none">
+                          "
+                        </div>
+
+                        {/* Depoimento */}
+                        <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
+                          {testimonial.text}
+                        </p>
+
+                        {/* Autor */}
+                        <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                          <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
+                            {testimonial.emoji}
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-slate-900 text-sm">
+                              {testimonial.name}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {testimonial.time}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Marquee>
+              </div>
+
+              {/* Segunda linha - esquerda para direita */}
+              <div>
+                <Marquee pauseOnHover className="[--duration:60s]">
+                  {testimonials.slice(4, 8).map((testimonial, index) => (
+                    <div
+                      key={index}
+                      className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                    >
+                      <div className="space-y-4">
+                        {/* Aspas decorativas */}
+                        <div className="text-4xl text-slate-300 leading-none">
+                          "
+                        </div>
+
+                        {/* Depoimento */}
+                        <p className="text-sm text-slate-700 leading-relaxed line-clamp-4">
+                          {testimonial.text}
+                        </p>
+
+                        {/* Autor */}
+                        <div className="flex items-center gap-3 pt-2 border-t border-slate-100">
+                          <div className="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-lg">
+                            {testimonial.emoji}
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-slate-900 text-sm">
+                              {testimonial.name}
+                            </p>
+                            <p className="text-xs text-slate-500">
+                              {testimonial.time}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </Marquee>
+              </div>
+            </div>
+          </section>
+
+          {/* 4. CTA final com motivação emocional */}
+          <section className="space-y-6 md:space-y-8 text-center">
+            <div className="space-y-3 md:space-y-4">
+              <h4 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-slate-900 max-w-3xl mx-auto leading-tight px-2">
+                Agora que você já entendeu parte da lógica, não pare aqui.
+              </h4>
+              <p className="text-sm md:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed px-4">
+                O relatório completo é o que faz você realmente sair do ciclo —
+                com orientações claras, ações práticas e resultados em poucos
+                dias.
+              </p>
+            </div>
+
+            <Button
+              onClick={() => handleUnlockClick("final_cta")}
+              size="lg"
+              className="w-full md:w-auto group relative inline-flex items-center justify-center gap-2 md:gap-3 overflow-hidden rounded-full bg-slate-900 px-8 md:px-12 py-4 md:py-5 text-base md:text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
+            >
+              <span className="absolute inset-0 bg-gradient-to-r from-white/[0.08] via-white/[0.16] to-white/[0.08] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
+              <span className="relative flex items-center gap-2">
+                Liberar Relatório Completo Agora
+                <ArrowRight className="h-5 w-5 md:h-6 md:w-6 transition-transform duration-500 group-hover:translate-x-1" />
+              </span>
+            </Button>
+
+            {/* Microprovas simbólicas */}
+            <div className="pt-6 md:pt-8 space-y-2 md:space-y-3 text-xs md:text-sm text-slate-600 px-4">
+              <p className="flex items-center justify-center gap-2">
+                ✓ Mais de 7.000 pessoas já descobriram o que estava por trás da
+                dor
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                ✓ 92% disseram que o relatório descreveu exatamente o que
+                estavam vivendo
+              </p>
+              <p className="flex items-center justify-center gap-2">
+                ✓ Em média, os primeiros resultados aparecem entre 3 e 5 dias
+              </p>
+            </div>
+          </section>
         </div>
-      </section>
+      )}
 
       {/* Espaço final para evitar overlap com CTA sticky */}
       <div className="h-20 md:h-24" />

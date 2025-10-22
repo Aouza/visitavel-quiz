@@ -8,11 +8,11 @@ import { NextRequest, NextResponse } from "next/server";
 // Rate limiting store (in production, use Redis or similar)
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
-// Rate limiting configuration
+// Rate limiting configuration (only applies in production)
 const RATE_LIMIT = {
   windowMs: 15 * 60 * 1000, // 15 minutes
   maxRequests: 100, // 100 requests per window
-  apiMaxRequests: 20, // 20 API requests per window
+  apiMaxRequests: 50, // 50 API requests per window (increased from 20 for better UX)
 };
 
 function getRateLimitKey(request: NextRequest): string {
@@ -22,6 +22,11 @@ function getRateLimitKey(request: NextRequest): string {
 }
 
 function isRateLimited(key: string, isApi: boolean = false): boolean {
+  // Disable rate limiting in development
+  if (process.env.NODE_ENV === "development") {
+    return false;
+  }
+
   const now = Date.now();
   const limit = isApi ? RATE_LIMIT.apiMaxRequests : RATE_LIMIT.maxRequests;
 
