@@ -413,9 +413,9 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
     "segment": "Nome da etapa REAL identificada (ex.: Devastação, Abstinência emocional, Interiorização, Ira, Aceitação frágil, Reconstrução)"
   },
 
-  "intro": "Parágrafo curto e personalizado para {{userFirstName}}, adaptado ao segmento, com tom empático e direto. Ex.: 'Você, {{userFirstName}}, está tentando seguir, mas seu corpo não acompanha. Este relatório vai doer um pouco, mas ele explica — de forma simples — por que isso ainda prende você.'",
+  "intro": "Parágrafo curto e personalizado USANDO O NOME REAL DO LEITOR de forma natural, adaptado ao segmento, com tom empático e direto. Insira o nome onde soar mais natural (pode ser no início, meio ou final). Ex.: 'Você está tentando seguir, Maria, mas seu corpo não acompanha.' ou 'Maria, este relatório vai doer um pouco, mas ele explica por que isso ainda prende você.'",
 
-  "one_liner": "Resumo em 1 frase, direta, sobre o momento atual de {{userFirstName}}.",
+  "one_liner": "Resumo em 1 frase, direta, sobre o momento atual DO LEITOR (use o nome real).",
 
   "stage_confidence": 0.85,
 
@@ -425,7 +425,13 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   ],
 
   "personProfile": [
-    "Escreva 2-3 parágrafos cirúrgicos, usando o nome {{userFirstName}}. Explique como {{userFirstName}} sente, pensa e se protege emocionalmente. Traga exemplos concretos (sono, apetite, checagens, energia), sem mencionar 'quiz'. Seja direto, humano e específico. Evite poesia."
+    "Escreva 3-4 parágrafos PROFUNDOS E CIRÚRGICOS sobre quem a pessoa É agora. Use o NOME REAL de forma natural (2-3 vezes). Fale sobre:
+    - Como ela SENTE (emoções dominantes, o que está por baixo da superfície)
+    - Como ela PENSA (padrões de pensamento, narrativas internas, loops mentais)
+    - Como ela SE PROTEGE emocionalmente (mecanismos de defesa, comportamentos de evitação ou controle)
+    - Como isso aparece no CORPO e no COMPORTAMENTO (sono, apetite, energia, checagens, isolamento)
+    
+    Seja ESPECÍFICO. Traga exemplos concretos das respostas. Conecte os pontos entre corpo, mente e emoção. Zero poesia, máxima precisão. A pessoa precisa se reconhecer completamente."
   ],
   "personProfile_evidences": [
     { "questionId": "sono", "answerLabel": "Dificuldade para dormir" },
@@ -433,7 +439,13 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   ],
 
   "relationshipOverview": [
-    "Explique, em 2-3 parágrafos, por que a conexão aconteceu, onde começou a se perder e o que ficou em aberto. Mostre a cola emocional (rotina, promessas, sensação de 'quase deu certo'). Linguagem simples."
+    "Escreva 3-4 parágrafos DETALHADOS sobre a história do relacionamento:
+    - POR QUE a conexão aconteceu (o que atraiu, que necessidades cada um supria no outro)
+    - ONDE começou a se perder (quando as dinâmicas mudaram, que sinais apareceram)
+    - O QUE ficou em aberto (promessas não cumpridas, conversas não tidas, potencial não realizado)
+    - A COLA EMOCIONAL que ainda prende (rotina compartilhada, memórias específicas, sensação de 'quase deu certo')
+    
+    Seja concreto. Use detalhes das respostas. A pessoa precisa entender a TRAJETÓRIA, não só o momento atual."
   ],
   "relationshipOverview_evidences": [
     { "questionId": "idealizacao", "answerLabel": "Costuma idealizar" },
@@ -442,13 +454,30 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
 
   "currentFeelings": {
     "mind": [
-      "Explique os loops da mente de {{userFirstName}} de forma direta (ex.: revisa conversas, procura sinais, cria cenários). Zero misticismo."
+      "2-3 parágrafos sobre OS LOOPS MENTAIS específicos. Use o nome real 1 vez. Explique:
+      - Que tipo de pensamentos se repetem (reconstrói conversas, procura sinais, cria cenários 'e se')
+      - QUANDO isso piora (noite, ao acordar, em momentos de silêncio)
+      - O que a mente BUSCA nesses loops (confirmação, sentido, controle, alívio)
+      
+      Seja cirúrgico. A pessoa precisa reconhecer os padrões exatos da própria cabeça."
     ],
     "body": [
-      "Mostre como o corpo reage (sono/apetite/energia/tensão) e por que isso é normal nesta etapa. Linguagem simples."
+      "2 parágrafos sobre COMO O CORPO ESTÁ REAGINDO. Seja específico:
+      - Sono (como está dormindo, quando acorda, qualidade do descanso)
+      - Apetite e energia (se está comendo, que tipo de cansaço sente)
+      - Tensão física (onde acumula, como se manifesta)
+      - POR QUE isso é uma resposta normal do sistema nervoso nesta fase
+      
+      Valide a experiência física, não minimize."
     ],
     "heart": [
-      "Explique o que o coração sente (saudade, medo, comparação, injustiça) e como isso se mistura. Direto, concreto."
+      "2-3 parágrafos sobre A MISTURA EMOCIONAL. Seja preciso:
+      - Que emoções COEXISTEM (saudade + raiva, alívio + culpa, esperança + medo)
+      - Como isso CONFUNDE (sentir duas coisas opostas ao mesmo tempo)
+      - Qual emoção DOMINA em diferentes momentos
+      - Como a pessoa está LIDANDO com essa confusão
+      
+      Não simplifique. Mostre a complexidade real."
     ]
   },
   "currentFeelings_evidences": [
@@ -457,7 +486,14 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   ],
 
   "whyCantMoveOn": [
-    "Mostre, em 2-3 parágrafos, o que mantém o vínculo ativo: memória boa, rotina quebrada, necessidade de sentido, medo de soltar, comparação. Conecte com tempo desde o fim. Nada de conselhos."
+    "Escreva 3-4 parágrafos PROFUNDOS sobre O QUE MANTÉM O VÍNCULO ATIVO. Explique:
+    - MEMÓRIAS específicas que ainda puxam (não genérico, mas momentos concretos que ficaram marcados)
+    - ROTINA quebrada (que vazio isso deixou, que parte do dia ficou sem sentido)
+    - NECESSIDADE DE SENTIDO (por que a pessoa precisa entender o que aconteceu antes de soltar)
+    - MEDO DE SOLTAR (o que vai embora se ela aceitar que acabou - identidade, esperança, parte de si)
+    - COMPARAÇÃO (com o avanço do outro, com versões anteriores de si mesma)
+    
+    Conecte com o TEMPO desde o término. Mostre por que, neste momento específico, ainda está difícil. Zero conselhos, máxima clareza sobre OS MECANISMOS."
   ],
   "whyCantMoveOn_evidences": [
     { "questionId": "checagens", "answerLabel": "3-5 vezes/dia" },
@@ -467,7 +503,7 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   "currentStage": {
     "name": "Etapa REAL identificada (DEVE SER IGUAL a header.segment)",
     "description": [
-      "Explique, em 2-3 parágrafos, sinais concretos desta etapa, por que {{userFirstName}} está nela e o que a sustenta. Use linguagem simples e direta."
+      "Explique, em 2-3 parágrafos, sinais concretos desta etapa, por que A PESSOA está nela e o que a sustenta. Use o nome real de forma natural (no meio ou final das frases). Use linguagem simples e direta. USE O NOME 1 VEZ de forma orgânica."
     ]
   },
   "currentStage_evidences": [
@@ -476,7 +512,13 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   ],
 
   "rootCause": [
-    "Explique, em 2-3 parágrafos, o padrão central (ex.: controle, validação, medo de abandono, idealização) e como ele aparece aqui. Zero julgamento, só clareza."
+    "Escreva 3-4 parágrafos CIRÚRGICOS sobre O PADRÃO RAIZ que está operando. Identifique:
+    - QUAL é o padrão central (ex.: busca de validação externa, necessidade de controle, medo de abandono, idealização, necessidade de ser 'a boa pessoa', dificuldade com imperfeição)
+    - COMO esse padrão apareceu NESTE relacionamento especificamente (exemplos concretos)
+    - COMO esse padrão está aparecendo AGORA no pós-término (nas checagens, na culpa, na dificuldade de soltar)
+    - DE ONDE provavelmente vem esse padrão (histórico relacional, necessidades não atendidas, estratégias aprendidas)
+    
+    Zero julgamento. Máxima clareza. A pessoa precisa VER o padrão operando, não só saber que ele existe."
   ],
   "rootCause_evidences": [
     { "questionId": "culpa", "answerLabel": "Frequente" },
@@ -484,24 +526,42 @@ SAÍDA OBRIGATÓRIA: JSON VÁLIDO (UTF-8), SEM markdown.
   ],
 
   "unresolvedPoints": [
-    "Liste 3-5 frases curtas e diretas sobre o que AINDA puxa {{userFirstName}} para trás. Ex.: 'Você ainda busca confirmação do outro para se acalmar.'",
+    "Liste 3-5 frases curtas e diretas sobre o que AINDA puxa A PESSOA para trás. Use o nome real de forma natural em 1-2 frases. Ex.: 'Você ainda busca confirmação, [NOME], para se acalmar.' ou '[NOME], você ainda compara seu avanço com o dele.'",
     "Frases de impacto, sem rodeios, sem tarefas."
   ],
 
   "learning": [
-    "Explique, em 2-3 parágrafos, o que essa história mostra sobre o padrão emocional de {{userFirstName}}. Nada de moral da história. Apenas clareza sobre o padrão."
+    "Explique, em 2-3 parágrafos, o que essa história mostra sobre o padrão emocional DA PESSOA. Use o nome real de forma natural (1 vez). Nada de moral da história. Apenas clareza sobre o padrão."
   ],
   "learning_evidences": [
     { "questionId": "reflexao", "answerLabel": "Já comecei a rever hábitos" },
     { "questionId": "novas_conexoes", "answerLabel": "Ainda não" }
   ],
 
-  "compatibility": {
-    "connection": ["Se houver dados do ex, explique por que conectaram (traços semelhantes/complementares)."],
-    "strengths": ["Pontos fortes da dupla."],
-    "frictions": ["Fontes previsíveis de atrito."],
-    "distancing": ["Por que se afastaram (dinâmicas que não fechavam)."]
+  "relationshipDynamics": {
+    "whyConnected": [
+      "Explique em 2-3 parágrafos POR QUE vocês se conectaram no início. Use insights sobre traços de personalidade, necessidades emocionais e formas de se relacionar (SEM mencionar signos ou astrologia). Fale sobre o que atraiu um ao outro, como as personalidades se complementavam, que tipo de conexão emocional surgiu. Seja específico sobre as dinâmicas que funcionavam. Use o nome real 1 vez de forma natural."
+    ],
+    "whatWorked": [
+      "Liste 3-5 pontos específicos que FUNCIONARAM bem no relacionamento. Seja concreto: formas de comunicação, rituais compartilhados, como lidavam com conflitos, aspectos da rotina que fluíam bem. Baseie-se nos traços de personalidade de ambos."
+    ],
+    "whatDidntWork": [
+      "Explique em 2-3 parágrafos O QUE NÃO FUNCIONOU. Identifique os pontos de atrito: diferenças de ritmo emocional, formas de processar conflito, necessidades incompatíveis, padrões que geravam distância. Seja direto sobre as dinâmicas que criavam tensão. Use insights de personalidade SEM mencionar astrologia."
+    ],
+    "whatCouldHaveBeenBetter": [
+      "Explique em 2 parágrafos O QUE VOCÊS DOIS poderiam ter feito diferente. Fale sobre ajustes de comunicação, necessidades que poderiam ter sido expressas melhor, limites que faltaram, espaços que precisavam ser respeitados. Zero julgamento, apenas clareza sobre o que poderia ter mudado a dinâmica."
+    ],
+    "howYouComplement": [
+      "Explique em 1-2 parágrafos COMO vocês se complementam naturalmente. Quais traços de um equilibram o outro? Onde a diferença é força ao invés de atrito? Use insights de personalidade de forma sutil."
+    ],
+    "howYouClash": [
+      "Explique em 1-2 parágrafos ONDE vocês se afastam naturalmente. Quais diferenças fundamentais criam distância? Onde os ritmos emocionais não batem? Onde as necessidades entram em conflito? Seja claro e direto."
+    ]
   },
+  "relationshipDynamics_evidences": [
+    { "questionId": "comunicacao", "answerLabel": "Fácil e natural" },
+    { "questionId": "idealizacao", "answerLabel": "Costuma idealizar" }
+  ],
 
   "nextStepHint": {
     "summary": "Resumo curto do que {{userFirstName}} já entendeu e do que AINDA está em aberto.",
@@ -519,7 +579,8 @@ REGRAS NÃO NEGOCIÁVEIS:
 5) 'header.segment' DEVE ser exatamente igual a 'currentStage.name'.
 6) 'stage_confidence' entre 0 e 1.
 7) Cada *_evidences deve ter ao menos 2 evidências reais (questionId + answerLabel).
-8) Se não houver dados do ex, omita 'compatibility' do JSON final.
+8) ⚠️ SEÇÃO 'relationshipDynamics': SÓ inclua se houver dados do ex (traços de personalidade disponíveis). Se não houver, OMITA completamente do JSON.
+9) ⚠️ Na seção 'relationshipDynamics': Use os TRAÇOS DE PERSONALIDADE fornecidos para fundamentar a análise, MAS NUNCA mencione "signo", "astrologia" ou termos relacionados. Seja sutil e fale como se fosse análise de comportamento natural.
 `;
 
     const schemaForPrompt = understandingSchema.replace(
@@ -531,26 +592,51 @@ REGRAS NÃO NEGOCIÁVEIS:
 Você é um especialista em análise de padrões de comportamento pós-término. Gere um relatório direto, humano e cirúrgico para ${userFirstName}.
 
 🔤 GÊNERO E PRONOMES:
-${
-  userGender === "M"
-    ? "O leitor é MASCULINO."
-    : "A leitora é FEMININA (ou gênero não informado)."
-}
+${userGender === "M" ? "O leitor é MASCULINO." : "A leitora é FEMININA."}
 Use pronomes coerentes nos exemplos e na narração quando necessário.
 - Ex.: "${pronouns.dele_dela}" / "${pronouns.ele_ela}" / "${
       pronouns.preso_presa
     }" / artigo "${pronouns.o_a}".
 - NUNCA use “você mesma”/“você mesmo”. Prefira neutro: “você contou”, “você indicou”, “seus sinais mostram”.
 
-TOM OBRIGATÓRIO:
+TOM E PROFUNDIDADE OBRIGATÓRIOS:
 - Direto, empático, provocativo quando útil.
 - Zero misticismo, zero poesia, zero autoajuda.
 - Comparações simples são bem-vindas (ex.: "parece música repetindo na cabeça").
-- O objetivo é a pessoa se reconhecer de primeira e pensar: “é isso”.
+- O objetivo é a pessoa se reconhecer de primeira e pensar: "é isso".
+- ⚠️ PROFUNDIDADE: Este NÃO é um relatório superficial. Cada seção deve ser RICA, ESPECÍFICA e CIRÚRGICA.
+  * Não use frases genéricas que poderiam servir para qualquer pessoa.
+  * Use DETALHES das respostas para fundamentar cada afirmação.
+  * Conecte os pontos: como o que acontece no corpo reflete a mente, como o padrão aparece em diferentes áreas.
+  * A pessoa está PAGANDO por profundidade. Entregue análise de verdade, não texto de horóscopo genérico.
+
+⚠️ REGRA DE OURO - USO DO NOME (NATURAL):
+- Use o NOME REAL DO LEITOR ao longo do texto (5-7 vezes total), mas de forma NATURAL e VARIADA.
+- VARIE a posição: início, meio ou final das frases. NÃO use sempre o mesmo padrão.
+- Exemplos naturais: 
+  * "Você está tentando seguir, [NOME], mas seu corpo não acompanha."
+  * "[NOME], sua mente ainda revisa conversas..."
+  * "Sua dificuldade para dormir mostra que, [NOME], você ainda..."
+  * "Isso é comum para você nesta fase, [NOME]."
+- O objetivo é soar humano e pessoal, não robotizado.
+- Distribua o nome ao longo das seções, não concentre tudo no início.
 
 PROIBIÇÕES NO TEXTO PARA O LEITOR:
-- Não fale “no quiz você respondeu…”, “na pesquisa…”, “no formulário…”. 
-- Se precisar referenciar, diga “pelos seus sinais”, “pelo que você contou” (sem citar o mecanismo).
+- Não fale "no quiz você respondeu…", "na pesquisa…", "no formulário…". 
+- Se precisar referenciar, diga "pelos seus sinais", "pelo que você contou" (sem citar o mecanismo).
+- NUNCA mencione "signo", "astrologia", "mapa astral", "horóscopo" ou termos relacionados.
+
+⚠️ COMO USAR OS TRAÇOS DE PERSONALIDADE (na seção relationshipDynamics):
+- Você receberá TRAÇOS DO USUÁRIO e TRAÇOS DO EX derivados de análise comportamental.
+- Use esses traços para fundamentar TODA a análise de compatibilidade/dinâmica do relacionamento.
+- Fale sobre esses traços como se fossem características naturais de personalidade observadas.
+- Exemplos de como traduzir:
+  * "Você tende a processar emoções de forma mais racional" ao invés de "Você é de signo de ar"
+  * "Ele precisa de mais espaço emocional para processar" ao invés de "Ele é de signo de água"
+  * "Vocês têm ritmos emocionais diferentes - você age rápido, ele reflete devagar"
+  * "Você busca estabilidade enquanto ele valoriza novidade e mudança"
+- Seja ESPECÍFICO sobre como essas diferenças aparecem no dia a dia do relacionamento.
+- Use os INSIGHTS DE COMPATIBILIDADE fornecidos para explicar atritos, complementos e dinâmicas.
 
 SAÍDA OBRIGATÓRIA:
 - JSON válido seguindo o schema abaixo (SEM markdown).
@@ -578,13 +664,7 @@ ${schemaForPrompt}
 
     const userPrompt = `
 LEITOR: ${userFirstName}
-GÊNERO: ${
-      userGender === "M"
-        ? "Masculino"
-        : userGender === "F"
-        ? "Feminino"
-        : "Não informado"
-    }
+GÊNERO: ${userGender === "M" ? "Masculino" : "Feminino"}
 PRONOMES: ${pronouns.dele_dela} / ${pronouns.ele_ela} / ${
       pronouns.preso_presa
     } / ${pronouns.o_a}
@@ -612,8 +692,19 @@ ${userTraitsBlock}
 TRAÇOS DO EX (se houver dados — não citar signos no texto):
 ${exTraitsBlock}
 
-DINÂMICA ENTRE VOCÊS (se houver base — texto não deve citar “quiz”):
+DINÂMICA ENTRE VOCÊS (insights de compatibilidade — USE ESTES DADOS na seção 'relationshipDynamics'):
 ${compatibilityBlock}
+
+⚠️ INSTRUÇÃO CRÍTICA SOBRE 'relationshipDynamics':
+${
+  shouldIncludeCompatibility
+    ? `✅ INCLUA a seção 'relationshipDynamics' completa no JSON.
+- Use OS TRAÇOS acima para explicar a dinâmica do relacionamento.
+- Seja ESPECÍFICO sobre como as personalidades se conectaram, se complementaram e entraram em atrito.
+- Explique O QUE poderia ter sido feito diferente com base nessas dinâmicas.
+- NUNCA mencione "signo" ou "astrologia" - fale como análise de comportamento natural.`
+    : `❌ NÃO INCLUA a seção 'relationshipDynamics' no JSON final (dados insuficientes do ex).`
+}
 
 RESPOSTAS DETALHADAS (para embasar *_evidences; NÃO citar no texto narrativo):
 ${answersContext}
@@ -621,8 +712,17 @@ ${answersContext}
 RESTRIÇÕES CRÍTICAS:
 - Gere apenas o JSON no formato exigido (SEM markdown).
 - "header.segment" DEVE ser EXATAMENTE IGUAL a "currentStage.name".
-- Use o nome ${userFirstName} pelo menos 3 vezes no texto.
-- Não use “você mesma/você mesmo”; prefira “você” neutro.
+- ⚠️ OBRIGATÓRIO: Use o nome "${userFirstName}" 5-7 VEZES ao longo do relatório, mas de forma NATURAL e VARIADA.
+- ⚠️ VARIE AS FORMAS: não repita sempre "Você, ${userFirstName},". Use posições diferentes:
+  * Início: "${userFirstName}, você está passando..."
+  * Meio: "Você está tentando seguir, ${userFirstName}, mas..."
+  * Final: "Sua mente ainda está agitada, ${userFirstName}."
+  * Natural: "Isso é comum para você nesta fase, ${userFirstName}."
+- ⚠️ EXEMPLOS CORRETOS:
+  * "Você está passando por um momento difícil, ${userFirstName}, e isso aparece no seu corpo."
+  * "${userFirstName}, sua dificuldade para dormir mostra que..."
+  * "Sua mente ainda procura sinais, ${userFirstName}, mesmo sem querer."
+- Não use "você mesma/você mesmo"; prefira "você" neutro.
 - Se não houver base para "compatibility", omita essa seção do JSON final.
 `;
 
