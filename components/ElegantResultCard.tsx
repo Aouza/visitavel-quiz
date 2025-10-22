@@ -102,6 +102,7 @@ export function ElegantResultCard({
   const [isLoading, setIsLoading] = useState(true);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [showAdditionalSections, setShowAdditionalSections] = useState(false);
 
   // Wrapper para adicionar tracking ao CTA principal
   const handleUnlockClick = useCallback(
@@ -283,6 +284,23 @@ export function ElegantResultCard({
     }
     return undefined;
   }, [isLoading]);
+
+  // Revelar seções extras após o relatório estar pronto
+  useEffect(() => {
+    if (
+      !isLoading &&
+      !hasError &&
+      typeof reportPreview === "object" &&
+      reportPreview !== null
+    ) {
+      // Aguardar um pouco para o usuário ler o relatório, depois revelar as seções extras
+      const timer = setTimeout(() => {
+        setShowAdditionalSections(true);
+      }, 2000); // 2 segundos após o relatório estar pronto
+
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading, hasError, reportPreview]);
 
   const handleScrollToLocked = useCallback(() => {
     const lockedZone = document.getElementById("zona-bloqueada");
@@ -1034,9 +1052,44 @@ export function ElegantResultCard({
             </div>
           )}
 
-        {/* Novas seções adaptadas */}
-        {!isLoading && (
-          <div className="space-y-16 pt-12">
+        {/* Loading das seções extras */}
+        {!isLoading &&
+          !showAdditionalSections &&
+          typeof reportPreview === "object" &&
+          reportPreview !== null && (
+            <div className="flex flex-col items-center gap-4 py-12 text-center">
+              <div className="flex items-center gap-2 text-slate-500">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                <span className="text-sm font-medium">
+                  Gerando próximos passos personalizados...
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 max-w-md">
+                Com base na sua análise, estamos preparando orientações
+                específicas para sua jornada
+              </p>
+            </div>
+          )}
+
+        {/* Novas seções adaptadas - Revelação progressiva */}
+        {!isLoading && showAdditionalSections && (
+          <div className="space-y-16 pt-12 animate-in fade-in-50 slide-in-from-bottom-4 duration-700">
+            {/* Título de conexão */}
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 border border-blue-200">
+                <span className="text-sm font-semibold text-blue-700">
+                  ✨ Análise completa gerada
+                </span>
+              </div>
+              <h3 className="text-xl md:text-2xl font-bold text-slate-800">
+                Com base na sua análise, aqui estão seus próximos passos
+              </h3>
+              <p className="text-slate-600 max-w-2xl mx-auto">
+                Suas respostas revelaram padrões específicos. Agora você tem um
+                mapa completo para sua jornada.
+              </p>
+            </div>
+
             {/* Bloco 1 — O que você já ganhou */}
             <div className="space-y-8">
               <div className="text-center space-y-3">
