@@ -34,7 +34,7 @@ interface ElegantResultCardProps {
   segment: Segment;
   answers: Record<string, string | string[]>;
   scores: Record<Segment, number>;
-  onPrimaryAction: () => void;
+  onPrimaryAction: (location?: string) => void;
 }
 
 // Depoimentos reais e emocionais
@@ -113,7 +113,7 @@ export function ElegantResultCard({
         location,
       });
 
-      // Track Meta - InitiateCheckout (intenção de compra)
+      // Track Meta - InitiateCheckout (intenção de interesse)
       trackMetaEvent({
         eventName: "InitiateCheckout",
         customData: {
@@ -123,7 +123,7 @@ export function ElegantResultCard({
         },
       });
 
-      onPrimaryAction();
+      onPrimaryAction(location);
     },
     [segment, onPrimaryAction]
   );

@@ -68,8 +68,9 @@ function ResultContent() {
     trackPageView("/quiz/resultado", `Resultado: ${seg}`);
   }, [searchParams, router]);
 
-  const handlePrimaryAction = () => {
-    router.push(`/oferta?seg=${segment}`);
+  const handlePrimaryAction = (location?: string) => {
+    // 🆕 Fake door: redirecionar para página de interesse
+    router.push(`/interesse?seg=${segment}&loc=${location || "unknown"}`);
   };
 
   if (!segment || !quizData) {
