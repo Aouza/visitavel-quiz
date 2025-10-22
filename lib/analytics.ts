@@ -1,6 +1,6 @@
 /**
  * @file: analytics.ts
- * @responsibility: Rastreamento de eventos (Google Analytics 4)
+ * @responsibility: Rastreamento de eventos (Google Analytics 4 + Microsoft Clarity)
  * @note: Meta Pixel é rastreado via lib/track-meta-event.ts
  * @exports: track, trackPageView, EventNames, gtag functions
  */
@@ -21,6 +21,13 @@ declare global {
     ) => void;
   }
 }
+
+// Import Clarity functions
+import {
+  trackClarityEvent,
+  setClarityTag,
+  identifyUser,
+} from "@/components/Clarity";
 
 // Google Analytics Tracking ID (configurado via env)
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
@@ -52,7 +59,7 @@ interface EventPayload {
 }
 
 /**
- * Envia evento para GA4 (dataLayer)
+ * Envia evento para GA4 (dataLayer) + Microsoft Clarity
  * Nota: Meta Pixel agora é rastreado via trackMetaEvent() para deduplicação
  */
 export function track(name: EventName, payload?: EventPayload): void {
@@ -68,6 +75,13 @@ export function track(name: EventName, payload?: EventPayload): void {
     }
   } catch (error) {
     console.error("[Analytics] Error pushing to dataLayer:", error);
+  }
+
+  // Microsoft Clarity
+  try {
+    trackClarityEvent(name);
+  } catch (error) {
+    console.error("[Analytics] Error sending to Clarity:", error);
   }
 
   // Meta Pixel foi REMOVIDO daqui para evitar duplicação
@@ -149,6 +163,15 @@ export function trackQuizCompleted(
     score,
     answers_hash: answersHash,
   });
+
+  // Add Clarity tags for quiz completion
+  try {
+    setClarityTag("quiz_segment", segment);
+    setClarityTag("quiz_score", score.toString());
+    setClarityTag("quiz_completed", "true");
+  } catch (error) {
+    console.error("[Analytics] Error setting Clarity tags:", error);
+  }
 }
 
 export function trackLeadSubmitted(email: string): void {
@@ -157,6 +180,15 @@ export function trackLeadSubmitted(email: string): void {
   track(EventNames.LEAD_SUBMITTED, {
     email_domain: domain,
   });
+
+  // Identify user in Clarity (using email domain as custom ID)
+  try {
+    identifyUser(domain, undefined, undefined, `User from ${domain}`);
+    setClarityTag("lead_source", "quiz_form");
+    setClarityTag("email_domain", domain);
+  } catch (error) {
+    console.error("[Analytics] Error identifying user in Clarity:", error);
+  }
 }
 
 export function trackLeadError(error: string): void {
