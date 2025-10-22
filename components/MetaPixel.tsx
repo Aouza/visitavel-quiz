@@ -8,22 +8,6 @@
 
 import { useEffect } from "react";
 
-// Tipagem estendida do window.fbq
-declare global {
-  interface Window {
-    fbq?: {
-      (action: string, ...args: unknown[]): void;
-      instance?: boolean;
-      callMethod?: (...args: unknown[]) => void;
-      queue: unknown[];
-      push: (args: unknown) => void;
-      loaded: boolean;
-      version: string;
-    };
-    _fbq?: unknown;
-  }
-}
-
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
 export default function MetaPixel() {
@@ -31,7 +15,8 @@ export default function MetaPixel() {
     if (!FB_PIXEL_ID) return;
 
     // Verifica se o pixel já foi inicializado (evita duplicação)
-    if (window.fbq && window.fbq.instance) {
+    // @ts-ignore - propriedade customizada para controle de inicialização
+    if (window.fbq && (window.fbq as any).__initialized) {
       return;
     }
 
@@ -61,9 +46,10 @@ export default function MetaPixel() {
     );
 
     // Inicializa o Pixel apenas UMA vez
-    if (window.fbq && !window.fbq.instance) {
+    if (window.fbq && !(window.fbq as any).__initialized) {
       window.fbq("init", FB_PIXEL_ID);
-      window.fbq.instance = true; // Marca como inicializado
+      // @ts-ignore - propriedade customizada para controle de inicialização
+      (window.fbq as any).__initialized = true; // Marca como inicializado
       // NÃO dispara PageView aqui - será disparado pelo AnalyticsProvider
     }
   }, []);
