@@ -17,8 +17,12 @@ export function ClarityAnalytics() {
       return;
     }
 
-    // Initialize Clarity
+    // Initialize Clarity with privacy settings
     Clarity.init(CLARITY_PROJECT_ID);
+
+    // Set default consent to false for GDPR compliance
+    // User must explicitly consent before tracking
+    Clarity.consent(false);
   }, []);
 
   return null;

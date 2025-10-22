@@ -5,6 +5,7 @@ import Script from "next/script";
 import AnalyticsProvider from "./providers/AnalyticsProvider";
 import MetaPixel from "@/components/MetaPixel";
 import { ClarityAnalytics } from "@/components/Clarity";
+import { ClarityConsent } from "@/components/ClarityConsent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,6 +57,7 @@ export default function RootLayout({
         <AnalyticsProvider />
         <MetaPixel />
         <ClarityAnalytics />
+        <ClarityConsent />
         <main className="min-h-screen">{children}</main>
 
         {/* Footer */}
