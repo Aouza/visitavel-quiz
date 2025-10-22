@@ -23,7 +23,9 @@ interface LeadPayload {
   quizCompletedAt?: string;
 }
 
-const TMP_DIR = join(process.cwd(), "tmp");
+// Em produção (serverless), use /tmp que é o único diretório com permissão de escrita
+// Em local, vai usar ./tmp
+const TMP_DIR = process.env.VERCEL ? "/tmp" : join(process.cwd(), "tmp");
 const LEADS_FILE = join(TMP_DIR, "leads.jsonl");
 
 async function saveLeadToFile(lead: LeadPayload): Promise<void> {
@@ -129,10 +131,15 @@ export async function POST(request: NextRequest) {
       }`
     );
 
-    // Sempre salvar no arquivo como backup/fallback
-    console.log("[Lead] 💾 Salvando no arquivo local...");
-    await saveLeadToFile(enrichedLead);
-    console.log("[Lead] ✅ Lead salvo no arquivo com sucesso!");
+    // Salvar no arquivo como backup/fallback (pode falhar em serverless)
+    try {
+      console.log("[Lead] 💾 Tentando salvar no arquivo local...");
+      await saveLeadToFile(enrichedLead);
+      console.log("[Lead] ✅ Lead salvo no arquivo com sucesso!");
+    } catch (fileError) {
+      console.error("[Lead] ⚠️ Não foi possível salvar no arquivo (normal em serverless):", fileError);
+      // Não quebra a requisição se não conseguir salvar no arquivo
+    }
 
     return NextResponse.json({
       ok: true,
