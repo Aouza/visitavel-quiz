@@ -418,9 +418,7 @@ export function ElegantResultCard({
                 size="lg"
                 className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-4 md:px-10 py-2.5 md:py-4 text-sm md:text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
               >
-                <span className="text-center">
-                  Ver Relatório Completo
-                </span>
+                <span className="text-center">Ver Relatório Completo</span>
                 <ArrowRight className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0" />
               </Button>
               <p className="text-xs text-slate-500 mt-3 text-center md:text-left">
