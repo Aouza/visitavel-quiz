@@ -53,7 +53,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                   value={field.value as string}
                   onChange={field.onChange}
                   max={new Date().toISOString().split("T")[0]}
-                  className="max-w-md h-14 text-base rounded-2xl border-slate-300 focus:border-slate-900 focus:ring-slate-900"
+                  className="max-w-md h-12 md:h-14 text-sm md:text-base rounded-2xl border-slate-300 focus:border-slate-900 focus:ring-slate-900"
                   aria-label={question.title}
                 />
               </div>

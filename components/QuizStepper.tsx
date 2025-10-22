@@ -298,7 +298,7 @@ export function QuizStepper() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50 min-h-screen">
-      <div className="w-full max-w-3xl mx-auto px-4 py-6 md:py-12 lg:py-16">
+      <div className="w-full max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8 lg:py-12">
         {/* Progress Header */}
         <div className="mb-6 md:mb-12">
           <ProgressHeader
@@ -310,7 +310,7 @@ export function QuizStepper() {
         {/* Question Card */}
         <div className="relative overflow-hidden rounded-2xl md:rounded-[32px] border border-slate-200 bg-white shadow-sm mb-6 md:mb-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.04),_transparent_70%)]" />
-          <div className="relative px-5 md:px-6 lg:px-10 py-8 md:py-10 lg:py-12 min-h-[300px] md:min-h-[400px]">
+          <div className="relative px-4 md:px-6 lg:px-10 py-6 md:py-10 lg:py-12 min-h-[280px] md:min-h-[400px]">
             <QuizQuestion
               question={currentQuestion}
               control={control}
