@@ -307,7 +307,7 @@ export function ElegantResultCard({
         "Descubra por que seu cérebro ainda busca essa pessoa — e como parar de reforçar isso",
       summary:
         "Entenda o padrão de comportamento que mantém você preso e aprenda a desativar esse ciclo de busca.",
-      cta: "Parar de Pensar",
+      cta: "Ver como parar de pensar nessa pessoa",
     },
     {
       icon: "🧠",
@@ -315,21 +315,21 @@ export function ElegantResultCard({
         "Entenda por que sua mente ainda repete a história — e como quebrar esse loop",
       summary:
         "Método prático para interromper o pensamento obsessivo e finalmente dormir em paz.",
-      cta: "Silenciar Mente",
+      cta: "Ver como silenciar minha mente",
     },
     {
       icon: "🌙",
       title: "Aprenda a reduzir o desejo de reconexão sem recaídas",
       summary:
         "Descubra por que seu corpo reage como se estivesse em crise e como equilibrar essa resposta.",
-      cta: "Lidar com Saudade",
+      cta: "Ver como lidar com a saudade",
     },
     {
       icon: "⚡",
       title: "Reconstrua sua autoestima sem depender de aprovação externa",
       summary:
         "Entenda como o término abalou sua confiança e o caminho para recuperá-la de verdade.",
-      cta: "Recuperar Confiança",
+      cta: "Ver como recuperar minha confiança",
     },
     {
       icon: "🌑",
@@ -344,7 +344,7 @@ export function ElegantResultCard({
         "Feche esse ciclo de forma madura, sem precisar apagar ou mandar mensagens",
       summary:
         "Método de fechamento simbólico que traz paz interna sem humilhação ou arrependimento.",
-      cta: "Encerrar com Dignidade",
+      cta: "Ver como encerrar com dignidade",
     },
     {
       icon: "🔮",
@@ -352,7 +352,7 @@ export function ElegantResultCard({
         "Recupere sua vitalidade e volte a sentir prazer nas pequenas coisas",
       summary:
         "Reative seu interesse pela vida: sono, apetite, vontade de sair e se cuidar.",
-      cta: "Voltar a Me Sentir Bem",
+      cta: "Ver como voltar a me sentir bem",
     },
     {
       icon: "🌅",
@@ -382,7 +382,7 @@ export function ElegantResultCard({
   );
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto space-y-8 md:space-y-16 pb-12 md:pb-24 px-3 md:px-4 text-slate-900 overflow-x-hidden min-h-screen">
+    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-3 md:px-4 text-slate-900 overflow-x-hidden min-h-screen">
       {/* 1. Header / abertura - PRIMEIRO IMPACTO */}
       <section className="space-y-6 md:space-y-8">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -416,9 +416,11 @@ export function ElegantResultCard({
               <Button
                 onClick={() => handleUnlockClick("hero_top")}
                 size="lg"
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-4 md:px-10 py-2.5 md:py-4 text-sm md:text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
               >
-                <span className="text-center">Ver Relatório Completo</span>
+                <span className="text-center">
+                  Quero ver o relatório completo agora
+                </span>
                 <ArrowRight className="h-4 w-4 md:h-5 md:w-5 flex-shrink-0" />
               </Button>
               <p className="text-xs text-slate-500 mt-3 text-center md:text-left">
@@ -1018,7 +1020,7 @@ export function ElegantResultCard({
               </div>
 
               <div className="grid gap-5 md:grid-cols-3 max-w-4xl mx-auto">
-                <div className="bg-slate-50 rounded-2xl p-4 md:p-6 border border-slate-200">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
                       <span className="text-white text-base font-bold">1</span>
@@ -1033,7 +1035,7 @@ export function ElegantResultCard({
                   </p>
                 </div>
 
-                <div className="bg-slate-50 rounded-2xl p-4 md:p-6 border border-slate-200">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
                       <span className="text-white text-base font-bold">2</span>
@@ -1048,7 +1050,7 @@ export function ElegantResultCard({
                   </p>
                 </div>
 
-                <div className="bg-slate-50 rounded-2xl p-4 md:p-6 border border-slate-200">
+                <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="h-10 w-10 rounded-xl bg-slate-900 flex items-center justify-center">
                       <span className="text-white text-base font-bold">3</span>
@@ -1394,9 +1396,9 @@ export function ElegantResultCard({
                 <Button
                   onClick={() => handleUnlockClick("bloco_2_cta")}
                   size="lg"
-                  className="w-full md:w-auto inline-flex items-center gap-2 md:gap-3 rounded-full bg-slate-900 px-4 md:px-10 py-2.5 md:py-4 text-sm md:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+                  className="w-full md:w-auto inline-flex items-center gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
                 >
-                  Ver Relatório Completo
+                  Desbloquear Relatório Completo Agora
                   <ArrowRight className="h-5 w-5" />
                 </Button>
                 <p className="text-xs text-slate-500 mt-4 px-2">
@@ -1576,9 +1578,9 @@ export function ElegantResultCard({
           <Button
             onClick={() => handleUnlockClick("bloco_3_cta")}
             size="lg"
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-4 md:px-12 py-2.5 md:py-4 text-sm md:text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-12 py-4 text-base md:text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
           >
-            Quero Essa Diferença
+            Quero Sentir Essa Diferença Agora
             <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
           </Button>
           <p className="text-xs text-slate-500 mt-3 md:mt-4 px-2">
@@ -1704,11 +1706,11 @@ export function ElegantResultCard({
         <Button
           onClick={() => handleUnlockClick("final_cta")}
           size="lg"
-          className="w-full md:w-auto group relative inline-flex items-center justify-center gap-2 md:gap-3 overflow-hidden rounded-full bg-slate-900 px-4 md:px-12 py-2.5 md:py-5 text-sm md:text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
+          className="w-full md:w-auto group relative inline-flex items-center justify-center gap-2 md:gap-3 overflow-hidden rounded-full bg-slate-900 px-8 md:px-12 py-4 md:py-5 text-base md:text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
         >
           <span className="absolute inset-0 bg-gradient-to-r from-white/[0.08] via-white/[0.16] to-white/[0.08] opacity-0 transition-opacity duration-700 group-hover:opacity-100" />
           <span className="relative flex items-center gap-2">
-            Liberar Relatório
+            Liberar Relatório Completo Agora
             <ArrowRight className="h-5 w-5 md:h-6 md:w-6 transition-transform duration-500 group-hover:translate-x-1" />
           </span>
         </Button>

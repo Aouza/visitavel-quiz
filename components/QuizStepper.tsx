@@ -298,7 +298,7 @@ export function QuizStepper() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50 min-h-screen">
-      <div className="w-full max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8 lg:py-12">
+      <div className="w-full max-w-3xl mx-auto px-3 md:px-8 py-4 md:py-8 lg:py-12">
         {/* Progress Header */}
         <div className="mb-6 md:mb-12">
           <ProgressHeader

@@ -312,17 +312,17 @@ export async function POST(request: NextRequest) {
     const userZodiac = userBirthdate ? getZodiacSign(userBirthdate) : null;
     const exZodiac = userExBirthdate ? getZodiacSign(userExBirthdate) : null;
 
-    if (userZodiac) {
+        if (userZodiac) {
       userBehaviorTraits.push(
         ...insightToTraits(getZodiacInsights(userZodiac))
       );
-    }
+        }
 
     if (exZodiac) {
       exBehaviorTraits.push(...insightToTraits(getZodiacInsights(exZodiac)));
-    }
+      }
 
-    if (userZodiac && exZodiac) {
+        if (userZodiac && exZodiac) {
       compatibilityHighlights.push(
         ...insightToTraits(getCompatibilityInsights(userZodiac, exZodiac))
       );
@@ -336,15 +336,15 @@ export async function POST(request: NextRequest) {
           )
           .join("\n")
       : QUESTIONS.map((question) => {
-          const answer = answers[question.id];
-          const answerValue = Array.isArray(answer) ? answer[0] : answer;
-          const selectedOption = question.options.find(
-            (opt) => opt.value === answerValue
-          );
+      const answer = answers[question.id];
+      const answerValue = Array.isArray(answer) ? answer[0] : answer;
+      const selectedOption = question.options.find(
+        (opt) => opt.value === answerValue
+      );
           return `Pergunta: ${question.title}\nResposta: ${
             selectedOption?.label || "Não respondida"
           }\n`;
-        }).join("\n");
+    }).join("\n");
 
     const segmentContent = getSegmentContent(segment);
     const userFirstName = deriveFirstName(answers);

@@ -110,7 +110,7 @@ export default function QuizStartPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center px-4 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center px-3 md:px-4 py-12">
       <div className="w-full max-w-2xl space-y-8">
         {/* Header com contexto */}
         <div className="text-center space-y-4">

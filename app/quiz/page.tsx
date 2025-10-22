@@ -89,7 +89,7 @@ export default function QuizPage() {
   // Landing page
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <div className="max-w-4xl mx-auto px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
+      <div className="max-w-4xl mx-auto px-3 md:px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
         {/* Hero */}
         <section className="space-y-6 md:space-y-8">
           <div className="flex items-center gap-2 md:gap-3 text-xs uppercase tracking-[0.25em] md:tracking-[0.35em] text-slate-400">

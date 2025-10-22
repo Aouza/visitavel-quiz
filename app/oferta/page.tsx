@@ -39,7 +39,7 @@ function OfertaContent() {
 
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      <div className="max-w-6xl mx-auto px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
+      <div className="max-w-6xl mx-auto px-3 md:px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
         {/* Header com resultado */}
         {content && (
           <section className="space-y-6">

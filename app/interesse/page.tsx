@@ -45,7 +45,7 @@ function InteresseContent() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center px-4 py-8 md:py-12">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-50 flex items-center justify-center px-3 md:px-4 py-8 md:py-12">
       <div className="w-full max-w-2xl">
         {/* Card principal */}
         <div className="relative overflow-hidden rounded-2xl md:rounded-[32px] border-2 border-slate-200 bg-white shadow-xl">
