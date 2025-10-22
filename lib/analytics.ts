@@ -33,9 +33,10 @@ import {
 export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 
 export const EventNames = {
-  // Quiz
-  QUIZ_VIEW: "quiz_view",
+  // Landing & Quiz
+  LANDING_VIEW: "landing_view",
   QUIZ_CTA_CLICK: "quiz_cta_click",
+  QUIZ_STARTED: "quiz_started",
   QUIZ_COMPLETED: "quiz_completed",
 
   // Lead
@@ -143,12 +144,18 @@ export function gtagPageView(url: string): void {
  * Helpers específicos por evento
  */
 
-export function trackQuizView(): void {
-  track(EventNames.QUIZ_VIEW);
+export function trackLandingView(): void {
+  track(EventNames.LANDING_VIEW);
 }
 
 export function trackQuizCTAClick(): void {
   track(EventNames.QUIZ_CTA_CLICK);
+}
+
+export function trackQuizStarted(hasLead: boolean): void {
+  track(EventNames.QUIZ_STARTED, {
+    has_lead: hasLead,
+  });
 }
 
 export function trackQuizCompleted(

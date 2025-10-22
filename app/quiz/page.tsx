@@ -9,7 +9,11 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
-import { trackQuizView, trackQuizCTAClick, gtagEvent } from "@/lib/analytics";
+import {
+  trackLandingView,
+  trackQuizCTAClick,
+  gtagEvent,
+} from "@/lib/analytics";
 import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { Check, ArrowRight } from "lucide-react";
 
@@ -25,12 +29,12 @@ export default function QuizPage() {
     const leadInfo = getLeadInfo();
     setHasLead(!!leadInfo);
 
-    // Track visualização (GA4) - sempre executa
-    trackQuizView();
+    // Track visualização da landing page (GA4) - sempre executa
+    trackLandingView();
 
-    // Track visualização (Meta - quiz_view) - proteção contra duplicação
-    trackMetaEventOnce("quiz_view", {
-      eventName: "quiz_view",
+    // Track visualização da landing (Meta - landing_view) - proteção contra duplicação
+    trackMetaEventOnce("landing_view", {
+      eventName: "landing_view",
       customData: {
         page: "landing",
         has_lead: leadInfo ? 1 : 0,

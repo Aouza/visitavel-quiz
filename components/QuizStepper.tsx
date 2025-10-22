@@ -20,9 +20,10 @@ import {
   clearQuizProgress,
   saveQuizResult,
 } from "@/lib/storage";
-import { trackQuizCompleted } from "@/lib/analytics";
+import { trackQuizCompleted, trackQuizStarted } from "@/lib/analytics";
 import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
+import { getLeadInfo } from "@/lib/storage";
 
 const extractEmojiFromOption = (option?: Option) => {
   if (!option) return undefined;
@@ -69,6 +70,24 @@ export function QuizStepper() {
     defaultValues,
     mode: "all",
   });
+
+  // Track quando o quiz REALMENTE inicia (primeira pergunta aparece)
+  useEffect(() => {
+    const leadInfo = getLeadInfo();
+    const hasLead = !!leadInfo;
+
+    // Track GA4
+    trackQuizStarted(hasLead);
+
+    // Track Meta - quiz_started (primeira pergunta apareceu)
+    trackMetaEventOnce("quiz_started", {
+      eventName: "quiz_started",
+      customData: {
+        has_lead: hasLead ? 1 : 0,
+        total_questions: QUESTIONS.length,
+      },
+    });
+  }, []); // Executa apenas uma vez quando o componente é montado
 
   // Registrar todos os campos uma única vez e carregar progresso salvo
   useEffect(() => {
