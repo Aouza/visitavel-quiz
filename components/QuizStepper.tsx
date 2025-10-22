@@ -99,10 +99,6 @@ export function QuizStepper() {
   // Salvar progresso automaticamente usando estado local
   useEffect(() => {
     const saveProgress = () => {
-      console.log("💾 Auto-save: localAnswers =", localAnswers);
-      console.log("💾 Auto-save: watch() =", allFormValues);
-      console.log("💾 Auto-save: getValues() =", getValues());
-
       // Usar estado local que mantém as respostas
       const answersToSave =
         Object.keys(localAnswers).length > 0 ? localAnswers : allFormValues;
@@ -125,7 +121,6 @@ export function QuizStepper() {
   // Sincronizar estado local com React Hook Form
   useEffect(() => {
     if (currentAnswer && currentAnswer !== "") {
-      console.log(`🔄 Sincronizando: ${currentQuestion.id} = ${currentAnswer}`);
       setLocalAnswers((prev) => ({
         ...prev,
         [currentQuestion.id]: currentAnswer,
@@ -138,7 +133,6 @@ export function QuizStepper() {
   useEffect(() => {
     const handleQuizAnswer = (event: CustomEvent) => {
       const { questionId, value } = event.detail;
-      console.log(`🎯 Evento recebido: ${questionId} = ${value}`);
       setLocalAnswers((prev) => ({
         ...prev,
         [questionId]: value,
@@ -161,22 +155,9 @@ export function QuizStepper() {
       currentAnswer !== "" &&
       (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true));
 
-  // Debug: log da resposta atual
-  console.log(
-    `🔍 Pergunta ${currentStep}: ${currentQuestion.id} = "${currentAnswer}"`
-  );
-  console.log(`🔍 isAnswered: ${isAnswered}`);
-  console.log(`🔍 required: ${currentQuestion.required}`);
-  console.log(`🔍 localAnswers:`, localAnswers);
-
   const handleNext = handleSubmit(() => {
-    console.log(
-      `🚀 handleNext chamado - currentStep: ${currentStep}, isAnswered: ${isAnswered}`
-    );
-
     // Perguntas opcionais podem ser puladas
     if (!isAnswered && currentQuestion.required) {
-      console.log(`❌ Não pode avançar - pergunta obrigatória não respondida`);
       return;
     }
 
@@ -184,11 +165,9 @@ export function QuizStepper() {
     trackQuizStep(currentStep + 1, QUESTIONS.length);
 
     if (currentStep < QUESTIONS.length - 1) {
-      console.log(`➡️ Avançando para step ${currentStep + 1}`);
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
-      console.log(`🏁 Última pergunta - finalizando`);
       // Última pergunta - calcular resultado
       handleFinish();
     }
@@ -274,7 +253,6 @@ export function QuizStepper() {
         };
       });
 
-      console.log("🔍 Finalizando com respostas detalhadas:", detailedAnswers);
       const result = computeSegment(currentAnswers);
 
       // Salvar resultado final (mantém as respostas)

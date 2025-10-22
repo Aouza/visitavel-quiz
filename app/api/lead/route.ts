@@ -33,8 +33,6 @@ async function saveLeadToFile(lead: LeadPayload): Promise<void> {
     // Adicionar lead ao arquivo JSONL (uma linha por lead)
     const line = JSON.stringify(lead) + "\n";
     await writeFile(LEADS_FILE, line, { flag: "a" });
-
-    console.log("[Lead] Saved to file as fallback:", lead.email);
   } catch (error) {
     console.error("[Lead] Error saving to file:", error);
     throw error;
@@ -62,7 +60,6 @@ async function sendLeadToWebhook(lead: LeadPayload): Promise<boolean> {
       throw new Error(`Webhook returned ${response.status}`);
     }
 
-    console.log("[Lead] Successfully sent to webhook:", lead.email);
     return true;
   } catch (error) {
     console.error("[Lead] Error sending to webhook:", error);

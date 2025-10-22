@@ -66,9 +66,6 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
               <RadioGroup
                 value={field.value as string}
                 onValueChange={(value) => {
-                  console.log(
-                    `✅ RadioGroup onChange: ${question.id} = ${value}`
-                  );
                   field.onChange(value);
 
                   // Forçar sincronização imediata

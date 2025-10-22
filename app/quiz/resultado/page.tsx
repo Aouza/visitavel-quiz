@@ -43,7 +43,6 @@ function ResultContent() {
     // Tentar carregar resultado salvo primeiro
     const savedResult = loadQuizResult();
     if (savedResult?.answers) {
-      console.log("✅ Carregado resultado salvo:", savedResult);
       setQuizData({
         answers: savedResult.answers,
         scores: savedResult.scores,
@@ -52,7 +51,6 @@ function ResultContent() {
       // Fallback: tentar carregar do progresso em andamento
       const savedProgress = loadQuizProgress();
       if (savedProgress?.answers) {
-        console.log("⚠️ Carregado do progresso (fallback):", savedProgress);
         const result = computeSegment(savedProgress.answers);
         setQuizData({
           answers: savedProgress.answers,
@@ -60,7 +58,6 @@ function ResultContent() {
         });
       } else {
         // Se não houver dados salvos, redirecionar para o quiz
-        console.log("❌ Nenhum dado encontrado - redirecionando para o quiz");
         alert("Você precisa completar o quiz primeiro!");
         router.push("/quiz");
         return;

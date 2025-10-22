@@ -147,18 +147,15 @@ export function ElegantResultCard({
 
             // Validar se é um JSON válido do novo schema (tem header)
             if (parsed && typeof parsed === "object" && parsed.header) {
-              console.log("✅ Usando cache válido do modo 'free'");
               setReportPreview(parsed);
               setIsLoading(false);
               return;
             } else {
               // Cache inválido (modo antigo) - limpar e regenerar
-              console.log("⚠️ Cache inválido detectado - regenerando...");
               window.sessionStorage.removeItem(previewCacheKey);
             }
           } catch {
             // Cache com formato inválido - limpar e regenerar
-            console.log("⚠️ Cache corrompido - regenerando...");
             window.sessionStorage.removeItem(previewCacheKey);
           }
         }
@@ -176,11 +173,8 @@ export function ElegantResultCard({
           : undefined;
 
       try {
-        console.log("🚀 Chamando API com mode: free...");
-
         // Carregar informações do lead (nome, email, gender, etc.)
         const leadInfo = getLeadInfo();
-        console.log("📋 Lead info carregado:", leadInfo);
 
         // Adicionar o nome e gênero do lead às respostas
         const answersWithName = {
@@ -208,19 +202,18 @@ export function ElegantResultCard({
         });
 
         if (!response.ok) {
-          console.error("❌ API retornou erro:", response.status);
+          console.error("API retornou erro:", response.status);
           setHasError(true);
           setIsLoading(false);
           return;
         }
 
         const data = await response.json();
-        console.log("✅ Dados recebidos da API:", data);
         const preview = data.report ?? "";
 
         // Validar se preview é válido
         if (!preview) {
-          console.error("❌ API retornou resposta vazia");
+          console.error("API retornou resposta vazia");
           setHasError(true);
           setIsLoading(false);
           return;
@@ -228,15 +221,11 @@ export function ElegantResultCard({
 
         // Se for objeto, validar estrutura do novo schema (deve ter header)
         if (typeof preview === "object" && !preview.header) {
-          console.error(
-            "❌ API retornou JSON com estrutura inválida - falta header"
-          );
+          console.error("API retornou JSON com estrutura inválida - falta header");
           setHasError(true);
           setIsLoading(false);
           return;
         }
-
-        console.log("✅ Relatório válido recebido - novo schema confirmado");
 
         setReportPreview(preview);
         setHasError(false);
@@ -250,7 +239,7 @@ export function ElegantResultCard({
         if ((error as Error).name === "AbortError") {
           return;
         }
-        console.error("❌ Erro ao gerar preview:", error);
+        console.error("Erro ao gerar preview:", error);
         setHasError(true);
       } finally {
         if (!controller.signal.aborted) {

@@ -61,7 +61,6 @@ export function track(name: EventName, payload?: EventPayload): void {
         event: name,
         ...payload,
       });
-      console.log("[Analytics] GA4 Event:", name, payload);
     }
   } catch (error) {
     console.error("[Analytics] Error pushing to dataLayer:", error);
@@ -71,7 +70,6 @@ export function track(name: EventName, payload?: EventPayload): void {
   try {
     if (window.fbq) {
       window.fbq("trackCustom", name, payload || {});
-      console.log("[Analytics] Meta Pixel Event:", name, payload);
     }
   } catch (error) {
     console.error("[Analytics] Error tracking Meta Pixel:", error);
@@ -107,7 +105,6 @@ export function gtagEvent(action: string, params?: Record<string, any>): void {
   try {
     if (window.gtag) {
       window.gtag("event", action, params);
-      console.log("[Analytics] gtag Event:", action, params);
     }
   } catch (error) {
     console.error("[Analytics] Error sending gtag event:", error);
@@ -126,7 +123,6 @@ export function gtagPageView(url: string): void {
       window.gtag("config", GA_TRACKING_ID, {
         page_path: url,
       });
-      console.log("[Analytics] gtag PageView:", url);
     }
   } catch (error) {
     console.error("[Analytics] Error tracking gtag page view:", error);
