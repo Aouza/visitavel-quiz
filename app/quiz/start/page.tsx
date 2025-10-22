@@ -14,6 +14,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { saveLeadInfo, getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
 import { trackLeadSubmitted } from "@/lib/analytics";
+import { trackMetaEvent } from "@/lib/track-meta-event";
 import { Loader2, Heart, ArrowRight, Shield, Clock } from "lucide-react";
 
 export default function QuizStartPage() {
@@ -51,8 +52,26 @@ export default function QuizStartPage() {
         formData.gender
       );
 
-      // Track captura
+      // Track captura (GA4)
       trackLeadSubmitted(formData.email);
+
+      // 🆕 Track captura (Meta - Lead)
+      const nameParts = formData.name.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ") || undefined;
+
+      trackMetaEvent({
+        eventName: "Lead",
+        email: formData.email,
+        phone: formData.whatsapp,
+        firstName,
+        lastName,
+        gender: formData.gender,
+        customData: {
+          lead_source: "quiz_start_page",
+          gender: formData.gender || "not_informed",
+        },
+      });
 
       // Aguardar um pouquinho para dar feedback visual
       await new Promise((resolve) => setTimeout(resolve, 500));
@@ -165,7 +184,9 @@ export default function QuizStartPage() {
                       className="sr-only"
                     />
                     <span className="text-lg">👩</span>
-                    <span className="font-medium text-sm text-slate-900">Feminino</span>
+                    <span className="font-medium text-sm text-slate-900">
+                      Feminino
+                    </span>
                   </label>
 
                   <label
