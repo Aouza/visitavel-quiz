@@ -1,7 +1,8 @@
 /**
  * @file: analytics.ts
- * @responsibility: Rastreamento de eventos (GA4 + Meta Pixel)
- * @exports: track, trackPageView, EventNames
+ * @responsibility: Rastreamento de eventos (Google Analytics 4)
+ * @note: Meta Pixel é rastreado via lib/track-meta-event.ts
+ * @exports: track, trackPageView, EventNames, gtag functions
  */
 
 // Definir tipos para window
@@ -49,7 +50,8 @@ interface EventPayload {
 }
 
 /**
- * Envia evento para GA4 (dataLayer) e Meta Pixel (fbq)
+ * Envia evento para GA4 (dataLayer)
+ * Nota: Meta Pixel agora é rastreado via trackMetaEvent() para deduplicação
  */
 export function track(name: EventName, payload?: EventPayload): void {
   if (typeof window === "undefined") return;
@@ -66,14 +68,8 @@ export function track(name: EventName, payload?: EventPayload): void {
     console.error("[Analytics] Error pushing to dataLayer:", error);
   }
 
-  // Meta Pixel
-  try {
-    if (window.fbq) {
-      window.fbq("trackCustom", name, payload || {});
-    }
-  } catch (error) {
-    console.error("[Analytics] Error tracking Meta Pixel:", error);
-  }
+  // Meta Pixel foi REMOVIDO daqui para evitar duplicação
+  // Use trackMetaEvent() diretamente para eventos que precisam ir para Meta
 }
 
 /**
