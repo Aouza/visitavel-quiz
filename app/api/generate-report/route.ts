@@ -14,6 +14,13 @@ import {
   getCompatibilityInsights,
 } from "@/lib/astrology";
 import { ReportFreePayload } from "@/types/report-free";
+import {
+  sanitizeQuizAnswers,
+  validateQuizAnswers,
+  hasSQLInjection,
+  hasXSS,
+  SECURITY_HEADERS,
+} from "@/lib/security";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -277,12 +284,33 @@ export async function POST(request: NextRequest) {
     } = body;
     safeLog(`📊 Gerando relatório de entendimento - Segmento: ${segment}`);
 
+    // Security validation
     if (!segment || !answers) {
       return NextResponse.json(
         { error: "Segmento e respostas são obrigatórios" },
-        { status: 400 }
+        { status: 400, headers: SECURITY_HEADERS }
       );
     }
+
+    // Validate and sanitize inputs
+    if (!validateQuizAnswers(answers)) {
+      return NextResponse.json(
+        { error: "Dados inválidos detectados" },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Check for malicious patterns
+    const answersString = JSON.stringify(answers);
+    if (hasSQLInjection(answersString) || hasXSS(answersString)) {
+      return NextResponse.json(
+        { error: "Padrões suspeitos detectados" },
+        { status: 400, headers: SECURITY_HEADERS }
+      );
+    }
+
+    // Sanitize answers
+    const sanitizedAnswers = sanitizeQuizAnswers(answers);
 
     if (!process.env.OPENAI_API_KEY) {
       console.error("OPENAI_API_KEY não configurada");
@@ -293,12 +321,12 @@ export async function POST(request: NextRequest) {
     }
 
     const userBirthdate =
-      birthdate || (answers.birthdate as string) || undefined;
+      birthdate || (sanitizedAnswers.birthdate as string) || undefined;
     const userExBirthdate =
-      exBirthdate || (answers.exBirthdate as string) || undefined;
+      exBirthdate || (sanitizedAnswers.exBirthdate as string) || undefined;
 
-    const daysSinceBreakup = deriveDaysSinceBreakup(answers);
-    const symptomFlags = deriveSymptomFlags(answers);
+    const daysSinceBreakup = deriveDaysSinceBreakup(sanitizedAnswers);
+    const symptomFlags = deriveSymptomFlags(sanitizedAnswers);
 
     const userBehaviorTraits: string[] = [];
     const exBehaviorTraits: string[] = [];
@@ -673,13 +701,16 @@ RESTRIÇÕES CRÍTICAS:
       throw new Error("Erro ao processar relatório (parse JSON)");
     }
 
-    return NextResponse.json({
-      success: true,
-      report,
-      segment,
-      days_since_breakup: daysSinceBreakup ?? null,
-      generatedAt: new Date().toISOString(),
-    });
+    return NextResponse.json(
+      {
+        success: true,
+        report,
+        segment,
+        days_since_breakup: daysSinceBreakup ?? null,
+        generatedAt: new Date().toISOString(),
+      },
+      { headers: SECURITY_HEADERS }
+    );
   } catch (error: any) {
     console.error("❌ ERRO GERAL ao gerar relatório:", error);
 
@@ -689,11 +720,14 @@ RESTRIÇÕES CRÍTICAS:
           error: "Erro ao processar solicitação",
           details: (error as any).message,
         },
-        { status: (error as any).status || 500 }
+        { status: (error as any).status || 500, headers: SECURITY_HEADERS }
       );
     }
 
     const msg = (error as Error)?.message || "Erro ao gerar relatório";
-    return NextResponse.json({ error: msg }, { status: 500 });
+    return NextResponse.json(
+      { error: msg },
+      { status: 500, headers: SECURITY_HEADERS }
+    );
   }
 }
