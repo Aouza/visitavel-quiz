@@ -307,7 +307,7 @@ export function ElegantResultCard({
         "Descubra por que seu cérebro ainda busca essa pessoa — e como parar de reforçar isso",
       summary:
         "Entenda o padrão de comportamento que mantém você preso e aprenda a desativar esse ciclo de busca.",
-      cta: "Ver como parar de pensar nessa pessoa",
+      cta: "Parar de Pensar",
     },
     {
       icon: "🧠",
@@ -315,28 +315,28 @@ export function ElegantResultCard({
         "Entenda por que sua mente ainda repete a história — e como quebrar esse loop",
       summary:
         "Método prático para interromper o pensamento obsessivo e finalmente dormir em paz.",
-      cta: "Ver como silenciar minha mente",
+      cta: "Silenciar Mente",
     },
     {
       icon: "🌙",
       title: "Aprenda a reduzir o desejo de reconexão sem recaídas",
       summary:
         "Descubra por que seu corpo reage como se estivesse em crise e como equilibrar essa resposta.",
-      cta: "Ver como lidar com a saudade",
+      cta: "Lidar com Saudade",
     },
     {
       icon: "⚡",
       title: "Reconstrua sua autoestima sem depender de aprovação externa",
       summary:
         "Entenda como o término abalou sua confiança e o caminho para recuperá-la de verdade.",
-      cta: "Ver como recuperar minha confiança",
+      cta: "Recuperar Confiança",
     },
     {
       icon: "🌑",
       title: "Pare de se comparar e de sentir que está atrasado na cura",
       summary:
         "Compreenda as fases ocultas de cada pessoa e libere-se da culpa e da comparação.",
-      cta: "Ver por que ele parece bem",
+      cta: "Por que Ele Parece Bem",
     },
     {
       icon: "🕯",
@@ -344,7 +344,7 @@ export function ElegantResultCard({
         "Feche esse ciclo de forma madura, sem precisar apagar ou mandar mensagens",
       summary:
         "Método de fechamento simbólico que traz paz interna sem humilhação ou arrependimento.",
-      cta: "Ver como encerrar com dignidade",
+      cta: "Encerrar com Dignidade",
     },
     {
       icon: "🔮",
@@ -352,14 +352,14 @@ export function ElegantResultCard({
         "Recupere sua vitalidade e volte a sentir prazer nas pequenas coisas",
       summary:
         "Reative seu interesse pela vida: sono, apetite, vontade de sair e se cuidar.",
-      cta: "Ver como voltar a me sentir bem",
+      cta: "Voltar a Me Sentir Bem",
     },
     {
       icon: "🌅",
       title: "Transforme essa dor em aprendizado e reconstrua sua identidade",
       summary:
         "Descubra o significado oculto por trás do fim e use isso como seu ponto de virada.",
-      cta: "Ver o que vem depois",
+      cta: "O que Vem Depois",
     },
   ];
 
