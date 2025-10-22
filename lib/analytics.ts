@@ -29,7 +29,6 @@ export const EventNames = {
   // Quiz
   QUIZ_VIEW: "quiz_view",
   QUIZ_CTA_CLICK: "quiz_cta_click",
-  QUIZ_STEP: "quiz_step",
   QUIZ_COMPLETED: "quiz_completed",
 
   // Lead
@@ -138,14 +137,6 @@ export function trackQuizView(): void {
 
 export function trackQuizCTAClick(): void {
   track(EventNames.QUIZ_CTA_CLICK);
-}
-
-export function trackQuizStep(stepNumber: number, totalSteps: number): void {
-  track(EventNames.QUIZ_STEP, {
-    step: stepNumber,
-    total_steps: totalSteps,
-    progress_percentage: Math.round((stepNumber / totalSteps) * 100),
-  });
 }
 
 export function trackQuizCompleted(

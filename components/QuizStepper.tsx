@@ -162,8 +162,6 @@ export function QuizStepper() {
       return;
     }
 
-    // Track step
-    trackQuizStep(currentStep + 1, QUESTIONS.length);
 
     if (currentStep < QUESTIONS.length - 1) {
       setCurrentStep((prev) => prev + 1);
