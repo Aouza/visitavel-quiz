@@ -11,6 +11,7 @@ import { Marquee } from "@/components/ui/marquee";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
 import { getLeadInfo } from "@/lib/storage";
+import { gtagEvent } from "@/lib/analytics";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { ReportFreePayload } from "@/types/report-free";
 
@@ -100,6 +101,20 @@ export function ElegantResultCard({
   const [isLoading, setIsLoading] = useState(true);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
   const [hasError, setHasError] = useState(false);
+
+  // Wrapper para adicionar tracking ao CTA principal
+  const handleUnlockClick = useCallback(
+    (location: string) => {
+      gtagEvent("cta_unlock_report", {
+        segment,
+        page: "/quiz/resultado",
+        location,
+      });
+      onPrimaryAction();
+    },
+    [segment, onPrimaryAction]
+  );
+
   const answersKey = useMemo(() => JSON.stringify(answers), [answers]);
   const scoresKey = useMemo(() => JSON.stringify(scores), [scores]);
   const answersPayload = useMemo(
@@ -394,7 +409,7 @@ export function ElegantResultCard({
             {/* CTA acima da dobra */}
             <div className="pt-4">
               <Button
-                onClick={onPrimaryAction}
+                onClick={() => handleUnlockClick("hero_top")}
                 size="lg"
                 className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-semibold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
               >
@@ -1363,7 +1378,7 @@ export function ElegantResultCard({
               {/* CTA */}
               <div className="text-center pt-6">
                 <Button
-                  onClick={onPrimaryAction}
+                  onClick={() => handleUnlockClick("bloco_2_cta")}
                   size="lg"
                   className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
                 >
@@ -1419,7 +1434,7 @@ export function ElegantResultCard({
 
                 <div className="flex-shrink-0">
                   <Button
-                    onClick={onPrimaryAction}
+                    onClick={() => handleUnlockClick("card_locked")}
                     className="inline-flex items-center gap-2 rounded-full bg-slate-800 px-5 py-2.5 text-xs font-semibold text-white transition-all hover:bg-slate-900 hover:shadow-md hover:scale-105"
                   >
                     <span className="text-sm">🔓</span>
@@ -1541,7 +1556,7 @@ export function ElegantResultCard({
         {/* CTA forte com urgência */}
         <div className="text-center pt-6">
           <Button
-            onClick={onPrimaryAction}
+            onClick={() => handleUnlockClick("bloco_3_cta")}
             size="lg"
             className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-12 py-4 text-lg font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
           >
@@ -1669,7 +1684,7 @@ export function ElegantResultCard({
         </div>
 
         <Button
-          onClick={onPrimaryAction}
+          onClick={() => handleUnlockClick("final_cta")}
           size="lg"
           className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-slate-900 px-12 py-5 text-lg font-bold text-white transition focus-visible:outline-none hover:bg-slate-800 hover:shadow-2xl hover:scale-105"
         >
@@ -1712,7 +1727,7 @@ export function ElegantResultCard({
                 </p>
               </div>
               <Button
-                onClick={onPrimaryAction}
+                onClick={() => handleUnlockClick("sticky_cta")}
                 size="sm"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-slate-900 px-5 py-2 text-sm font-semibold text-white transition hover:bg-slate-800"
               >

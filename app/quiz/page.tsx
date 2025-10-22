@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
-import { trackQuizView, trackQuizCTAClick } from "@/lib/analytics";
+import { trackQuizView, trackQuizCTAClick, gtagEvent } from "@/lib/analytics";
 import { Check, ArrowRight } from "lucide-react";
 
 export default function QuizPage() {
@@ -38,6 +38,11 @@ export default function QuizPage() {
 
   const handleStartClick = () => {
     trackQuizCTAClick();
+    gtagEvent("cta_start_quiz", {
+      page: "/quiz",
+      has_lead: hasLead,
+      source: "landing_page",
+    });
 
     if (hasLead) {
       // Já tem lead, ir direto pro quiz

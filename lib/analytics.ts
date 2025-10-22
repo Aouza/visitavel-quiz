@@ -8,6 +8,11 @@
 declare global {
   interface Window {
     dataLayer?: Array<Record<string, unknown>>;
+    gtag?: (
+      command: string,
+      target: string,
+      config?: Record<string, unknown>
+    ) => void;
     fbq?: (
       action: string,
       eventName: string,
@@ -15,6 +20,9 @@ declare global {
     ) => void;
   }
 }
+
+// Google Analytics Tracking ID (configurado via env)
+export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
 
 export const EventNames = {
   // Quiz
@@ -86,6 +94,42 @@ export function trackPageView(path: string, title?: string): void {
     }
   } catch (error) {
     console.error("[Analytics] Error tracking page view:", error);
+  }
+}
+
+/**
+ * Envia evento genérico para GA4 via gtag
+ * Útil para eventos personalizados do Google Analytics
+ */
+export function gtagEvent(action: string, params?: Record<string, any>): void {
+  if (typeof window === "undefined") return;
+
+  try {
+    if (window.gtag) {
+      window.gtag("event", action, params);
+      console.log("[Analytics] gtag Event:", action, params);
+    }
+  } catch (error) {
+    console.error("[Analytics] Error sending gtag event:", error);
+  }
+}
+
+/**
+ * Rastreia pageview manualmente no GA4 via gtag
+ * Útil para SPAs e navegação client-side (Next.js router)
+ */
+export function gtagPageView(url: string): void {
+  if (typeof window === "undefined" || !GA_TRACKING_ID) return;
+
+  try {
+    if (window.gtag) {
+      window.gtag("config", GA_TRACKING_ID, {
+        page_path: url,
+      });
+      console.log("[Analytics] gtag PageView:", url);
+    }
+  } catch (error) {
+    console.error("[Analytics] Error tracking gtag page view:", error);
   }
 }
 

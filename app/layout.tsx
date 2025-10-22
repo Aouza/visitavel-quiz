@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import AnalyticsProvider from "./providers/AnalyticsProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
   title: "Quiz Pós-Término | Descubra sua fase e receba orientações",
   description:
     "Descubra em que fase do pós-término você está e receba um relatório personalizado com orientações práticas para sua recuperação emocional.",
@@ -66,6 +68,7 @@ export default function RootLayout({
         )}
       </head>
       <body className={inter.className}>
+        <AnalyticsProvider />
         <main className="min-h-screen">{children}</main>
 
         {/* Footer */}

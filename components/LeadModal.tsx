@@ -26,7 +26,7 @@ import {
   normalizeWhatsApp,
 } from "@/lib/validators";
 import { saveLeadInfo } from "@/lib/storage";
-import { trackLeadSubmitted, trackLeadError } from "@/lib/analytics";
+import { trackLeadSubmitted, trackLeadError, gtagEvent } from "@/lib/analytics";
 import { getUTMs } from "@/lib/storage";
 
 interface LeadModalProps {
@@ -97,6 +97,11 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
 
       // Track sucesso
       trackLeadSubmitted(data.email);
+      gtagEvent("lead_capture", {
+        email_domain: data.email.split("@")[1] || "unknown",
+        gender: data.gender || "not_informed",
+        source: "quiz_flow",
+      });
 
       // Fechar modal e continuar
       onSuccess();
@@ -105,6 +110,10 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
         err instanceof Error ? err.message : "Erro desconhecido";
       setError(errorMessage);
       trackLeadError(errorMessage);
+      gtagEvent("lead_error", {
+        error: errorMessage,
+        step: "submit",
+      });
     } finally {
       setIsSubmitting(false);
     }
