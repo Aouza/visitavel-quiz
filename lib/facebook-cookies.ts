@@ -23,7 +23,6 @@ export function ensureFacebookCookies(): void {
     document.cookie = `_fbc=${value}; Path=/; Max-Age=${
       60 * 60 * 24 * 90
     }; SameSite=Lax`;
-    console.log("[Facebook Cookies] 🍪 _fbc sintetizado a partir de fbclid");
   }
 
   // 2. Criar _fbp se não existir (fallback para ambientes com bloqueio)
@@ -34,7 +33,6 @@ export function ensureFacebookCookies(): void {
     document.cookie = `_fbp=${value}; Path=/; Max-Age=${
       60 * 60 * 24 * 365 * 2
     }; SameSite=Lax`;
-    console.log("[Facebook Cookies] 🍪 _fbp criado (fallback)");
   }
 }
 
