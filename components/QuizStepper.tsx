@@ -20,7 +20,7 @@ import {
   clearQuizProgress,
   saveQuizResult,
 } from "@/lib/storage";
-import { trackQuizStep, trackQuizCompleted } from "@/lib/analytics";
+import { trackQuizCompleted } from "@/lib/analytics";
 import { trackMetaEvent } from "@/lib/track-meta-event";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 

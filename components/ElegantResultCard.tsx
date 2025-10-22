@@ -11,7 +11,7 @@ import { Marquee } from "@/components/ui/marquee";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
 import { getLeadInfo } from "@/lib/storage";
-import { gtagEvent } from "@/lib/analytics";
+import { gtagEvent, trackViewReportLocked } from "@/lib/analytics";
 import { trackMetaEvent } from "@/lib/track-meta-event";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { ReportFreePayload } from "@/types/report-free";
@@ -287,7 +287,10 @@ export function ElegantResultCard({
   const handleScrollToLocked = useCallback(() => {
     const lockedZone = document.getElementById("zona-bloqueada");
     lockedZone?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
+
+    // Track when user views locked sections
+    trackViewReportLocked(segment);
+  }, [segment]);
 
   const handleRetry = useCallback(() => {
     setHasError(false);
@@ -299,6 +302,34 @@ export function ElegantResultCard({
     // Force re-fetch
     window.location.reload();
   }, [previewCacheKey]);
+
+  // Track when user scrolls to locked sections
+  useEffect(() => {
+    const handleScroll = () => {
+      const lockedZone = document.getElementById("zona-bloqueada");
+      if (lockedZone) {
+        const rect = lockedZone.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+
+        if (isVisible) {
+          trackViewReportLocked(segment);
+        }
+      }
+    };
+
+    // Add scroll listener with debounce
+    let timeoutId: NodeJS.Timeout;
+    const debouncedScroll = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(handleScroll, 500);
+    };
+
+    window.addEventListener("scroll", debouncedScroll);
+    return () => {
+      window.removeEventListener("scroll", debouncedScroll);
+      clearTimeout(timeoutId);
+    };
+  }, [segment]);
 
   const lockedSections = [
     {

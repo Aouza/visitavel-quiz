@@ -41,6 +41,9 @@ export const EventNames = {
   CTA_CLICK_CHECKOUT: "cta_click_checkout",
   ORDER_BUMP_VIEW: "order_bump_view",
   ORDER_BUMP_CLICK: "order_bump_click",
+
+  // Report
+  VIEW_REPORT_LOCKED: "view_report_locked",
 } as const;
 
 export type EventName = (typeof EventNames)[keyof typeof EventNames];
@@ -190,4 +193,10 @@ export function trackOrderBumpView(): void {
 
 export function trackOrderBumpClick(): void {
   track(EventNames.ORDER_BUMP_CLICK);
+}
+
+export function trackViewReportLocked(segment: string): void {
+  track(EventNames.VIEW_REPORT_LOCKED, {
+    segment,
+  });
 }
