@@ -44,7 +44,6 @@ async function sendLeadToWebhook(lead: LeadPayload): Promise<boolean> {
   const webhookUrl = process.env.LEAD_WEBHOOK_URL;
 
   if (!webhookUrl) {
-    console.warn("[Lead] No webhook URL configured");
     return false;
   }
 

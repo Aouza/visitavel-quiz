@@ -30,8 +30,6 @@ async function saveEventToFile(event: EventPayload): Promise<void> {
     // Adicionar evento ao arquivo JSONL
     const line = JSON.stringify(event) + "\n";
     await writeFile(EVENTS_FILE, line, { flag: "a" });
-
-    console.log("[Event] Saved:", event.event);
   } catch (error) {
     console.error("[Event] Error saving to file:", error);
   }
