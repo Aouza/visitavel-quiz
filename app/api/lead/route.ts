@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import { existsSync } from "fs";
 import { join } from "path";
+import { sendMetaEvent } from "@/lib/meta-capi";
 
 interface LeadPayload {
   email: string;
@@ -91,6 +92,31 @@ export async function POST(request: NextRequest) {
       ...body,
       timestamp: body.timestamp || new Date().toISOString(),
     };
+
+    // Coletar dados para Meta Conversion API
+    const ipAddress = (request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown") as string;
+    const userAgent = request.headers.get("user-agent") || undefined;
+    const eventSourceUrl =
+      request.headers.get("referer") ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      "https://quiz.visitavel.com";
+
+    // Enviar evento Lead para Meta Conversion API (server-side tracking)
+    sendMetaEvent({
+      eventName: "Lead",
+      email: enrichedLead.email,
+      phone: enrichedLead.whatsapp,
+      ipAddress,
+      userAgent,
+      eventSourceUrl,
+      customData: {
+        lead_source: "quiz",
+      },
+    }).catch((error) => {
+      console.error("[Lead] Meta CAPI error (non-blocking):", error);
+    });
 
     // Tentar enviar para webhook
     const webhookSuccess = await sendLeadToWebhook(enrichedLead);
