@@ -65,7 +65,20 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
             return (
               <RadioGroup
                 value={field.value as string}
-                onValueChange={field.onChange}
+                onValueChange={(value) => {
+                  console.log(
+                    `✅ RadioGroup onChange: ${question.id} = ${value}`
+                  );
+                  field.onChange(value);
+
+                  // Forçar sincronização imediata
+                  setTimeout(() => {
+                    const event = new CustomEvent("quizAnswer", {
+                      detail: { questionId: question.id, value },
+                    });
+                    window.dispatchEvent(event);
+                  }, 0);
+                }}
                 className="space-y-3"
                 aria-label={question.title}
               >

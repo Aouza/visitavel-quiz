@@ -1,0 +1,246 @@
+{
+  "success": true,
+  "report": {
+    "headline": "Relatório de Pós-Término: Fase de Abstinência",
+    "subheadline": "Entenda sua experiência e como avançar.",
+    "progress": {
+      "revealed": 1,
+      "total": 8
+    },
+    "sections": [
+      {
+        "id": "pensar_de_novo",
+        "icon": "🧠",
+        "title": "Por que você volta a pensar nessa pessoa",
+        "severity": "high",
+        "summary": "É comum sentir a necessidade de relembrar momentos do relacionamento. Isso acontece porque o cérebro se acostuma com a presença da pessoa e a ausência gera um vazio.",
+        "insight": "Quando um relacionamento termina, o cérebro pode entrar em um estado de abstinência, similar ao que ocorre com substâncias viciantes. A liberação de dopamina durante o relacionamento cria um padrão que, ao ser interrompido, gera um desejo intenso de retorno.",
+        "bullets": {
+          "voce_pode_dizer_que": [
+            "Sinto falta das conversas que tínhamos.",
+            "Parece que não consigo parar de pensar nele(a).",
+            "Às vezes, idealizo momentos que vivemos juntos."
+          ],
+          "voce_vai_perceber": [
+            "Pensamentos frequentes sobre a pessoa.",
+            "Dificuldade em se concentrar em outras atividades.",
+            "Desejo de verificar redes sociais para saber sobre ele(a)."
+          ],
+          "o_que_fazer_agora": [
+            "Anote suas memórias boas e ruins sobre o relacionamento.",
+            "Defina um horário específico para pensar sobre isso.",
+            "Evite redes sociais por 24 horas."
+          ]
+        },
+        "callouts": [
+          {
+            "type": "success",
+            "title": "Reconheça seus sentimentos",
+            "body": "É normal sentir saudade e confusão."
+          },
+          {
+            "type": "warning",
+            "title": "Cuidado com a idealização",
+            "body": "Lembre-se dos motivos que levaram ao término."
+          }
+        ]
+      },
+      {
+        "id": "jeito_de_amar",
+        "icon": "💗",
+        "title": "O que o seu jeito de amar revela sobre como você se conecta",
+        "severity": "medium",
+        "summary": "Seu estilo de amar pode ser intenso e envolvente, o que pode dificultar a separação emocional. Você pode ter uma tendência a se apegar rapidamente.",
+        "insight": "Pessoas que se conectam de forma intensa muitas vezes têm um padrão de amor que se baseia na entrega total. Isso pode levar a uma dependência emocional, tornando a recuperação mais desafiadora.",
+        "bullets": {
+          "voce_pode_dizer_que": [
+            "Amo intensamente e me entrego completamente.",
+            "Sinto que preciso da presença da pessoa para ser feliz.",
+            "É difícil imaginar minha vida sem ele(a)."
+          ],
+          "voce_vai_perceber": [
+            "Sentimentos de vazio quando não estou com a pessoa.",
+            "Dificuldade em me envolver em novas relações.",
+            "Tendência a idealizar relacionamentos passados."
+          ],
+          "o_que_fazer_agora": [
+            "Identifique suas necessidades emocionais e escreva-as.",
+            "Pratique a autoafirmação diariamente.",
+            "Busque atividades que aumentem sua autoestima."
+          ]
+        },
+        "callouts": [
+          {
+            "type": "success",
+            "title": "Você é capaz de amar profundamente",
+            "body": "Isso é uma força, não uma fraqueza."
+          },
+          {
+            "type": "warning",
+            "title": "Cuidado com a dependência emocional",
+            "body": "Busque equilíbrio em suas relações."
+          }
+        ]
+      },
+      {
+        "id": "insuficiencia",
+        "icon": "😔",
+        "title": "Por que você sente que deu tudo de si e ainda assim não foi suficiente",
+        "severity": "high",
+        "summary": "É comum sentir que você fez o máximo, mas isso não foi reconhecido. Essa sensação pode gerar um ciclo de culpa e autocrítica.",
+        "insight": "A percepção de insuficiência muitas vezes está ligada a expectativas não atendidas. Quando investimos muito em alguém, a frustração é maior quando o resultado não é o esperado.",
+        "bullets": {
+          "voce_pode_dizer_que": [
+            "Eu fiz tudo que podia por ele(a).",
+            "Sinto que não fui suficiente.",
+            "Me culpo pelo término."
+          ],
+          "voce_vai_perceber": [
+            "Pensamentos negativos sobre si mesmo.",
+            "Comparações com outras pessoas.",
+            "Dificuldade em aceitar o término."
+          ],
+          "o_que_fazer_agora": [
+            "Escreva uma carta para si mesmo, reconhecendo seus esforços.",
+            "Pratique a autocompaixão diariamente.",
+            "Converse com amigos sobre suas emoções."
+          ]
+        },
+        "callouts": [
+          {
+            "type": "success",
+            "title": "Você fez o seu melhor",
+            "body": "Reconheça isso e valorize-se."
+          },
+          {
+            "type": "warning",
+            "title": "Evite a autocrítica excessiva",
+            "body": "Isso só traz mais dor."
+          }
+        ]
+      },
+      {
+        "id": "corpo_sintomas",
+        "icon": "⚠️",
+        "title": "O que o seu corpo está tentando te dizer através dos sintomas",
+        "severity": "medium",
+        "summary": "Os sintomas físicos podem ser um reflexo do seu estado emocional. Estresse e ansiedade podem se manifestar de várias formas no corpo.",
+        "insight": "Quando estamos emocionalmente abalados, o corpo reage. Isso pode incluir insônia, perda de apetite ou até dores físicas. É importante prestar atenção a esses sinais.",
+        "bullets": {
+          "voce_pode_dizer_que": [
+            "Estou sempre cansado(a) e sem energia.",
+            "Sinto dores de cabeça frequentes.",
+            "Meu apetite mudou muito."
+          ],
+          "voce_vai_perceber": [
+            "Dificuldade para dormir.",
+            "Mudanças no peso.",
+            "Tensão muscular."
+          ],
+          "o_que_fazer_agora": [
+            "Pratique exercícios físicos regulares.",
+            "Experimente técnicas de relaxamento, como meditação.",
+            "Mantenha uma alimentação saudável e equilibrada."
+          ]
+        },
+        "callouts": [
+          {
+            "type": "success",
+            "title": "Seu corpo está tentando se comunicar",
+            "body": "Preste atenção aos sinais."
+          },
+          {
+            "type": "warning",
+            "title": "Não ignore os sintomas físicos",
+            "body": "Busque ajuda se necessário."
+          }
+        ]
+      },
+      {
+        "id": "proximos_passos",
+        "icon": "✓",
+        "title": "O que vem agora: da compreensão para a ação",
+        "severity": "high",
+        "summary": "Entender suas emoções é o primeiro passo. Agora, é hora de agir para se recuperar e seguir em frente.",
+        "insight": "A transição da dor para a recuperação exige ação. Ao tomar pequenas medidas, você começa a se libertar do ciclo de sofrimento.",
+        "bullets": {
+          "voce_pode_dizer_que": [
+            "Quero me sentir melhor.",
+            "Estou pronto(a) para seguir em frente.",
+            "Preciso de ajuda para isso."
+          ],
+          "voce_vai_perceber": [
+            "Mudanças na sua disposição.",
+            "Maior clareza emocional.",
+            "Menos necessidade de contato com o ex."
+          ],
+          "o_que_fazer_agora": [
+            "Defina metas pequenas e alcançáveis para o dia.",
+            "Busque apoio de amigos ou terapia.",
+            "Dedique tempo a novos hobbies ou interesses."
+          ]
+        },
+        "callouts": [
+          {
+            "type": "success",
+            "title": "Você está no caminho da recuperação",
+            "body": "Cada passo conta."
+          },
+          {
+            "type": "warning",
+            "title": "Não se apresse",
+            "body": "A recuperação leva tempo."
+          }
+        ]
+      }
+    ],
+    "nextBlock": {
+      "lockwallSummary": "Existem 7 processos emocionais críticos ainda bloqueados — e eles explicam por que a dor volta.",
+      "lockedChapters": [
+        {
+          "id": "autoestima",
+          "title": "Por que o fim abalou sua autoestima",
+          "oneLine": "Como reconstruir sua percepção de valor"
+        },
+        {
+          "id": "comparacao",
+          "title": "Por que ele parece bem e você sofre",
+          "oneLine": "Entenda os tempos diferentes de processamento"
+        },
+        {
+          "id": "fechamento",
+          "title": "Como encerrar sem apagar a história",
+          "oneLine": "Criar um fechamento interno real"
+        },
+        {
+          "id": "pensamento_obsessivo",
+          "title": "Como parar o loop mental",
+          "oneLine": "Técnicas para interromper pensamentos recorrentes"
+        },
+        {
+          "id": "reconstrucao",
+          "title": "Como reconstruir sua identidade",
+          "oneLine": "Voltar a saber quem você é sem essa pessoa"
+        },
+        {
+          "id": "recaidas",
+          "title": "Como evitar recaídas emocionais",
+          "oneLine": "Protocolos para não voltar ao ciclo"
+        },
+        {
+          "id": "injustica",
+          "title": "Como lidar com a sensação de injustiça",
+          "oneLine": "Processar o descompasso emocional"
+        }
+      ],
+      "cta": {
+        "label": "Desbloquear relatório completo",
+        "hint": "Veja o que ainda te prende"
+      }
+    },
+    "disclaimer": "Este diagnóstico foi gerado especificamente para você, baseado em suas respostas do questionário."
+  },
+  "segment": "abstinencia",
+  "mode": "free",
+  "generatedAt": "2025-10-21T19:05:53.031Z"
+}

@@ -5,56 +5,111 @@
 
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ProgressHeader } from "@/components/ProgressHeader";
 import { QuizQuestion } from "@/components/QuizQuestion";
-import { QUESTIONS } from "@/lib/questions";
+import { QUESTIONS, type Option } from "@/lib/questions";
 import { computeSegment } from "@/lib/scoring";
 import {
   saveQuizProgress,
   loadQuizProgress,
   clearQuizProgress,
+  saveQuizResult,
 } from "@/lib/storage";
 import { trackQuizStep, trackQuizCompleted } from "@/lib/analytics";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
+
+const extractEmojiFromOption = (option?: Option) => {
+  if (!option) return undefined;
+  if (option.emoji) return option.emoji;
+  const [firstToken] = option.label.trim().split(" ");
+  if (!firstToken || /[a-zA-Z0-9]/.test(firstToken)) {
+    return undefined;
+  }
+  return firstToken;
+};
 
 export function QuizStepper() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Estado local para capturar respostas
+  const [localAnswers, setLocalAnswers] = useState<
+    Record<string, string | string[]>
+  >({});
+
+  // Criar defaultValues com todos os IDs das perguntas
+  const defaultValues = useMemo(() => {
+    const values: Record<string, string | string[]> = {};
+    QUESTIONS.forEach((q) => {
+      if (q.type === "multi") {
+        values[q.id] = [];
+      } else {
+        values[q.id] = "";
+      }
+    });
+    return values;
+  }, []);
+
   const {
     control,
     handleSubmit,
     watch,
     setValue,
+    getValues,
+    register,
     formState: { errors },
   } = useForm<Record<string, string | string[]>>({
-    defaultValues: {},
+    defaultValues,
+    mode: "all",
   });
 
-  // Carregar progresso salvo
+  // Registrar todos os campos uma única vez e carregar progresso salvo
   useEffect(() => {
+    // Registrar todos os campos no formulário
+    QUESTIONS.forEach((question) => {
+      if (question.type === "multi") {
+        register(question.id, { value: [] });
+      } else {
+        register(question.id, { value: "" });
+      }
+    });
+
+    // Carregar progresso salvo
     const savedProgress = loadQuizProgress();
     if (savedProgress) {
       setCurrentStep(savedProgress.currentStep);
+      setLocalAnswers(savedProgress.answers); // Carregar no estado local
       Object.entries(savedProgress.answers).forEach(([key, value]) => {
         setValue(key, value);
       });
     }
-  }, [setValue]);
+  }, [register, setValue]); // Removido currentStep da dependência
 
-  // Salvar progresso automaticamente
-  const answers = watch();
+  // Não sincronizar automaticamente - usar getValues() quando necessário
+
+  // Usar watch() para capturar todas as mudanças
+  const allFormValues = watch();
+
+  // Salvar progresso automaticamente usando estado local
   useEffect(() => {
     const saveProgress = () => {
+      console.log("💾 Auto-save: localAnswers =", localAnswers);
+      console.log("💾 Auto-save: watch() =", allFormValues);
+      console.log("💾 Auto-save: getValues() =", getValues());
+
+      // Usar estado local que mantém as respostas
+      const answersToSave =
+        Object.keys(localAnswers).length > 0 ? localAnswers : allFormValues;
+
       saveQuizProgress({
         currentStep,
-        answers,
+        answers: answersToSave,
         startedAt: new Date().toISOString(),
         lastUpdated: new Date().toISOString(),
       });
@@ -62,10 +117,42 @@ export function QuizStepper() {
 
     const timeoutId = setTimeout(saveProgress, 1000);
     return () => clearTimeout(timeoutId);
-  }, [currentStep, answers]);
+  }, [currentStep, localAnswers, allFormValues, getValues]);
 
   const currentQuestion = QUESTIONS[currentStep];
-  const currentAnswer = answers[currentQuestion.id];
+  const currentAnswer = watch(currentQuestion.id);
+
+  // Sincronizar estado local com React Hook Form
+  useEffect(() => {
+    if (currentAnswer && currentAnswer !== "") {
+      console.log(`🔄 Sincronizando: ${currentQuestion.id} = ${currentAnswer}`);
+      setLocalAnswers((prev) => ({
+        ...prev,
+        [currentQuestion.id]: currentAnswer,
+      }));
+      setValue(currentQuestion.id, currentAnswer);
+    }
+  }, [currentAnswer, currentQuestion.id, setValue]);
+
+  // Escutar evento customizado do QuizQuestion
+  useEffect(() => {
+    const handleQuizAnswer = (event: CustomEvent) => {
+      const { questionId, value } = event.detail;
+      console.log(`🎯 Evento recebido: ${questionId} = ${value}`);
+      setLocalAnswers((prev) => ({
+        ...prev,
+        [questionId]: value,
+      }));
+    };
+
+    window.addEventListener("quizAnswer", handleQuizAnswer as EventListener);
+    return () => {
+      window.removeEventListener(
+        "quizAnswer",
+        handleQuizAnswer as EventListener
+      );
+    };
+  }, []);
 
   // Perguntas opcionais podem ser puladas
   const isAnswered =
@@ -74,21 +161,38 @@ export function QuizStepper() {
       currentAnswer !== "" &&
       (Array.isArray(currentAnswer) ? currentAnswer.length > 0 : true));
 
-  const handleNext = () => {
+  // Debug: log da resposta atual
+  console.log(
+    `🔍 Pergunta ${currentStep}: ${currentQuestion.id} = "${currentAnswer}"`
+  );
+  console.log(`🔍 isAnswered: ${isAnswered}`);
+  console.log(`🔍 required: ${currentQuestion.required}`);
+  console.log(`🔍 localAnswers:`, localAnswers);
+
+  const handleNext = handleSubmit(() => {
+    console.log(
+      `🚀 handleNext chamado - currentStep: ${currentStep}, isAnswered: ${isAnswered}`
+    );
+
     // Perguntas opcionais podem ser puladas
-    if (!isAnswered && currentQuestion.required) return;
+    if (!isAnswered && currentQuestion.required) {
+      console.log(`❌ Não pode avançar - pergunta obrigatória não respondida`);
+      return;
+    }
 
     // Track step
     trackQuizStep(currentStep + 1, QUESTIONS.length);
 
     if (currentStep < QUESTIONS.length - 1) {
+      console.log(`➡️ Avançando para step ${currentStep + 1}`);
       setCurrentStep((prev) => prev + 1);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
+      console.log(`🏁 Última pergunta - finalizando`);
       // Última pergunta - calcular resultado
       handleFinish();
     }
-  };
+  });
 
   const handleBack = () => {
     if (currentStep > 0) {
@@ -98,9 +202,10 @@ export function QuizStepper() {
   };
 
   const handleSaveAndContinueLater = () => {
+    const currentAnswers = getValues();
     saveQuizProgress({
       currentStep,
-      answers,
+      answers: currentAnswers,
       startedAt: new Date().toISOString(),
       lastUpdated: new Date().toISOString(),
     });
@@ -114,16 +219,81 @@ export function QuizStepper() {
     setIsSubmitting(true);
 
     try {
-      const result = computeSegment(answers);
+      // Usar estado local que mantém todas as respostas
+      const currentAnswers =
+        Object.keys(localAnswers).length > 0 ? localAnswers : getValues();
+
+      // Criar payload detalhado para a API
+      const detailedAnswers = QUESTIONS.map((question) => {
+        const rawAnswer = currentAnswers[question.id];
+        const answerValues = Array.isArray(rawAnswer)
+          ? rawAnswer
+          : rawAnswer
+          ? [rawAnswer]
+          : [];
+        const matchedOptions = answerValues
+          .map((value) =>
+            question.options.find((opt) => opt.value === value)
+          )
+          .filter((opt): opt is Option => Boolean(opt));
+
+        const answerLabel =
+          matchedOptions.length > 0
+            ? matchedOptions.map((opt) => opt.label).join(", ")
+            : answerValues.length > 0
+            ? answerValues.join(", ")
+            : "Não respondida";
+
+        const weight = matchedOptions.reduce(
+          (total, option) => total + (option.weight ?? 0),
+          0
+        );
+
+        const emoji =
+          matchedOptions
+            .map((option) => extractEmojiFromOption(option))
+            .filter(Boolean)
+            .join(" ") || "❓";
+
+        const answerContent = Array.isArray(rawAnswer)
+          ? rawAnswer.length > 0
+            ? rawAnswer
+            : "Não respondida"
+          : typeof rawAnswer === "string" && rawAnswer.trim().length > 0
+          ? rawAnswer
+          : "Não respondida";
+
+        return {
+          questionId: question.id,
+          question: question.title,
+          answer: answerContent,
+          answerLabel,
+          weight,
+          segment: question.mapTo ?? "general",
+          emoji,
+        };
+      });
+
+      console.log("🔍 Finalizando com respostas detalhadas:", detailedAnswers);
+      const result = computeSegment(currentAnswers);
+
+      // Salvar resultado final (mantém as respostas)
+      saveQuizResult({
+        segment: result.segment,
+        answers: currentAnswers,
+        detailedAnswers: detailedAnswers,
+        scores: result.scores,
+        completedAt: new Date().toISOString(),
+      });
 
       // Track conclusão
       trackQuizCompleted(
         result.segment,
         result.totalScore,
-        JSON.stringify(answers).substring(0, 50)
+        JSON.stringify(currentAnswers).substring(0, 50)
       );
 
-      // Limpar progresso salvo
+      // Limpar progresso salvo (mas mantém o resultado)
       clearQuizProgress();
 
       // Redirecionar para resultado com segmento

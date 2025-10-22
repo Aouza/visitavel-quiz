@@ -10,7 +10,23 @@ import { Button } from "@/components/ui/button";
 import { Marquee } from "@/components/ui/marquee";
 import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
+import { getLeadInfo } from "@/lib/storage";
 import { ArrowRight, Loader2 } from "lucide-react";
+import { ReportFreePayload } from "@/types/report-free";
+
+const toStringArray = (value: unknown): string[] => {
+  if (Array.isArray(value)) {
+    return value
+      .filter((item): item is string => typeof item === "string")
+      .map((item) => item.trim())
+      .filter(Boolean);
+  }
+  if (typeof value === "string") {
+    const trimmed = value.trim();
+    return trimmed ? [trimmed] : [];
+  }
+  return [];
+};
 
 interface ElegantResultCardProps {
   segment: Segment;
@@ -78,14 +94,12 @@ export function ElegantResultCard({
   onPrimaryAction,
 }: ElegantResultCardProps) {
   const content = getSegmentContent(segment);
-  const [reportPreview, setReportPreview] = useState<string>("");
+  const [reportPreview, setReportPreview] = useState<
+    ReportFreePayload | string
+  >("");
   const [isLoading, setIsLoading] = useState(true);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
-  const isProduction = process.env.NODE_ENV === "production";
-  const forceReportApi =
-    process.env.NEXT_PUBLIC_FORCE_REPORT_API === "true" || isProduction;
-  const useMockReport =
-    process.env.NEXT_PUBLIC_USE_MOCK_REPORT === "true" || !forceReportApi;
+  const [hasError, setHasError] = useState(false);
   const answersKey = useMemo(() => JSON.stringify(answers), [answers]);
   const scoresKey = useMemo(() => JSON.stringify(scores), [scores]);
   const answersPayload = useMemo(
@@ -100,16 +114,6 @@ export function ElegantResultCard({
     () => `report-preview:${segment}:${answersKey}:${scoresKey}`,
     [segment, answersKey, scoresKey]
   );
-  const emotionalPreview = useMemo(
-    () => [
-      "Você volta a pensar nele toda vez que bate o vazio porque sua mente ainda não entendeu onde a história travou. Isso não é fraqueza; é um pedido por resposta clara.",
-      "Seu jeito de amar não é apego cego. Você quer saber se o esforço vale. Quando não enxerga retorno, acaba se culpando. Você precisa de respostas simples, não de tentativas no escuro.",
-      "Você aprendeu a salvar relação sozinho(a) e passou do seu limite muitas vezes. Por isso hoje fica sem energia e sem voz. Identificar esse ponto é o primeiro passo para recuperar força.",
-      "Seu corpo já avisou: aperto no peito, sono ruim, mente acelerada. Esses sinais pedem mudança real, não insistência.",
-      "Você já começou a ver onde o ciclo prende você. O relatório completo mostra o gatilho principal, o momento da virada e o plano direto para sair desse looping.",
-    ],
-    []
-  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -118,24 +122,31 @@ export function ElegantResultCard({
       setIsLoading(true);
       setReportPreview("");
 
-      // Se estiver em modo mock ou cache em sessionStorage, evitar nova chamada
+      // Verificar cache em sessionStorage
       if (typeof window !== "undefined") {
         const cachedPreview = window.sessionStorage.getItem(previewCacheKey);
         if (cachedPreview) {
-          setReportPreview(cachedPreview);
-          setIsLoading(false);
-          return;
-        }
-      }
+          try {
+            // Tentar fazer parse do JSON
+            const parsed = JSON.parse(cachedPreview);
 
-      if (useMockReport) {
-        const mock = emotionalPreview.join("\n\n");
-        setReportPreview(mock);
-        if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(previewCacheKey, mock);
+            // Validar se é um JSON válido do novo schema (tem header)
+            if (parsed && typeof parsed === "object" && parsed.header) {
+              console.log("✅ Usando cache válido do modo 'free'");
+              setReportPreview(parsed);
+              setIsLoading(false);
+              return;
+            } else {
+              // Cache inválido (modo antigo) - limpar e regenerar
+              console.log("⚠️ Cache inválido detectado - regenerando...");
+              window.sessionStorage.removeItem(previewCacheKey);
+            }
+          } catch {
+            // Cache com formato inválido - limpar e regenerar
+            console.log("⚠️ Cache corrompido - regenerando...");
+            window.sessionStorage.removeItem(previewCacheKey);
+          }
         }
-        setIsLoading(false);
-        return;
       }
 
       const birthdate =
@@ -150,40 +161,82 @@ export function ElegantResultCard({
           : undefined;
 
       try {
+        console.log("🚀 Chamando API com mode: free...");
+
+        // Carregar informações do lead (nome, email, gender, etc.)
+        const leadInfo = getLeadInfo();
+        console.log("📋 Lead info carregado:", leadInfo);
+
+        // Adicionar o nome e gênero do lead às respostas
+        const answersWithName = {
+          ...answersPayload,
+          name: leadInfo?.name || "",
+          leadName: leadInfo?.name || "",
+          gender: leadInfo?.gender || "",
+        };
+
+        // Criar payload detalhado se disponível
+        const detailedAnswers = (answersPayload as any)?.detailedAnswers;
+
         const response = await fetch("/api/generate-report", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             segment,
-            answers: answersPayload,
+            answers: answersWithName,
+            detailedAnswers: detailedAnswers,
             scores: scoresPayload,
             birthdate,
             exBirthdate,
-            mode: "summary",
           }),
           signal: controller.signal,
         });
 
         if (!response.ok) {
+          console.error("❌ API retornou erro:", response.status);
+          setHasError(true);
+          setIsLoading(false);
           return;
         }
 
         const data = await response.json();
+        console.log("✅ Dados recebidos da API:", data);
         const preview = data.report ?? "";
+
+        // Validar se preview é válido
+        if (!preview) {
+          console.error("❌ API retornou resposta vazia");
+          setHasError(true);
+          setIsLoading(false);
+          return;
+        }
+
+        // Se for objeto, validar estrutura do novo schema (deve ter header)
+        if (typeof preview === "object" && !preview.header) {
+          console.error(
+            "❌ API retornou JSON com estrutura inválida - falta header"
+          );
+          setHasError(true);
+          setIsLoading(false);
+          return;
+        }
+
+        console.log("✅ Relatório válido recebido - novo schema confirmado");
+
         setReportPreview(preview);
+        setHasError(false);
         if (typeof window !== "undefined" && preview) {
-          window.sessionStorage.setItem(previewCacheKey, preview);
+          window.sessionStorage.setItem(
+            previewCacheKey,
+            JSON.stringify(preview)
+          );
         }
       } catch (error) {
         if ((error as Error).name === "AbortError") {
           return;
         }
-        console.error("Erro ao gerar preview:", error);
-        const fallback = emotionalPreview.join("\n\n");
-        setReportPreview(fallback);
-        if (typeof window !== "undefined") {
-          window.sessionStorage.setItem(previewCacheKey, fallback);
-        }
+        console.error("❌ Erro ao gerar preview:", error);
+        setHasError(true);
       } finally {
         if (!controller.signal.aborted) {
           setIsLoading(false);
@@ -201,9 +254,7 @@ export function ElegantResultCard({
     scoresKey,
     answersPayload,
     scoresPayload,
-    emotionalPreview,
     previewCacheKey,
-    useMockReport,
   ]);
 
   useEffect(() => {
@@ -219,18 +270,16 @@ export function ElegantResultCard({
     lockedZone?.scrollIntoView({ behavior: "smooth", block: "start" });
   }, []);
 
-  const previewParagraphs = useMemo(() => {
-    if (reportPreview.trim().length === 0) {
-      return emotionalPreview;
+  const handleRetry = useCallback(() => {
+    setHasError(false);
+    setIsLoading(true);
+    // Limpar cache
+    if (typeof window !== "undefined") {
+      window.sessionStorage.removeItem(previewCacheKey);
     }
-
-    const sanitized = reportPreview.trim();
-
-    const parts = sanitized
-      .split(/\n\s*\n/)
-      .map((paragraph) => paragraph.trim());
-    return parts.filter(Boolean);
-  }, [reportPreview, emotionalPreview]);
+    // Force re-fetch
+    window.location.reload();
+  }, [previewCacheKey]);
 
   const lockedSections = [
     {
@@ -389,9 +438,82 @@ export function ElegantResultCard({
           {isLoading ? (
             <div className="flex flex-col items-center gap-4 py-20 text-center text-slate-500">
               <Loader2 className="h-9 w-9 animate-spin text-slate-400" />
-              <p>Estamos decodificando os dados do seu padrão emocional...</p>
+              <p className="font-medium">
+                Estamos gerando seu relatório personalizado...
+              </p>
+              <p className="text-xs text-slate-400">
+                Analisando suas respostas com inteligência artificial
+              </p>
             </div>
-          ) : (
+          ) : hasError ? (
+            // EMPTY STATE - Erro ao gerar relatório
+            <div className="flex flex-col items-center gap-6 py-16 px-8 text-center">
+              <div className="w-20 h-20 rounded-full bg-rose-50 flex items-center justify-center">
+                <svg
+                  className="w-10 h-10 text-rose-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  />
+                </svg>
+              </div>
+
+              <div className="space-y-2 max-w-md">
+                <h3 className="text-xl font-bold text-slate-900">
+                  Não foi possível gerar seu relatório
+                </h3>
+                <p className="text-sm text-slate-600 leading-relaxed">
+                  Ocorreu um erro ao processar suas respostas. Isso pode ter
+                  acontecido por uma instabilidade temporária ou problema de
+                  conexão.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={handleRetry}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-slate-900 text-white font-semibold text-sm transition hover:bg-slate-800 hover:shadow-lg"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    />
+                  </svg>
+                  Tentar novamente
+                </button>
+
+                <button
+                  onClick={() => {
+                    if (typeof window !== "undefined") {
+                      window.location.href = "/";
+                    }
+                  }}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-slate-300 text-slate-700 font-semibold text-sm transition hover:bg-slate-50"
+                >
+                  Voltar ao início
+                </button>
+              </div>
+
+              <p className="text-xs text-slate-400 mt-4">
+                Se o problema persistir, entre em contato com o suporte
+              </p>
+            </div>
+          ) : typeof reportPreview === "object" && reportPreview !== null ? (
+            // RENDERIZAÇÃO DO JSON ESTRUTURADO
             <div className="relative">
               {/* Conteúdo do relatório - Design de documento profissional */}
               <div className="px-8 md:px-12 py-10 space-y-8">
@@ -404,331 +526,407 @@ export function ElegantResultCard({
                   </div>
                 </div>
 
-                {/* Seção 1: Abertura emocional */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
-                      1
-                    </div>
-                    <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-slate-900">
-                        Por que você volta a pensar nessa pessoa mesmo depois de
-                        tanto tempo
-                      </h3>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Você volta a pensar nele toda vez que bate o vazio
-                        porque{" "}
-                        <strong>
-                          sua mente ainda não entendeu onde a história travou
-                        </strong>
-                        . Isso não é fraqueza; é um pedido por resposta clara.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Quando uma relação termina sem um fechamento real — sem
-                        você entender o que deu errado, por que deu errado, ou o
-                        que você poderia ter feito diferente — o cérebro entra
-                        em modo de busca.{" "}
-                        <strong>Ele não aceita lacunas</strong>. E enquanto
-                        essas lacunas existirem, sua mente vai continuar
-                        revisitando a história, tentando montar o quebra-cabeça
-                        que ficou incompleto.
-                      </p>
-                      <div className="pl-4 border-l-4 border-emerald-500 bg-emerald-50/50 p-4 rounded-r-lg">
-                        <p className="text-sm text-emerald-900 italic">
-                          <strong>O que isso significa:</strong> Você não está
-                          "preso no passado" por escolha. Sua mente está
-                          tentando proteger você de repetir o mesmo erro. O
-                          problema é que sem clareza, ela nunca vai parar de
-                          procurar.
-                        </p>
-                      </div>
-                    </div>
+                {reportPreview.header && (
+                  <div className="space-y-4 text-center">
+                    <p className="text-sm uppercase tracking-[0.35em] text-slate-400">
+                      Etapa identificada: {reportPreview.header.segment}
+                    </p>
+                    <h2 className="text-3xl md:text-4xl font-semibold text-slate-900">
+                      {reportPreview.header.title}
+                    </h2>
+                    <p className="text-base md:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+                      {reportPreview.header.subtitle}
+                    </p>
                   </div>
-                </div>
+                )}
 
-                <div className="h-px bg-slate-200" />
-
-                {/* Seção 2: Padrão de amor */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
-                      2
-                    </div>
-                    <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-slate-900">
-                        O que o seu jeito de amar revela sobre como você se
-                        conecta
+                {/* 1. Retrato da Pessoa */}
+                {(() => {
+                  const personProfile = toStringArray(
+                    (reportPreview as any)?.personProfile ??
+                      (reportPreview as any)?.profile?.paragraphs
+                  );
+                  if (personProfile.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Retrato de quem você é
                       </h3>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Seu jeito de amar não é apego cego.{" "}
-                        <strong>Você quer saber se o esforço vale</strong>.
-                        Quando não enxerga retorno, acaba se culpando. Você
-                        precisa de respostas simples, não de tentativas no
-                        escuro.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Você é o tipo de pessoa que investe de verdade — não
-                        apenas tempo, mas energia emocional, paciência, cuidado.
-                        Mas tem um ponto crítico:{" "}
-                        <strong>
-                          você precisa sentir que esse investimento está sendo
-                          reconhecido
-                        </strong>
-                        . Não precisa ser em palavras grandiosas ou gestos
-                        enormes. Precisa ser em presença real, em consistência,
-                        em reciprocidade.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Quando isso não acontece, você não desiste de imediato.
-                        Você tenta entender, ajustar, se adaptar. E é aí que
-                        mora o perigo:{" "}
-                        <strong>
-                          você passa a interpretar a ausência de retorno como
-                          falha sua
-                        </strong>
-                        . "Será que eu não fiz o suficiente?" "Será que eu
-                        esperei demais?" "Será que eu deveria ter sido
-                        diferente?"
-                      </p>
-                      <div className="bg-slate-50 border border-slate-200 rounded-lg p-5 space-y-2">
-                        <p className="text-sm font-semibold text-slate-900">
-                          💡 O que você precisa saber agora:
-                        </p>
-                        <ul className="space-y-2 text-sm text-slate-700">
-                          <li className="flex items-start gap-2">
-                            <span className="text-emerald-600 font-bold">
-                              •
-                            </span>
-                            <span>
-                              Amor não é sobre tentativas infinitas no escuro. É
-                              sobre conexão real, não esforço unilateral.
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-emerald-600 font-bold">
-                              •
-                            </span>
-                            <span>
-                              A falta de reciprocidade não é um reflexo do seu
-                              valor. É um sinal de incompatibilidade emocional.
-                            </span>
-                          </li>
-                          <li className="flex items-start gap-2">
-                            <span className="text-emerald-600 font-bold">
-                              •
-                            </span>
-                            <span>
-                              Quando você para de se culpar, você abre espaço
-                              para relacionamentos que realmente te valorizam.
-                            </span>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="h-px bg-slate-200" />
-
-                {/* Seção 3: Sobrecarga emocional */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
-                      3
-                    </div>
-                    <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-slate-900">
-                        Por que você sente que deu tudo de si e ainda assim não
-                        foi suficiente
-                      </h3>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Você aprendeu a salvar relação sozinho(a) e{" "}
-                        <strong>passou do seu limite muitas vezes</strong>. Por
-                        isso hoje fica sem energia e sem voz. Identificar esse
-                        ponto é o primeiro passo para recuperar força.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Existe um momento em que a tentativa de "fazer dar
-                        certo" se transforma em autossabotagem emocional. Você
-                        passa a ignorar sinais,{" "}
-                        <strong>engolir o que te machuca</strong>, e ajustar
-                        suas expectativas até elas caberem no que o outro pode
-                        (ou quer) oferecer.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        O problema não é você ter tentado. O problema é que{" "}
-                        <strong>
-                          ninguém deveria ter que carregar uma relação sozinho
-                        </strong>
-                        . E quando você faz isso repetidas vezes, seu corpo
-                        começa a cobrar a conta: cansaço que não passa,
-                        irritação desproporcional, vontade de sumir, sensação de
-                        vazio mesmo estando acompanhado.
-                      </p>
-                      <div className="grid md:grid-cols-2 gap-4">
-                        <div className="bg-rose-50 border border-rose-200 rounded-lg p-4 space-y-2">
-                          <p className="text-sm font-bold text-rose-900">
-                            ⚠️ Sinais de sobrecarga
+                      <div className="space-y-3">
+                        {personProfile.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
                           </p>
-                          <ul className="space-y-1 text-sm text-rose-800">
-                            <li>• Dificuldade para dizer não</li>
-                            <li>• Culpa por colocar limites</li>
-                            <li>• Sensação de "não ser ouvido"</li>
-                            <li>• Cansaço crônico emocional</li>
-                          </ul>
-                        </div>
-                        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 space-y-2">
-                          <p className="text-sm font-bold text-emerald-900">
-                            ✅ Caminho de recuperação
-                          </p>
-                          <ul className="space-y-1 text-sm text-emerald-800">
-                            <li>• Reconhecer seus limites</li>
-                            <li>• Validar suas necessidades</li>
-                            <li>• Parar de justificar o outro</li>
-                            <li>• Reaprender a se priorizar</li>
-                          </ul>
-                        </div>
+                        ))}
                       </div>
                     </div>
-                  </div>
-                </div>
+                  );
+                })()}
 
-                <div className="h-px bg-slate-200" />
-
-                {/* Seção 4: Sinais físicos */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-white text-sm font-bold mt-1">
-                      4
-                    </div>
-                    <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-slate-900">
-                        O que o seu corpo está tentando te dizer através dos
-                        sintomas
+                {/* 2. Visão do relacionamento */}
+                {(() => {
+                  let relationshipOverview = toStringArray(
+                    (reportPreview as any)?.relationshipOverview
+                  );
+                  if (relationshipOverview.length === 0) {
+                    const legacyNarrative = (reportPreview as any)
+                      ?.breakupNarrative;
+                    relationshipOverview = [
+                      ...toStringArray(legacyNarrative?.before),
+                      ...toStringArray(legacyNarrative?.during),
+                      ...toStringArray(legacyNarrative?.after),
+                    ];
+                  }
+                  if (relationshipOverview.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Como essa história se desenrolou
                       </h3>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Seu corpo já avisou:{" "}
-                        <strong>
-                          aperto no peito, sono ruim, mente acelerada
-                        </strong>
-                        . Esses sinais pedem mudança real, não insistência.
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Quando a mente não consegue processar uma dor emocional,{" "}
-                        <strong>o corpo assume o trabalho</strong>. E ele não é
-                        sutil: ele grita através de sintomas físicos que não dá
-                        mais para ignorar.
-                      </p>
-                      <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-6 space-y-4">
-                        <div className="flex items-start gap-3">
-                          <span className="text-2xl">⚠️</span>
-                          <div className="flex-1 space-y-3">
-                            <p className="font-bold text-amber-900">
-                              Seu corpo não está inventando — está reagindo:
+                      <div className="space-y-3">
+                        {relationshipOverview.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 3. Sentimentos atuais */}
+                {(() => {
+                  const feelings =
+                    (reportPreview as any)?.currentFeelings ?? {};
+                  const mind = toStringArray(
+                    feelings.mind ??
+                      (reportPreview as any)?.mindLoop?.paragraphs
+                  );
+                  const body = toStringArray(
+                    feelings.body ??
+                      (reportPreview as any)?.bodyState?.paragraphs
+                  );
+                  const heart = toStringArray(
+                    feelings.heart ??
+                      (reportPreview as any)?.innerConflict?.paragraphs
+                  );
+                  if (
+                    mind.length === 0 &&
+                    body.length === 0 &&
+                    heart.length === 0
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <div className="space-y-5 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        O que você sente agora
+                      </h3>
+                      <div className="grid md:grid-cols-3 gap-6">
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                            Mente
+                          </p>
+                          {mind.map((item, index) => (
+                            <p key={index} className="text-sm text-slate-700">
+                              {item}
                             </p>
-                            <div className="space-y-3 text-sm text-amber-900">
-                              <div>
-                                <p className="font-semibold">
-                                  Aperto no peito / falta de ar
-                                </p>
-                                <p className="text-amber-800">
-                                  É a resposta do sistema nervoso ao estresse
-                                  prolongado. Seu corpo está em alerta
-                                  constante.
-                                </p>
-                              </div>
-                              <div>
-                                <p className="font-semibold">
-                                  Insônia ou sono agitado
-                                </p>
-                                <p className="text-amber-800">
-                                  Sua mente não consegue desligar porque ainda
-                                  está processando dor não resolvida.
-                                </p>
-                              </div>
-                              <div>
-                                <p className="font-semibold">
-                                  Pensamentos acelerados/ruminação
-                                </p>
-                                <p className="text-amber-800">
-                                  O cérebro tenta encontrar uma solução
-                                  revisitando a história — mas sem clareza, ele
-                                  fica preso em loop.
-                                </p>
-                              </div>
-                            </div>
+                          ))}
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                            Corpo
+                          </p>
+                          {body.map((item, index) => (
+                            <p key={index} className="text-sm text-slate-700">
+                              {item}
+                            </p>
+                          ))}
+                        </div>
+                        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5 space-y-2">
+                          <p className="text-xs font-semibold uppercase tracking-widest text-slate-500">
+                            Coração
+                          </p>
+                          {heart.map((item, index) => (
+                            <p key={index} className="text-sm text-slate-700">
+                              {item}
+                            </p>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 4. Por que ainda dói */}
+                {(() => {
+                  const reasons = toStringArray(reportPreview.whyCantMoveOn);
+                  if (reasons.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Por que ainda dói
+                      </h3>
+                      <div className="space-y-3">
+                        {reasons.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 5. Em que Etapa Você Está Agora */}
+                {reportPreview.currentStage && (
+                  <div className="space-y-4 pb-8 border-b border-slate-200">
+                    <h3 className="text-2xl font-bold text-slate-900">
+                      Em que etapa você está agora
+                    </h3>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-50 border border-amber-200">
+                      <span className="text-sm font-semibold text-amber-900">
+                        {reportPreview.currentStage.name}
+                      </span>
+                    </div>
+                    {(() => {
+                      const stageDescription = toStringArray(
+                        (reportPreview.currentStage as any)?.description ??
+                          (reportPreview.currentStage as any)?.paragraphs
+                      );
+                      if (stageDescription.length === 0) {
+                        return null;
+                      }
+                      return (
+                        <div className="space-y-3">
+                          {stageDescription.map((paragraph, i) => (
+                            <p
+                              key={i}
+                              className="text-base leading-relaxed text-slate-700"
+                            >
+                              {renderParagraph(paragraph, i)}
+                            </p>
+                          ))}
+                        </div>
+                      );
+                    })()}
+                  </div>
+                )}
+
+                {/* 6. O que está na raiz */}
+                {(() => {
+                  const rootCause = toStringArray(reportPreview.rootCause);
+                  if (rootCause.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        O que está na raiz disso
+                      </h3>
+                      <div className="space-y-3">
+                        {rootCause.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 7. O que ainda te trava */}
+                {(() => {
+                  const unresolved = toStringArray(
+                    (reportPreview as any)?.unresolvedPoints
+                  );
+                  if (unresolved.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        O que ainda te trava
+                      </h3>
+                      <div className="space-y-3">
+                        {unresolved.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 8. O que essa história te ensina */}
+                {(() => {
+                  const learning = toStringArray(reportPreview.learning);
+                  if (learning.length === 0) return null;
+                  return (
+                    <div className="space-y-4 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        O que essa história está te mostrando
+                      </h3>
+                      <div className="space-y-3">
+                        {learning.map((paragraph, i) => (
+                          <p
+                            key={i}
+                            className="text-base leading-relaxed text-slate-700"
+                          >
+                            {renderParagraph(paragraph, i)}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                })()}
+
+                {/* 9. Dinâmica Entre Vocês (Opcional - Compatibilidade) */}
+                {(() => {
+                  if (!reportPreview.compatibility) return null;
+                  const connection = toStringArray(
+                    reportPreview.compatibility.connection
+                  );
+                  const strengths = toStringArray(
+                    reportPreview.compatibility.strengths
+                  );
+                  const tensions = toStringArray(
+                    (reportPreview.compatibility as any).tensions ??
+                      (reportPreview.compatibility as any).frictions
+                  );
+                  const distancing = toStringArray(
+                    reportPreview.compatibility.distancing
+                  );
+                  if (
+                    connection.length === 0 &&
+                    strengths.length === 0 &&
+                    tensions.length === 0 &&
+                    distancing.length === 0
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <div className="space-y-5 pb-8">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Dinâmica entre vocês
+                      </h3>
+
+                      {/* Por que vocês se conectaram */}
+                      {connection.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-base font-semibold text-slate-900">
+                            Por que vocês se conectaram
+                          </h4>
+                          <div className="space-y-2">
+                            {connection.map((c, i) => (
+                              <p
+                                key={i}
+                                className="text-sm text-slate-700 leading-relaxed"
+                              >
+                                {c}
+                              </p>
+                            ))}
                           </div>
                         </div>
-                      </div>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Esses sintomas não vão embora com o tempo. Eles precisam
-                        de <strong>intervenção consciente</strong>. E o primeiro
-                        passo é entender que eles não são o problema — são o
-                        alarme de que algo precisa mudar.
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                      )}
 
-                <div className="h-px bg-slate-200" />
+                      {/* Pontos fortes da dupla */}
+                      {strengths.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-base font-semibold text-slate-900">
+                            Pontos fortes da dupla
+                          </h4>
+                          <div className="space-y-2">
+                            {strengths.map((s, i) => (
+                              <p
+                                key={i}
+                                className="text-sm text-slate-700 leading-relaxed"
+                              >
+                                {s}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
 
-                {/* Seção 5: Próximos passos */}
-                <div className="space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white text-sm font-bold mt-1">
-                      ✓
+                      {/* Tensões previsíveis */}
+                      {tensions.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-base font-semibold text-slate-900">
+                            Tensões previsíveis
+                          </h4>
+                          <div className="space-y-2">
+                            {tensions.map((item, i) => (
+                              <p
+                                key={i}
+                                className="text-sm text-slate-700 leading-relaxed"
+                              >
+                                {item}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Por que se afastaram */}
+                      {distancing.length > 0 && (
+                        <div className="space-y-2">
+                          <h4 className="text-base font-semibold text-slate-900">
+                            Por que se afastaram
+                          </h4>
+                          <div className="space-y-2">
+                            {distancing.map((d, i) => (
+                              <p
+                                key={i}
+                                className="text-sm text-slate-700 leading-relaxed"
+                              >
+                                {d}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    <div className="flex-1 space-y-3">
-                      <h3 className="text-xl font-bold text-slate-900">
-                        O que vem agora: da compreensão para a ação
+                  );
+                })()}
+
+                {/* 10. Resumo e próximo passo */}
+                {(() => {
+                  const summary =
+                    reportPreview.nextStepHint?.summary?.trim() ?? "";
+                  const whyFullReport =
+                    reportPreview.nextStepHint?.why_full_report?.trim() ?? "";
+                  if (!summary && !whyFullReport) return null;
+                  return (
+                    <div className="space-y-3 pb-8 border-b border-slate-200">
+                      <h3 className="text-2xl font-bold text-slate-900">
+                        Para onde isso aponta agora
                       </h3>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Você já começou a ver onde o ciclo prende você.{" "}
-                        <strong>
-                          O relatório completo mostra o gatilho principal, o
-                          momento da virada e o plano direto para sair desse
-                          looping.
-                        </strong>
-                      </p>
-                      <p className="text-base leading-relaxed text-slate-700">
-                        Este diagnóstico gratuito te deu as primeiras respostas.
-                        Mas existem{" "}
-                        <strong>7 camadas críticas ainda bloqueadas</strong> — e
-                        elas explicam:
-                      </p>
-                      <div className="grid gap-3">
-                        <div className="flex items-start gap-2 text-sm text-slate-700">
-                          <span className="text-slate-400 font-bold">→</span>
-                          <span>
-                            Por que você sempre volta para o mesmo pensamento
-                            obsessivo
-                          </span>
-                        </div>
-                        <div className="flex items-start gap-2 text-sm text-slate-700">
-                          <span className="text-slate-400 font-bold">→</span>
-                          <span>
-                            Como quebrar o ciclo de recaídas emocionais de uma
-                            vez
-                          </span>
-                        </div>
-                        <div className="flex items-start gap-2 text-sm text-slate-700">
-                          <span className="text-slate-400 font-bold">→</span>
-                          <span>
-                            O que fazer quando bater aquela vontade
-                            incontrolável de mandar mensagem
-                          </span>
-                        </div>
-                        <div className="flex items-start gap-2 text-sm text-slate-700">
-                          <span className="text-slate-400 font-bold">→</span>
-                          <span>
-                            Como reconstruir sua identidade sem apagar a
-                            história que você viveu
-                          </span>
-                        </div>
-                      </div>
+                      {summary && (
+                        <p className="text-base leading-relaxed text-slate-700">
+                          {renderParagraph(summary, 9000)}
+                        </p>
+                      )}
+                      {whyFullReport && (
+                        <p className="text-sm text-slate-600 leading-relaxed">
+                          {renderParagraph(whyFullReport, 9001)}
+                        </p>
+                      )}
                     </div>
-                  </div>
-                </div>
+                  );
+                })()}
               </div>
 
               {/* Rodapé do documento */}
@@ -736,28 +934,43 @@ export function ElegantResultCard({
                 <p className="text-xs text-slate-500 text-center">
                   Este diagnóstico foi gerado especificamente para você, baseado
                   em {Object.keys(answers).length} respostas do questionário.
-                  Tempo de leitura estimado: 8-12 minutos.
                 </p>
+              </div>
+            </div>
+          ) : (
+            // FALLBACK PARA MODO ANTIGO (string)
+            <div className="relative">
+              <div className="px-8 md:px-12 py-10 space-y-8">
+                <div className="text-sm text-slate-600">
+                  {typeof reportPreview === "string" &&
+                    reportPreview.split("\n\n").map((paragraph, pIndex) => (
+                      <p key={pIndex} className="mb-4 leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                </div>
               </div>
             </div>
           )}
         </div>
 
-        {!isLoading && (
-          <div className="text-center space-y-4 pt-8">
-            <div className="h-px w-24 bg-slate-200 mx-auto" />
-            <p className="text-sm text-slate-500 italic">
-              Isso é apenas a primeira camada do seu padrão emocional
-            </p>
-            <button
-              type="button"
-              onClick={handleScrollToLocked}
-              className="inline-flex items-center gap-2 text-base font-semibold text-slate-700 underline decoration-slate-300 underline-offset-8 transition hover:text-slate-900 hover:decoration-slate-500"
-            >
-              Ver o que ainda está oculto →
-            </button>
-          </div>
-        )}
+        {!isLoading &&
+          typeof reportPreview === "object" &&
+          reportPreview !== null && (
+            <div className="text-center space-y-4 pt-8">
+              <div className="h-px w-24 bg-slate-200 mx-auto" />
+              <p className="text-sm text-slate-500 italic">
+                Isso é apenas a primeira camada do seu padrão emocional
+              </p>
+              <button
+                type="button"
+                onClick={handleScrollToLocked}
+                className="inline-flex items-center gap-2 text-base font-semibold text-slate-700 underline decoration-slate-300 underline-offset-8 transition hover:text-slate-900 hover:decoration-slate-500"
+              >
+                Ver o que ainda está oculto →
+              </button>
+            </div>
+          )}
 
         {/* Novas seções adaptadas */}
         {!isLoading && (

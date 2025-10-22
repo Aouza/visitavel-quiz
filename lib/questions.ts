@@ -8,6 +8,7 @@ export type Option = {
   value: string;
   label: string;
   weight?: number;
+  emoji?: string;
 };
 
 export type QuestionType = "likert" | "single" | "multi" | "boolean" | "date";

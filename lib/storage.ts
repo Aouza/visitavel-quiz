@@ -5,6 +5,7 @@
  */
 
 const QUIZ_STORAGE_KEY = "visitavel_quiz_progress";
+const QUIZ_RESULT_KEY = "visitavel_quiz_result";
 const UTMS_STORAGE_KEY = "visitavel_utms";
 const LEAD_STORAGE_KEY = "visitavel_lead_info";
 
@@ -30,6 +31,24 @@ export interface LeadInfo {
   whatsapp: string;
   gender: string; // "M" ou "F"
   capturedAt: string;
+}
+
+export interface DetailedAnswer {
+  questionId: string;
+  question: string;
+  answer: string | string[];
+  answerLabel: string;
+  weight: number;
+  segment: string;
+  emoji: string;
+}
+
+export interface QuizResult {
+  segment: string;
+  answers: Record<string, string | string[]>;
+  detailedAnswers?: DetailedAnswer[];
+  scores: Record<string, number>;
+  completedAt: string;
 }
 
 // Quiz Progress
@@ -59,6 +78,36 @@ export function clearQuizProgress(): void {
     localStorage.removeItem(QUIZ_STORAGE_KEY);
   } catch (error) {
     console.error("Error clearing quiz progress:", error);
+  }
+}
+
+// Quiz Result (mantém as respostas após conclusão)
+export function saveQuizResult(result: QuizResult): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(QUIZ_RESULT_KEY, JSON.stringify(result));
+  } catch (error) {
+    console.error("Error saving quiz result:", error);
+  }
+}
+
+export function loadQuizResult(): QuizResult | null {
+  if (typeof window === "undefined") return null;
+  try {
+    const stored = localStorage.getItem(QUIZ_RESULT_KEY);
+    return stored ? JSON.parse(stored) : null;
+  } catch (error) {
+    console.error("Error loading quiz result:", error);
+    return null;
+  }
+}
+
+export function clearQuizResult(): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.removeItem(QUIZ_RESULT_KEY);
+  } catch (error) {
+    console.error("Error clearing quiz result:", error);
   }
 }
 

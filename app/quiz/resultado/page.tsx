@@ -8,9 +8,10 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { ElegantResultCard } from "@/components/ElegantResultCard";
+import { QuizDebugReport } from "@/components/QuizDebugReport";
 import { type Segment } from "@/lib/questions";
 import { trackPageView } from "@/lib/analytics";
-import { loadQuizProgress } from "@/lib/storage";
+import { loadQuizProgress, loadQuizResult } from "@/lib/storage";
 import { computeSegment } from "@/lib/scoring";
 
 function ResultContent() {
@@ -39,26 +40,31 @@ function ResultContent() {
       return;
     }
 
-    // Carregar dados do quiz
-    const savedProgress = loadQuizProgress();
-    if (savedProgress?.answers) {
-      const result = computeSegment(savedProgress.answers);
+    // Tentar carregar resultado salvo primeiro
+    const savedResult = loadQuizResult();
+    if (savedResult?.answers) {
+      console.log("✅ Carregado resultado salvo:", savedResult);
       setQuizData({
-        answers: savedProgress.answers,
-        scores: result.scores,
+        answers: savedResult.answers,
+        scores: savedResult.scores,
       });
     } else {
-      // Se não houver dados salvos, criar mock básico
-      setQuizData({
-        answers: {},
-        scores: {
-          devastacao: 0,
-          abstinencia: 0,
-          interiorizacao: 0,
-          ira: 0,
-          superacao: 0,
-        },
-      });
+      // Fallback: tentar carregar do progresso em andamento
+      const savedProgress = loadQuizProgress();
+      if (savedProgress?.answers) {
+        console.log("⚠️ Carregado do progresso (fallback):", savedProgress);
+        const result = computeSegment(savedProgress.answers);
+        setQuizData({
+          answers: savedProgress.answers,
+          scores: result.scores,
+        });
+      } else {
+        // Se não houver dados salvos, redirecionar para o quiz
+        console.log("❌ Nenhum dado encontrado - redirecionando para o quiz");
+        alert("Você precisa completar o quiz primeiro!");
+        router.push("/quiz");
+        return;
+      }
     }
 
     setSegment(seg);
@@ -90,6 +96,13 @@ function ResultContent() {
           onPrimaryAction={handlePrimaryAction}
         />
       </div>
+
+      {/* Debug Report - só aparece em desenvolvimento */}
+      <QuizDebugReport
+        answers={quizData.answers}
+        scores={quizData.scores}
+        segment={segment}
+      />
     </div>
   );
 }
