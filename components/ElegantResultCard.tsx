@@ -382,7 +382,7 @@ export function ElegantResultCard({
   );
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-4 text-slate-900">
+    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-4 text-slate-900 overflow-x-hidden">
       {/* 1. Header / abertura - PRIMEIRO IMPACTO */}
       <section className="space-y-6 md:space-y-8">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -1401,7 +1401,7 @@ export function ElegantResultCard({
                   Desbloquear Relatório Completo Agora
                   <ArrowRight className="h-5 w-5" />
                 </Button>
-                <p className="text-xs text-slate-500 mt-4">
+                <p className="text-xs text-slate-500 mt-4 px-2">
                   ✓ Acesso imediato • Resultados em 3-7 dias • +7 mil pessoas já
                   transformaram sua dor em clareza
                 </p>
@@ -1617,7 +1617,7 @@ export function ElegantResultCard({
               {testimonials.slice(0, 4).map((testimonial, index) => (
                 <div
                   key={index}
-                  className="relative w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                  className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
                 >
                   <div className="space-y-4">
                     {/* Aspas decorativas */}
@@ -1656,7 +1656,7 @@ export function ElegantResultCard({
               {testimonials.slice(4, 8).map((testimonial, index) => (
                 <div
                   key={index}
-                  className="relative w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
+                  className="relative w-[350px] min-w-[280px] max-w-[350px] rounded-2xl bg-white border border-slate-200 p-6 shadow-sm"
                 >
                   <div className="space-y-4">
                     {/* Aspas decorativas */}
