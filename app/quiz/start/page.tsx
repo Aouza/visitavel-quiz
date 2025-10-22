@@ -80,6 +80,7 @@ export default function QuizStartPage() {
       );
 
       // 🆕 Enviar lead para API (salva no servidor + webhook)
+      console.log("[Lead Form] 🚀 Enviando lead para API...");
       fetch("/api/lead", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -94,7 +95,15 @@ export default function QuizStartPage() {
           timestamp: new Date().toISOString(),
           quizStartedAt: new Date().toISOString(),
         }),
-      }).catch((err) => console.error("[Lead] Error sending to API:", err));
+      })
+        .then((res) => {
+          console.log("[Lead Form] ✅ Resposta da API:", res.status);
+          return res.json();
+        })
+        .then((data) => console.log("[Lead Form] 📦 Dados retornados:", data))
+        .catch((err) =>
+          console.error("[Lead Form] ❌ Erro ao enviar para API:", err)
+        );
 
       // Track captura (GA4)
       trackLeadSubmitted(formData.email);
