@@ -310,7 +310,7 @@ export function QuizStepper() {
         {/* Question Card */}
         <div className="relative overflow-hidden rounded-2xl md:rounded-[32px] border border-slate-200 bg-white shadow-sm mb-6 md:mb-8">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.04),_transparent_70%)]" />
-          <div className="relative px-4 md:px-6 lg:px-10 py-6 md:py-10 lg:py-12 min-h-[280px] md:min-h-[400px]">
+          <div className="relative px-5 md:px-8 lg:px-10 py-6 md:py-10 lg:py-12 min-h-[280px] md:min-h-[400px]">
             <QuizQuestion
               question={currentQuestion}
               control={control}

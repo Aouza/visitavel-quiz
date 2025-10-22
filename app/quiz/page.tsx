@@ -80,7 +80,7 @@ export default function QuizPage() {
   // Se já iniciou o quiz, mostrar o stepper
   if (isStarting) {
     return (
-      <div className="container mx-auto py-8">
+      <div className="mx-auto py-8">
         <QuizStepper />
       </div>
     );

@@ -20,13 +20,13 @@ interface QuizQuestionProps {
 
 export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
   return (
-    <div className="space-y-8 w-full">
-      <div className="space-y-4">
-        <h2 className="text-2xl md:text-3xl font-semibold leading-tight text-slate-900">
+    <div className="space-y-6 md:space-y-8 w-full">
+      <div className="space-y-3 md:space-y-4">
+        <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold leading-tight text-slate-900">
           {question.title}
         </h2>
         {question.helper && (
-          <p className="text-base text-slate-600 leading-relaxed">
+          <p className="text-sm md:text-base text-slate-600 leading-relaxed">
             {question.helper}
           </p>
         )}
@@ -76,21 +76,21 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                     window.dispatchEvent(event);
                   }, 0);
                 }}
-                className="space-y-3"
+                className="space-y-2 md:space-y-3"
                 aria-label={question.title}
               >
                 {question.options.map((option) => (
                   <label
                     key={option.value}
                     htmlFor={`${question.id}-${option.value}`}
-                    className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-5 rounded-xl md:rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                   >
                     <RadioGroupItem
                       value={option.value}
                       id={`${question.id}-${option.value}`}
                       className="flex-shrink-0"
                     />
-                    <span className="flex-1 text-base text-slate-700">
+                    <span className="flex-1 text-sm md:text-base text-slate-700 leading-snug">
                       {option.label}
                     </span>
                   </label>
@@ -105,7 +105,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
 
             return (
               <div
-                className="space-y-3"
+                className="space-y-2 md:space-y-3"
                 role="group"
                 aria-label={question.title}
               >
@@ -116,7 +116,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                     <label
                       key={option.value}
                       htmlFor={`${question.id}-${option.value}`}
-                      className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
+                      className="flex items-center gap-3 md:gap-4 p-3 md:p-5 rounded-xl md:rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                     >
                       <Checkbox
                         id={`${question.id}-${option.value}`}
@@ -132,7 +132,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
                         }}
                         className="flex-shrink-0"
                       />
-                      <span className="flex-1 text-base text-slate-700">
+                      <span className="flex-1 text-sm md:text-base text-slate-700 leading-snug">
                         {option.label}
                       </span>
                     </label>
@@ -148,21 +148,21 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
               <RadioGroup
                 value={field.value as string}
                 onValueChange={field.onChange}
-                className="space-y-3"
+                className="space-y-2 md:space-y-3"
                 aria-label={question.title}
               >
                 {question.options.map((option) => (
                   <label
                     key={option.value}
                     htmlFor={`${question.id}-${option.value}`}
-                    className="flex items-center gap-4 p-5 rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
+                    className="flex items-center gap-3 md:gap-4 p-3 md:p-5 rounded-xl md:rounded-2xl border border-slate-200 hover:border-slate-300 hover:bg-slate-50 transition-all cursor-pointer"
                   >
                     <RadioGroupItem
                       value={option.value}
                       id={`${question.id}-${option.value}`}
                       className="flex-shrink-0"
                     />
-                    <span className="flex-1 text-base text-slate-700">
+                    <span className="flex-1 text-sm md:text-base text-slate-700 leading-snug">
                       {option.label}
                     </span>
                   </label>
