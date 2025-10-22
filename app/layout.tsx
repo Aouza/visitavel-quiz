@@ -6,6 +6,8 @@ import AnalyticsProvider from "./providers/AnalyticsProvider";
 import MetaPixel from "@/components/MetaPixel";
 import { ClarityAnalytics } from "@/components/Clarity";
 import { ClarityConsent } from "@/components/ClarityConsent";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -58,6 +60,8 @@ export default function RootLayout({
         <MetaPixel />
         <ClarityAnalytics />
         <ClarityConsent />
+        <Analytics />
+        <SpeedInsights />
         <main className="min-h-screen">{children}</main>
 
         {/* Footer */}
