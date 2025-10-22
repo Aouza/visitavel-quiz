@@ -105,10 +105,19 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
       });
 
       // Track sucesso (Meta - Lead)
+      // 🆕 Enviando dados completos para melhorar qualidade de correspondência
+      const nameParts = data.name.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.slice(1).join(" ") || undefined;
+
       trackMetaEvent({
         eventName: "Lead",
         email: data.email,
         phone: normalizedWhatsApp,
+        firstName, // 🆕 Melhora qualidade de correspondência
+        lastName, // 🆕
+        gender: data.gender, // 🆕
+        // birthdate pode ser adicionado se você capturar no formulário
         customData: {
           lead_source: "quiz",
           gender: data.gender || "not_informed",

@@ -12,6 +12,10 @@ interface MetaEventData {
   user_data: {
     em?: string; // email (hashed com SHA256)
     ph?: string; // phone (hashed com SHA256)
+    fn?: string; // first name (hashed)
+    ln?: string; // last name (hashed)
+    ge?: string; // gender (hashed, 'm' or 'f')
+    db?: string; // date of birth (hashed, YYYYMMDD)
     client_ip_address?: string;
     client_user_agent?: string;
     fbc?: string; // Facebook click ID
@@ -25,6 +29,10 @@ interface SendMetaEventParams {
   eventId: string; // UUID para deduplicação
   email?: string;
   phone?: string;
+  firstName?: string;
+  lastName?: string;
+  gender?: string;
+  birthdate?: string; // formato YYYYMMDD
   ipAddress?: string;
   userAgent?: string;
   eventSourceUrl: string;
@@ -53,8 +61,17 @@ export async function sendMetaEvent(
   const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
   const accessToken = process.env.META_ACCESS_TOKEN;
 
+  // 🔍 LOG: Verificar configuração
+  console.log("[Meta CAPI] 🚀 Iniciando envio:", {
+    eventName: params.eventName,
+    eventId: params.eventId?.slice(0, 8) + "...",
+    pixelId: pixelId?.slice(0, 8) + "...",
+    hasToken: !!accessToken,
+    tokenPrefix: accessToken?.slice(0, 6) + "...",
+  });
+
   if (!pixelId || !accessToken) {
-    console.warn("[Meta CAPI] Pixel ID ou Access Token não configurados");
+    console.warn("[Meta CAPI] ❌ Pixel ID ou Access Token não configurados");
     return false;
   }
 
@@ -76,6 +93,28 @@ export async function sendMetaEvent(
       userData.ph = await hashSHA256(cleanPhone);
     }
 
+    // 🆕 Hashear campos adicionais para melhorar qualidade de correspondência
+    if (params.firstName) {
+      userData.fn = await hashSHA256(params.firstName);
+    }
+
+    if (params.lastName) {
+      userData.ln = await hashSHA256(params.lastName);
+    }
+
+    if (params.gender) {
+      // Meta aceita 'm' ou 'f' (minúsculo)
+      const normalizedGender = params.gender.toLowerCase().charAt(0);
+      if (normalizedGender === "m" || normalizedGender === "f") {
+        userData.ge = await hashSHA256(normalizedGender);
+      }
+    }
+
+    if (params.birthdate) {
+      // Formato esperado: YYYYMMDD (ex: 19900515)
+      userData.db = await hashSHA256(params.birthdate);
+    }
+
     // Adicionar Facebook IDs se disponíveis
     if (params.fbc) userData.fbc = params.fbc;
     if (params.fbp) userData.fbp = params.fbp;
@@ -94,6 +133,17 @@ export async function sendMetaEvent(
       eventData.custom_data = params.customData;
     }
 
+    // 🔍 LOG: Dados sendo enviados
+    console.log("[Meta CAPI] 📤 Payload:", {
+      event_name: eventData.event_name,
+      event_id: eventData.event_id.slice(0, 8) + "...",
+      has_email: !!userData.em,
+      has_phone: !!userData.ph,
+      has_fbp: !!userData.fbp,
+      has_fbc: !!userData.fbc,
+      ip: userData.client_ip_address,
+    });
+
     const response = await fetch(
       `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${accessToken}`,
       {
@@ -105,18 +155,25 @@ export async function sendMetaEvent(
       }
     );
 
+    const result = await response.json();
+
+    // 🔍 LOG: Resposta do Meta
+    console.log("[Meta CAPI] 📥 Resposta:", {
+      status: response.status,
+      ok: response.ok,
+      result,
+    });
+
     if (!response.ok) {
-      const errorData = await response.json();
-      console.error("[Meta CAPI] Error response:", errorData);
+      console.error("[Meta CAPI] ❌ Erro na resposta:", result);
       return false;
     }
 
-    const result = await response.json();
-
     if (result.events_received === 1) {
+      console.log("[Meta CAPI] ✅ Evento enviado com sucesso!");
       return true;
     } else {
-      console.error("[Meta CAPI] Event not received:", result);
+      console.error("[Meta CAPI] ⚠️ Evento não recebido:", result);
       return false;
     }
   } catch (error) {
