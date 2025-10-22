@@ -461,7 +461,7 @@ export function ElegantResultCard({
                 Estamos gerando seu relatório personalizado...
               </p>
               <p className="text-xs text-slate-400">
-                Analisando suas respostas com inteligência artificial
+                Processando suas respostas e montando sua análise
               </p>
             </div>
           ) : hasError ? (
