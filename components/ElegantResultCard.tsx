@@ -382,7 +382,7 @@ export function ElegantResultCard({
   );
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-4 text-slate-900 overflow-x-hidden">
+    <div className="relative w-full max-w-4xl mx-auto space-y-12 md:space-y-24 pb-16 md:pb-32 px-4 text-slate-900 overflow-x-hidden min-h-screen">
       {/* 1. Header / abertura - PRIMEIRO IMPACTO */}
       <section className="space-y-6 md:space-y-8">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
@@ -1396,7 +1396,7 @@ export function ElegantResultCard({
                 <Button
                   onClick={() => handleUnlockClick("bloco_2_cta")}
                   size="lg"
-                  className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-4 text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
+                  className="w-full md:w-auto inline-flex items-center gap-3 rounded-full bg-slate-900 px-6 md:px-10 py-3 md:py-4 text-sm md:text-base font-bold text-white transition-all hover:bg-slate-800 hover:shadow-xl hover:scale-105"
                 >
                   Desbloquear Relatório Completo Agora
                   <ArrowRight className="h-5 w-5" />
