@@ -12,6 +12,7 @@ import { type Segment } from "@/lib/questions";
 import { getSegmentContent } from "@/lib/segments";
 import { getLeadInfo } from "@/lib/storage";
 import { gtagEvent } from "@/lib/analytics";
+import { trackMetaEvent } from "@/lib/track-meta-event";
 import { ArrowRight, Loader2 } from "lucide-react";
 import { ReportFreePayload } from "@/types/report-free";
 
@@ -105,11 +106,23 @@ export function ElegantResultCard({
   // Wrapper para adicionar tracking ao CTA principal
   const handleUnlockClick = useCallback(
     (location: string) => {
+      // Track GA4
       gtagEvent("cta_unlock_report", {
         segment,
         page: "/quiz/resultado",
         location,
       });
+
+      // Track Meta - InitiateCheckout (intenção de compra)
+      trackMetaEvent({
+        eventName: "InitiateCheckout",
+        customData: {
+          segment,
+          location,
+          content_name: "Relatório Completo",
+        },
+      });
+
       onPrimaryAction();
     },
     [segment, onPrimaryAction]
@@ -221,7 +234,9 @@ export function ElegantResultCard({
 
         // Se for objeto, validar estrutura do novo schema (deve ter header)
         if (typeof preview === "object" && !preview.header) {
-          console.error("API retornou JSON com estrutura inválida - falta header");
+          console.error(
+            "API retornou JSON com estrutura inválida - falta header"
+          );
           setHasError(true);
           setIsLoading(false);
           return;

@@ -93,30 +93,8 @@ export async function POST(request: NextRequest) {
       timestamp: body.timestamp || new Date().toISOString(),
     };
 
-    // Coletar dados para Meta Conversion API
-    const ipAddress = (request.headers.get("x-forwarded-for") ||
-      request.headers.get("x-real-ip") ||
-      "unknown") as string;
-    const userAgent = request.headers.get("user-agent") || undefined;
-    const eventSourceUrl =
-      request.headers.get("referer") ||
-      process.env.NEXT_PUBLIC_SITE_URL ||
-      "https://quiz.visitavel.com";
-
-    // Enviar evento Lead para Meta Conversion API (server-side tracking)
-    sendMetaEvent({
-      eventName: "Lead",
-      email: enrichedLead.email,
-      phone: enrichedLead.whatsapp,
-      ipAddress,
-      userAgent,
-      eventSourceUrl,
-      customData: {
-        lead_source: "quiz",
-      },
-    }).catch((error) => {
-      console.error("[Lead] Meta CAPI error (non-blocking):", error);
-    });
+    // Meta Conversion API já é tratado pelo client-side via trackMetaEvent()
+    // que chama /api/meta/track automaticamente (não duplicar aqui)
 
     // Tentar enviar para webhook
     const webhookSuccess = await sendLeadToWebhook(enrichedLead);

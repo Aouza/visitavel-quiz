@@ -22,14 +22,15 @@ interface MetaEventData {
 
 interface SendMetaEventParams {
   eventName: string;
+  eventId: string; // UUID para deduplicação
   email?: string;
   phone?: string;
   ipAddress?: string;
   userAgent?: string;
   eventSourceUrl: string;
   customData?: Record<string, string | number>;
-  fbc?: string;
-  fbp?: string;
+  fbc?: string; // Facebook Click ID (_fbc cookie)
+  fbp?: string; // Facebook Browser ID (_fbp cookie)
 }
 
 /**
@@ -79,8 +80,9 @@ export async function sendMetaEvent(
     if (params.fbc) userData.fbc = params.fbc;
     if (params.fbp) userData.fbp = params.fbp;
 
-    const eventData: MetaEventData = {
+    const eventData: MetaEventData & { event_id: string } = {
       event_name: params.eventName,
+      event_id: params.eventId, // UUID para deduplicação
       event_time: Math.floor(Date.now() / 1000),
       action_source: "website",
       event_source_url: params.eventSourceUrl,
@@ -93,7 +95,7 @@ export async function sendMetaEvent(
     }
 
     const response = await fetch(
-      `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`,
+      `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${accessToken}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },

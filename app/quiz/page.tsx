@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
 import { trackQuizView, trackQuizCTAClick, gtagEvent } from "@/lib/analytics";
+import { trackMetaEvent } from "@/lib/track-meta-event";
 import { Check, ArrowRight } from "lucide-react";
 
 export default function QuizPage() {
@@ -24,8 +25,17 @@ export default function QuizPage() {
     const leadInfo = getLeadInfo();
     setHasLead(!!leadInfo);
 
-    // Track visualização
+    // Track visualização (GA4)
     trackQuizView();
+
+    // Track visualização (Meta - quiz_view)
+    trackMetaEvent({
+      eventName: "quiz_view",
+      customData: {
+        page: "landing",
+        has_lead: leadInfo ? 1 : 0,
+      },
+    });
 
     // Se tem lead E veio de ?autostart=1, iniciar automaticamente
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,11 +47,21 @@ export default function QuizPage() {
   }, []);
 
   const handleStartClick = () => {
+    // Track GA4
     trackQuizCTAClick();
     gtagEvent("cta_start_quiz", {
       page: "/quiz",
       has_lead: hasLead,
       source: "landing_page",
+    });
+
+    // Track Meta - quiz_start
+    trackMetaEvent({
+      eventName: "quiz_start",
+      customData: {
+        source: "landing_cta",
+        has_lead: hasLead ? 1 : 0,
+      },
     });
 
     if (hasLead) {

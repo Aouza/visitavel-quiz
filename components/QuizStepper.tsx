@@ -21,6 +21,7 @@ import {
   saveQuizResult,
 } from "@/lib/storage";
 import { trackQuizStep, trackQuizCompleted } from "@/lib/analytics";
+import { trackMetaEvent } from "@/lib/track-meta-event";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 
 const extractEmojiFromOption = (option?: Option) => {
@@ -211,9 +212,7 @@ export function QuizStepper() {
           ? [rawAnswer]
           : [];
         const matchedOptions = answerValues
-          .map((value) =>
-            question.options.find((opt) => opt.value === value)
-          )
+          .map((value) => question.options.find((opt) => opt.value === value))
           .filter((opt): opt is Option => Boolean(opt));
 
         const answerLabel =
@@ -264,12 +263,21 @@ export function QuizStepper() {
         completedAt: new Date().toISOString(),
       });
 
-      // Track conclusão
+      // Track conclusão (GA4)
       trackQuizCompleted(
         result.segment,
         result.totalScore,
         JSON.stringify(currentAnswers).substring(0, 50)
       );
+
+      // Track conclusão (Meta - quiz_complete)
+      trackMetaEvent({
+        eventName: "quiz_complete",
+        customData: {
+          segment: result.segment,
+          score: result.totalScore,
+        },
+      });
 
       // Limpar progresso salvo (mas mantém o resultado)
       clearQuizProgress();

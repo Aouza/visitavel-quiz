@@ -27,6 +27,7 @@ import {
 } from "@/lib/validators";
 import { saveLeadInfo } from "@/lib/storage";
 import { trackLeadSubmitted, trackLeadError, gtagEvent } from "@/lib/analytics";
+import { trackMetaEvent } from "@/lib/track-meta-event";
 import { getUTMs } from "@/lib/storage";
 
 interface LeadModalProps {
@@ -95,12 +96,23 @@ export function LeadModal({ open, onOpenChange, onSuccess }: LeadModalProps) {
       // Salvar lead localmente
       saveLeadInfo(data.name, data.email, normalizedWhatsApp, data.gender);
 
-      // Track sucesso
+      // Track sucesso (GA4)
       trackLeadSubmitted(data.email);
       gtagEvent("lead_capture", {
         email_domain: data.email.split("@")[1] || "unknown",
         gender: data.gender || "not_informed",
         source: "quiz_flow",
+      });
+
+      // Track sucesso (Meta - Lead)
+      trackMetaEvent({
+        eventName: "Lead",
+        email: data.email,
+        phone: normalizedWhatsApp,
+        customData: {
+          lead_source: "quiz",
+          gender: data.gender || "not_informed",
+        },
       });
 
       // Fechar modal e continuar
