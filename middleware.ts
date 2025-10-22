@@ -93,11 +93,12 @@ function validateRequest(request: NextRequest): {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Skip middleware for static files and Next.js internals
+  // Skip middleware for static files, Next.js internals, and file extensions
   if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/static") ||
-    pathname.includes(".")
+    pathname.startsWith("/_next/") ||
+    pathname.startsWith("/static/") ||
+    pathname.startsWith("/favicon") ||
+    pathname.match(/\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/i)
   ) {
     return NextResponse.next();
   }
@@ -133,5 +134,14 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    /*
+     * Match all request paths except:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public files (files with extensions)
+     */
+    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)).*)",
+  ],
 };
