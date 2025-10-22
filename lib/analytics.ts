@@ -59,22 +59,19 @@ interface EventPayload {
 }
 
 /**
- * Envia evento para GA4 (dataLayer) + Microsoft Clarity
+ * Envia evento para GA4 (via gtag) + Microsoft Clarity
  * Nota: Meta Pixel agora é rastreado via trackMetaEvent() para deduplicação
  */
 export function track(name: EventName, payload?: EventPayload): void {
   if (typeof window === "undefined") return;
 
-  // GA4 via dataLayer
+  // GA4 via gtag (método oficial que realmente funciona)
   try {
-    if (window.dataLayer) {
-      window.dataLayer.push({
-        event: name,
-        ...payload,
-      });
+    if (window.gtag) {
+      window.gtag("event", name, payload);
     }
   } catch (error) {
-    console.error("[Analytics] Error pushing to dataLayer:", error);
+    console.error("[Analytics] Error sending gtag event:", error);
   }
 
   // Microsoft Clarity
