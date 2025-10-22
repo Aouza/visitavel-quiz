@@ -7,12 +7,16 @@
 "use client";
 
 import { useEffect } from "react";
+import { ensureFacebookCookies } from "@/lib/facebook-cookies";
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
 export default function MetaPixel() {
   useEffect(() => {
     if (!FB_PIXEL_ID) return;
+
+    // 🆕 Garantir que os cookies Facebook existem (antes de inicializar)
+    ensureFacebookCookies();
 
     // Verifica se o pixel já foi inicializado (evita duplicação)
     // @ts-ignore - propriedade customizada para controle de inicialização

@@ -5,6 +5,7 @@
  */
 
 import { generateUUID } from "./uuid";
+import { getCookie } from "./facebook-cookies";
 
 interface TrackMetaEventParams {
   eventName: string;
@@ -15,22 +16,6 @@ interface TrackMetaEventParams {
   gender?: string;
   birthdate?: string; // formato YYYYMMDD
   customData?: Record<string, string | number>;
-}
-
-/**
- * Pega cookie do browser (_fbp, _fbc)
- */
-function getCookie(name: string): string | undefined {
-  if (typeof document === "undefined") return undefined;
-
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-
-  if (parts.length === 2) {
-    return parts.pop()?.split(";").shift();
-  }
-
-  return undefined;
 }
 
 /**
@@ -101,6 +86,8 @@ async function sendToConversionsAPI(
       has_phone: !!params.phone,
       has_fbp: !!fbp,
       has_fbc: !!fbc,
+      fbp_preview: fbp?.slice(0, 15) + "...", // 🔍 Ver preview do cookie
+      fbc_preview: fbc?.slice(0, 15) + "...", // 🔍 Ver preview do cookie
       url: window.location.href,
     });
 

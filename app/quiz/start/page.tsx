@@ -55,6 +55,9 @@ export default function QuizStartPage() {
       // Track captura (GA4)
       trackLeadSubmitted(formData.email);
 
+      // 🆕 Buffer mínimo para garantir que _fbp/_fbc foram setados pelo Pixel
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
       // 🆕 Track captura (Meta - Lead)
       const nameParts = formData.name.trim().split(" ");
       const firstName = nameParts[0];

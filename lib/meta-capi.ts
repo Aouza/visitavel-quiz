@@ -84,6 +84,10 @@ export async function sendMetaEvent(
     // Hashear email se fornecido
     if (params.email) {
       userData.em = await hashSHA256(params.email);
+      console.log("[Meta CAPI] 🔐 Email:", {
+        original: params.email,
+        hash: userData.em.slice(0, 16) + "...",
+      });
     }
 
     // Hashear telefone se fornecido
@@ -91,6 +95,11 @@ export async function sendMetaEvent(
       // Remover caracteres não numéricos
       const cleanPhone = params.phone.replace(/\D/g, "");
       userData.ph = await hashSHA256(cleanPhone);
+      console.log("[Meta CAPI] 🔐 Phone:", {
+        original: params.phone,
+        normalized: cleanPhone,
+        hash: userData.ph.slice(0, 16) + "...",
+      });
     }
 
     // 🆕 Hashear campos adicionais para melhorar qualidade de correspondência
@@ -139,9 +148,16 @@ export async function sendMetaEvent(
       event_id: eventData.event_id.slice(0, 8) + "...",
       has_email: !!userData.em,
       has_phone: !!userData.ph,
+      has_firstName: !!userData.fn,
+      has_lastName: !!userData.ln,
+      has_gender: !!userData.ge,
+      has_birthdate: !!userData.db,
       has_fbp: !!userData.fbp,
       has_fbc: !!userData.fbc,
       ip: userData.client_ip_address,
+      // 🔍 DEBUG: Mostrar primeiros caracteres dos hashes (para confirmar)
+      email_hash_preview: userData.em?.slice(0, 8) + "...",
+      phone_hash_preview: userData.ph?.slice(0, 8) + "...",
     });
 
     const response = await fetch(
