@@ -30,25 +30,16 @@ const LEADS_FILE = join(TMP_DIR, "leads.jsonl");
 
 async function saveLeadToFile(lead: LeadPayload): Promise<void> {
   try {
-    console.log(`[Lead] 📂 Diretório: ${TMP_DIR}`);
-    console.log(`[Lead] 📄 Arquivo: ${LEADS_FILE}`);
-
     // Criar diretório tmp se não existir
     if (!existsSync(TMP_DIR)) {
-      console.log("[Lead] 📁 Criando diretório tmp...");
       await mkdir(TMP_DIR, { recursive: true });
-      console.log("[Lead] ✅ Diretório criado!");
-    } else {
-      console.log("[Lead] ✅ Diretório já existe");
     }
 
     // Adicionar lead ao arquivo JSONL (uma linha por lead)
     const line = JSON.stringify(lead) + "\n";
-    console.log(`[Lead] ✍️ Escrevendo linha: ${line.substring(0, 100)}...`);
     await writeFile(LEADS_FILE, line, { flag: "a" });
-    console.log("[Lead] ✅ Linha escrita com sucesso!");
   } catch (error) {
-    console.error("[Lead] ❌ Erro ao salvar no arquivo:", error);
+    console.error("[Lead] Error saving to file:", error);
     throw error;
   }
 }
@@ -56,11 +47,7 @@ async function saveLeadToFile(lead: LeadPayload): Promise<void> {
 async function sendLeadToWebhook(lead: LeadPayload): Promise<boolean> {
   const webhookUrl = process.env.LEAD_WEBHOOK_URL;
 
-  console.log("[Lead] 🔍 DEBUG - LEAD_WEBHOOK_URL existe?", !!webhookUrl);
-  console.log("[Lead] 🔍 DEBUG - URL (primeiros 50 chars):", webhookUrl?.substring(0, 50) || "UNDEFINED");
-
   if (!webhookUrl) {
-    console.log("[Lead] ❌ LEAD_WEBHOOK_URL não está configurada em produção!");
     return false;
   }
 
@@ -85,15 +72,11 @@ async function sendLeadToWebhook(lead: LeadPayload): Promise<boolean> {
 }
 
 export async function POST(request: NextRequest) {
-  console.log("[Lead] 🔵 API endpoint /api/lead foi chamada!");
-
   try {
     const body: LeadPayload = await request.json();
-    console.log("[Lead] 📦 Dados recebidos:", JSON.stringify(body, null, 2));
 
     // Validação básica
     if (!body.email || !body.whatsapp) {
-      console.log("[Lead] ❌ Validação falhou: email ou whatsapp faltando");
       return NextResponse.json(
         { ok: false, error: "E-mail e WhatsApp são obrigatórios" },
         { status: 400 }
@@ -101,7 +84,6 @@ export async function POST(request: NextRequest) {
     }
 
     if (!body.consent) {
-      console.log("[Lead] ❌ Validação falhou: consent não dado");
       return NextResponse.json(
         { ok: false, error: "É necessário concordar com os termos" },
         { status: 400 }
@@ -114,31 +96,18 @@ export async function POST(request: NextRequest) {
       timestamp: body.timestamp || new Date().toISOString(),
     };
 
-    console.log(
-      "[Lead] 📝 Lead enriquecido:",
-      JSON.stringify(enrichedLead, null, 2)
-    );
-
     // Meta Conversion API já é tratado pelo client-side via trackMetaEvent()
     // que chama /api/meta/track automaticamente (não duplicar aqui)
 
     // Tentar enviar para webhook
-    console.log("[Lead] 🌐 Tentando enviar para webhook...");
     const webhookSuccess = await sendLeadToWebhook(enrichedLead);
-    console.log(
-      `[Lead] ${webhookSuccess ? "✅" : "⚠️"} Webhook ${
-        webhookSuccess ? "enviado com sucesso" : "não configurado ou falhou"
-      }`
-    );
 
     // Salvar no arquivo como backup/fallback (pode falhar em serverless)
     try {
-      console.log("[Lead] 💾 Tentando salvar no arquivo local...");
       await saveLeadToFile(enrichedLead);
-      console.log("[Lead] ✅ Lead salvo no arquivo com sucesso!");
     } catch (fileError) {
-      console.error("[Lead] ⚠️ Não foi possível salvar no arquivo (normal em serverless):", fileError);
       // Não quebra a requisição se não conseguir salvar no arquivo
+      console.error("[Lead] Could not save to file (expected in serverless):", fileError);
     }
 
     return NextResponse.json({
@@ -147,7 +116,7 @@ export async function POST(request: NextRequest) {
       webhookDelivered: webhookSuccess,
     });
   } catch (error) {
-    console.error("[Lead] ❌ Erro ao processar lead:", error);
+    console.error("[Lead] Error processing lead:", error);
 
     return NextResponse.json(
       {
