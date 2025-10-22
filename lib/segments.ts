@@ -25,7 +25,7 @@ export const SEGMENT_CONTENT: Record<Segment, SegmentContent> = {
       "É normal sentir-se sobrecarregado(a) neste momento",
       "Seu corpo e mente estão reagindo a uma perda significativa",
       "Cuidados básicos com sono e alimentação são fundamentais agora",
-      "Apoio próximo e estruturado pode acelerar sua recuperação",
+      "Apoio próximo e estruturado pode acelerar seu processo",
       "Não tome decisões importantes nesta fase",
     ],
     ctaPrimary: "Quero o Kit Anti-Recaída Completo",
@@ -38,8 +38,8 @@ export const SEGMENT_CONTENT: Record<Segment, SegmentContent> = {
     description:
       "Você sente forte necessidade de contato com seu(sua) ex, como se estivesse passando por uma crise de abstinência. Os impulsos são intensos e difíceis de controlar.",
     bullets: [
-      "Checagens constantes nas redes sociais são um sintoma comum",
-      "O impulso de entrar em contato é natural, mas pode atrasar sua cura",
+      "Checagens constantes nas redes sociais são um sinal comum",
+      "O impulso de entrar em contato é natural, mas pode atrasar seu processo",
       "Você pode estar idealizando o relacionamento",
       "Existem técnicas específicas para lidar com esses impulsos",
       "É possível romper esse ciclo com as estratégias certas",
@@ -89,7 +89,7 @@ export const SEGMENT_CONTENT: Record<Segment, SegmentContent> = {
       "Você já fez grande parte do trabalho mais difícil",
       "Manter-se neste caminho requer atenção e cuidado",
       "É normal ter altos e baixos ocasionais",
-      "Fortalecer sua base emocional previne recaídas",
+      "Fortalecer sua base interna previne recaídas",
       "Você está pronto(a) para consolidar sua evolução",
     ],
     ctaPrimary: "Quero consolidar minha evolução",

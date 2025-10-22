@@ -371,7 +371,7 @@ export async function POST(request: NextRequest) {
     const flagSummaryList = buildFlagSummary(symptomFlags);
     const flagsHumanReadable = flagSummaryList.length
       ? flagSummaryList.join(", ")
-      : "sem sintomas de alta intensidade detectados";
+      : "sem sinais de alta intensidade detectados";
     const flagsForPrompt = JSON.stringify(symptomFlags, null, 2);
 
     // ===== Schema de ENTENDIMENTO (free) =====
@@ -505,7 +505,7 @@ REGRAS NÃO NEGOCIÁVEIS:
     );
 
     const systemPromptFree = `
-Você é um especialista em análise emocional pós-término. Gere um relatório direto, humano e cirúrgico para ${userFirstName}.
+Você é um especialista em análise de padrões de comportamento pós-término. Gere um relatório direto, humano e cirúrgico para ${userFirstName}.
 
 🔤 GÊNERO E PRONOMES:
 ${
@@ -540,7 +540,7 @@ CONTEXTO DO CASO:
 - Segmento: ${segmentContent.headline}
 - Descrição: ${segmentContent.description}
 - Período desde o término: ${daysSinceBreakup ?? "não informado"} dias
-- Sintomas principais: ${flagsHumanReadable}
+- Sinais principais: ${flagsHumanReadable}
 - Traços do usuário (derivados, se houver): 
 ${userTraitsBlock}
 - Traços do ex (se houver): 
@@ -571,7 +571,7 @@ DESCRIÇÃO DO SEGMENTO: ${segmentContent.description}
 
 DIAS DESDE O TÉRMINO (aprox.): ${daysSinceBreakup ?? "não informado"}
 
-SINTOMAS / BANDEIRAS DETECTADOS (resumo humano):
+SINAIS / BANDEIRAS DETECTADOS (resumo humano):
 ${flagsHumanReadable}
 Mapa bruto das flags:
 ${flagsForPrompt}

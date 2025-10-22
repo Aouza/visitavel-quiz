@@ -45,7 +45,7 @@ function OfertaContent() {
           <section className="space-y-6">
             <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
               <span className="h-px w-12 bg-slate-200" />
-              Seu diagnóstico
+              Sua análise
             </div>
             <div className="flex items-start gap-6">
               <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl">
@@ -73,7 +73,7 @@ function OfertaContent() {
             <p className="text-lg md:text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
               O relatório completo te mostra o <strong>caminho exato</strong>{" "}
               para sair do ciclo de recaídas e recuperar o controle da sua vida
-              emocional.
+              interior.
             </p>
           </div>
         </section>
@@ -95,7 +95,7 @@ function OfertaContent() {
                 icon: "💬",
                 title: "Por que você ainda pensa nessa pessoa",
                 description:
-                  "Entenda o mecanismo emocional que mantém a obsessão ativa",
+                  "Entenda o padrão de comportamento que mantém a obsessão ativa",
               },
               {
                 icon: "🧠",
@@ -104,8 +104,8 @@ function OfertaContent() {
               },
               {
                 icon: "🌙",
-                title: "Como lidar com a abstinência emocional",
-                description: "Equilibre a química emocional sem recaídas",
+                title: "Como lidar com o desejo de reconexão",
+                description: "Equilibre sua resposta interna sem recaídas",
               },
               {
                 icon: "⚡",
@@ -121,7 +121,7 @@ function OfertaContent() {
               {
                 icon: "🕯",
                 title: "Como encerrar de verdade",
-                description: "Fechamento emocional real, sem humilhação",
+                description: "Fechamento simbólico real, sem humilhação",
               },
               {
                 icon: "🔮",

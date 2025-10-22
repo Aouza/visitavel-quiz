@@ -13,8 +13,8 @@ export const metadata: Metadata = {
   ),
   title: "Quiz Pós-Término | Descubra sua fase e receba orientações",
   description:
-    "Descubra em que fase do pós-término você está e receba um relatório personalizado com orientações práticas para sua recuperação emocional.",
-  keywords: "término, superação, relacionamento, luto amoroso, quiz emocional",
+    "Descubra em que fase do pós-término você está e receba um relatório personalizado com orientações práticas para seu realinhamento interno.",
+  keywords: "término, superação, relacionamento, luto amoroso, mapa pessoal",
   openGraph: {
     title: "Quiz Pós-Término | Descubra sua fase",
     description:

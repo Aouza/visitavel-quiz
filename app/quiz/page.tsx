@@ -94,7 +94,7 @@ export default function QuizPage() {
         <section className="space-y-8">
           <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
             <span className="h-px w-12 bg-slate-200" />
-            Diagnóstico emocional gratuito
+            Mapa emocional gratuito
           </div>
 
           <div className="space-y-6">
@@ -116,7 +116,7 @@ export default function QuizPage() {
                 .
               </p>
               <p>
-                Não é autoajuda genérica. É um diagnóstico direto baseado no que
+                Não é autoajuda genérica. É uma análise direta baseada no que
                 você realmente sente agora.
               </p>
             </div>
@@ -127,7 +127,7 @@ export default function QuizPage() {
                 onClick={handleStartClick}
                 className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-10 py-6 text-lg font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
               >
-                Começar diagnóstico gratuito
+                Começar mapeamento gratuito
                 <ArrowRight className="h-5 w-5" />
               </Button>
               <p className="text-sm text-slate-500 mt-4">
@@ -158,8 +158,8 @@ export default function QuizPage() {
                   Por que você ainda pensa nessa pessoa todo dia
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Não é fraqueza. É um mecanismo emocional que fica ativo quando
-                  algo termina sem respostas claras.
+                  Não é fraqueza. É um padrão de comportamento que fica ativo
+                  quando algo termina sem respostas claras.
                 </p>
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function QuizPage() {
                   Em que fase do pós-término você está agora
                 </h3>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Cada fase tem sintomas específicos. Saber onde você está é o
+                  Cada fase tem sinais específicos. Saber onde você está é o
                   primeiro passo para sair.
                 </p>
               </div>
@@ -217,7 +217,7 @@ export default function QuizPage() {
             <span className="text-2xl">🧠</span>
             <div className="text-center">
               <p className="text-sm font-semibold text-emerald-900">
-                Mais de 47 mil pessoas já fizeram este diagnóstico
+                Mais de 47 mil pessoas já fizeram este mapeamento
               </p>
               <p className="text-xs text-emerald-700">
                 98% dizem que o relatório "acertou em cheio o que estavam
@@ -314,7 +314,7 @@ export default function QuizPage() {
                 2
               </div>
               <h3 className="text-lg font-semibold text-slate-900">
-                Receba seu diagnóstico
+                Receba seu mapa pessoal
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
                 Na hora, você vê em que fase está, por que está preso e o que
@@ -354,8 +354,8 @@ export default function QuizPage() {
                 <span>❓</span> É gratuito mesmo?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                <strong>✅ Sim.</strong> Você responde 12 perguntas e recebe o
-                diagnóstico na hora, 100% grátis.
+                <strong>✅ Sim.</strong> Você responde 12 perguntas e recebe a
+                análise na hora, 100% grátis.
               </p>
             </div>
 
@@ -364,8 +364,8 @@ export default function QuizPage() {
                 <span>❓</span> É sobre astrologia ou espiritualidade?
               </h3>
               <p className="text-sm text-slate-600 leading-relaxed">
-                <strong>✅ Não.</strong> É um diagnóstico emocional direto,
-                baseado em comportamento real.
+                <strong>✅ Não.</strong> É uma leitura pessoal direta, baseada
+                em comportamento real.
               </p>
             </div>
 
@@ -386,16 +386,17 @@ export default function QuizPage() {
         <section className="space-y-6">
           <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 text-center">
             <p className="text-slate-600 text-base leading-relaxed mb-4">
-              "Eu finalmente entendi por que não conseguia seguir. O diagnóstico
-              foi tão direto que parecia que alguém estava lendo minha mente. Em
-              2 dias eu já estava melhor."
+              "Eu finalmente entendi por que não conseguia seguir. A análise foi
+              tão direta que parecia que alguém estava lendo minha mente. Em 2
+              dias eu já estava melhor."
             </p>
             <p className="text-sm text-slate-500">— Maria, 28 anos</p>
           </div>
 
           <p className="text-center text-sm text-slate-500">
             Mais de <strong className="text-slate-700">7 mil pessoas</strong> já
-            usaram este diagnóstico para entender o próprio padrão emocional
+            usaram este mapeamento para entender o próprio padrão de
+            comportamento
           </p>
         </section>
 
@@ -406,7 +407,7 @@ export default function QuizPage() {
               Pronto para entender o que realmente te prende?
             </h2>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              São apenas 2 minutos. Você vai receber seu diagnóstico completo na
+              São apenas 2 minutos. Você vai receber sua análise completa na
               hora — e finalmente ter clareza do que fazer.
             </p>
           </div>
@@ -416,7 +417,7 @@ export default function QuizPage() {
             onClick={handleStartClick}
             className="inline-flex items-center gap-3 rounded-full bg-slate-900 px-12 py-6 text-lg font-bold text-white transition hover:bg-slate-800 hover:shadow-xl hover:scale-105"
           >
-            Começar diagnóstico agora
+            Começar mapeamento agora
             <ArrowRight className="h-6 w-6" />
           </Button>
 

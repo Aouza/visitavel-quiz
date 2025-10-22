@@ -22,7 +22,7 @@ export function ProgressHeader({
     <div className="w-full space-y-4">
       <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
         <span className="h-px w-12 bg-slate-200" />
-        Diagnóstico emocional
+        Mapeamento pessoal
       </div>
 
       <div className="flex justify-between items-center">

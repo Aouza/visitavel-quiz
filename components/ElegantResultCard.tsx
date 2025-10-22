@@ -43,7 +43,7 @@ const testimonials = [
     emoji: "😌",
     name: "Carolina M.",
     time: "Há 3 dias",
-    text: "Eu achava que nunca ia conseguir parar de pensar nele. Em 5 dias usando o relatório, percebi que consegui dormir uma noite inteira sem acordar com ansiedade. Parece pouco, mas pra mim foi gigante.",
+    text: "Eu achava que nunca ia conseguir parar de pensar nele. Em 5 dias usando o relatório, percebi que consegui dormir uma noite inteira sem acordar com aquela inquietação. Parece pouco, mas pra mim foi gigante.",
   },
   {
     emoji: "💪",
@@ -79,7 +79,7 @@ const testimonials = [
     emoji: "💙",
     name: "Amanda R.",
     time: "Há 6 dias",
-    text: "Finalmente entendi por que eu me comparava tanto com a vida dele. O relatório me mostrou a lógica emocional por trás disso e como parar. Hoje eu foco em mim e no meu tempo.",
+    text: "Finalmente entendi por que eu me comparava tanto com a vida dele. O relatório me mostrou o padrão por trás disso e como parar. Hoje eu foco em mim e no meu tempo.",
   },
   {
     emoji: "🌟",
@@ -306,7 +306,7 @@ export function ElegantResultCard({
       title:
         "Descubra por que seu cérebro ainda busca essa pessoa — e como parar de reforçar isso",
       summary:
-        "Entenda o mecanismo emocional que mantém você preso e aprenda a desativar esse padrão de busca.",
+        "Entenda o padrão de comportamento que mantém você preso e aprenda a desativar esse ciclo de busca.",
       cta: "Ver como parar de pensar nessa pessoa",
     },
     {
@@ -319,7 +319,7 @@ export function ElegantResultCard({
     },
     {
       icon: "🌙",
-      title: "Aprenda a reduzir a abstinência emocional sem recaídas",
+      title: "Aprenda a reduzir o desejo de reconexão sem recaídas",
       summary:
         "Descubra por que seu corpo reage como se estivesse em crise e como equilibrar essa resposta.",
       cta: "Ver como lidar com a saudade",
@@ -343,7 +343,7 @@ export function ElegantResultCard({
       title:
         "Feche esse ciclo de forma madura, sem precisar apagar ou mandar mensagens",
       summary:
-        "Método de encerramento emocional que traz paz interna sem humilhação ou arrependimento.",
+        "Método de fechamento simbólico que traz paz interna sem humilhação ou arrependimento.",
       cta: "Ver como encerrar com dignidade",
     },
     {
@@ -387,7 +387,7 @@ export function ElegantResultCard({
       <section className="space-y-8">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-slate-400">
           <span className="h-px w-12 bg-slate-200" />
-          Relatório emocional
+          Análise personalizada
         </div>
         <div className="flex items-start gap-6">
           <div className="hidden md:flex h-14 w-14 items-center justify-center rounded-full bg-slate-100 text-3xl">
@@ -403,8 +403,8 @@ export function ElegantResultCard({
               </h1>
               <p className="text-lg md:text-xl text-slate-600 max-w-3xl leading-relaxed">
                 Tudo o que você sente tem uma explicação. E o{" "}
-                <strong>Relatório Completo</strong> te mostra o que o
-                diagnóstico gratuito ainda não conseguiu revelar:{" "}
+                <strong>Relatório Completo</strong> te mostra o que a análise
+                gratuita ainda não conseguiu revelar:{" "}
                 <strong>por que sua mente não desliga</strong>, e o que fazer
                 hoje para recuperar o controle.
               </p>
@@ -435,17 +435,17 @@ export function ElegantResultCard({
           {/* Tarja verde de validação */}
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-50 border border-emerald-200">
             <span className="text-sm font-semibold text-emerald-700">
-              ✅ Diagnóstico gratuito concluído
+              ✅ Análise gratuita concluída
             </span>
           </div>
           <div className="space-y-3">
             <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 leading-tight">
-              Aqui está o seu diagnóstico emocional personalizado
+              Aqui está a sua leitura pessoal
             </h2>
             <p className="text-base md:text-lg text-slate-600 max-w-3xl leading-relaxed">
-              Baseado nas suas respostas, este diagnóstico identifica o padrão
-              emocional que está te mantendo preso.{" "}
-              <strong>Leia com atenção</strong> — ele foi montado
+              Baseado nas suas respostas, esta análise identifica o padrão de
+              comportamento que está te mantendo preso.{" "}
+              <strong>Leia com atenção</strong> — ela foi montada
               especificamente para você.
             </p>
           </div>
@@ -951,8 +951,8 @@ export function ElegantResultCard({
               {/* Rodapé do documento */}
               <div className="px-8 md:px-12 py-6 bg-slate-50 border-t border-slate-200">
                 <p className="text-xs text-slate-500 text-center">
-                  Este diagnóstico foi gerado especificamente para você, baseado
-                  em {Object.keys(answers).length} respostas do questionário.
+                  Esta análise foi gerada especificamente para você, baseada em{" "}
+                  {Object.keys(answers).length} respostas do questionário.
                 </p>
               </div>
             </div>
@@ -1003,7 +1003,7 @@ export function ElegantResultCard({
                   </span>
                 </div>
                 <h3 className="text-2xl md:text-3xl font-medium text-slate-900 max-w-2xl mx-auto">
-                  Com o diagnóstico gratuito, você descobriu:
+                  Com a análise gratuita, você descobriu:
                 </h3>
               </div>
 
@@ -1018,8 +1018,8 @@ export function ElegantResultCard({
                     Sua mente ainda procura sentido
                   </h4>
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    Não é fraqueza — é um mecanismo emocional que fica ativado
-                    quando a história termina sem respostas claras.
+                    Não é fraqueza — é um padrão de comportamento que fica
+                    ativado quando a história termina sem respostas claras.
                   </p>
                 </div>
 
@@ -1147,11 +1147,11 @@ export function ElegantResultCard({
                       01
                     </div>
                     <h4 className="font-bold text-slate-900 text-sm leading-snug min-h-[40px]">
-                      Abstinência emocional ativa
+                      Desejo intenso de reconexão
                     </h4>
                     <p className="text-xs text-slate-600 leading-relaxed">
                       Seu corpo sente a ausência como se fosse uma crise de
-                      abstinência.
+                      vínculo rompido.
                     </p>
                     <div className="flex items-center gap-1.5 pt-1">
                       <div className="h-1 w-1 rounded-full bg-red-500 animate-pulse" />
@@ -1519,8 +1519,8 @@ export function ElegantResultCard({
                   Entende por que tudo aconteceu
                 </h4>
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  Para de se culpar e troca a dor por clareza — você vê a lógica
-                  emocional por trás de tudo
+                  Para de se culpar e troca a dor por clareza — você vê o padrão
+                  por trás de tudo
                 </p>
               </div>
             </div>
