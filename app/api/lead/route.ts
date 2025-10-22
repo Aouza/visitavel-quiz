@@ -11,8 +11,10 @@ import { join } from "path";
 import { sendMetaEvent } from "@/lib/meta-capi";
 
 interface LeadPayload {
+  name?: string;
   email: string;
   whatsapp: string;
+  gender?: string;
   consent: boolean;
   utms?: Record<string, string>;
   referrer?: string;

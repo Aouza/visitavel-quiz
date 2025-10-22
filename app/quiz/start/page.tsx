@@ -69,7 +69,9 @@ export default function QuizStartPage() {
     setIsSubmitting(true);
 
     try {
-      // Salvar lead com gênero
+      const utms = getUTMs();
+
+      // Salvar lead no localStorage (para uso no quiz)
       saveLeadInfo(
         formData.name,
         formData.email,
@@ -77,13 +79,30 @@ export default function QuizStartPage() {
         formData.gender
       );
 
+      // 🆕 Enviar lead para API (salva no servidor + webhook)
+      fetch("/api/lead", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          whatsapp: formData.whatsapp,
+          gender: formData.gender,
+          consent: agreedToTerms,
+          utms,
+          referrer: utms.referrer,
+          timestamp: new Date().toISOString(),
+          quizStartedAt: new Date().toISOString(),
+        }),
+      }).catch((err) => console.error("[Lead] Error sending to API:", err));
+
       // Track captura (GA4)
       trackLeadSubmitted(formData.email);
 
-      // 🆕 Buffer mínimo para garantir que _fbp/_fbc foram setados pelo Pixel
+      // Buffer mínimo para garantir que _fbp/_fbc foram setados pelo Pixel
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // 🆕 Track captura (Meta - Lead)
+      // Track captura (Meta - Lead)
       const nameParts = formData.name.trim().split(" ");
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(" ") || undefined;
