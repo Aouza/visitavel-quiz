@@ -20,7 +20,11 @@ import {
   clearQuizProgress,
   saveQuizResult,
 } from "@/lib/storage";
-import { trackQuizCompleted, trackQuizStarted } from "@/lib/analytics";
+import {
+  trackQuizCompleted,
+  trackQuizStarted,
+  trackQuizStep,
+} from "@/lib/analytics";
 import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 import { ArrowLeft, ArrowRight, Save } from "lucide-react";
 import { getLeadInfo } from "@/lib/storage";
@@ -182,7 +186,12 @@ export function QuizStepper() {
     }
 
     if (currentStep < QUESTIONS.length - 1) {
-      setCurrentStep((prev) => prev + 1);
+      const nextStep = currentStep + 1;
+      setCurrentStep(nextStep);
+
+      // Track progresso (cada avanço de pergunta)
+      trackQuizStep(nextStep + 1, QUESTIONS.length);
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       // Última pergunta - calcular resultado
@@ -298,8 +307,8 @@ export function QuizStepper() {
       // Limpar progresso salvo (mas mantém o resultado)
       clearQuizProgress();
 
-      // Redirecionar para resultado com segmento
-      router.push(`/quiz/resultado?seg=${result.segment}`);
+      // Redirecionar para captura de lead (novo fluxo)
+      router.push("/quiz/lead");
     } catch (error) {
       console.error("Error finishing quiz:", error);
       alert("Erro ao processar resultado. Tente novamente.");

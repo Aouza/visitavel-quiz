@@ -7,7 +7,6 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { QuizStepper } from "@/components/QuizStepper";
 import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
 import {
   trackLandingView,
@@ -19,7 +18,6 @@ import { Check, ArrowRight } from "lucide-react";
 
 export default function QuizPage() {
   const [hasLead, setHasLead] = useState(false);
-  const [isStarting, setIsStarting] = useState(false);
 
   useEffect(() => {
     // Capturar UTMs da URL
@@ -40,14 +38,6 @@ export default function QuizPage() {
         has_lead: leadInfo ? 1 : 0,
       },
     });
-
-    // Se tem lead E veio de ?autostart=1, iniciar automaticamente
-    const urlParams = new URLSearchParams(window.location.search);
-    const shouldAutoStart = urlParams.get("autostart") === "1";
-
-    if (leadInfo && shouldAutoStart) {
-      setIsStarting(true);
-    }
   }, []);
 
   const handleStartClick = () => {
@@ -68,23 +58,9 @@ export default function QuizPage() {
       },
     });
 
-    if (hasLead) {
-      // Já tem lead, ir direto pro quiz
-      setIsStarting(true);
-    } else {
-      // Redirecionar para página de captura
-      window.location.href = "/quiz/start";
-    }
+    // Sempre redirecionar para /quiz/start (novo fluxo)
+    window.location.href = "/quiz/start";
   };
-
-  // Se já iniciou o quiz, mostrar o stepper
-  if (isStarting) {
-    return (
-      <div className="mx-auto py-8">
-        <QuizStepper />
-      </div>
-    );
-  }
 
   // Landing page
   return (

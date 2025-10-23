@@ -10,7 +10,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { ElegantResultCard } from "@/components/ElegantResultCard";
 import { type Segment } from "@/lib/questions";
 import { trackPageView } from "@/lib/analytics";
-import { loadQuizProgress, loadQuizResult } from "@/lib/storage";
+import { loadQuizProgress, loadQuizResult, getLeadInfo } from "@/lib/storage";
 import { computeSegment } from "@/lib/scoring";
 
 function ResultContent() {
@@ -35,7 +35,15 @@ function ResultContent() {
         "superacao",
       ].includes(seg)
     ) {
-      router.push("/quiz");
+      router.push("/quiz/start");
+      return;
+    }
+
+    // Verificar se existe lead capturado
+    const leadInfo = getLeadInfo();
+    if (!leadInfo) {
+      // Se não tem lead, redirecionar para captura
+      router.push("/quiz/lead");
       return;
     }
 
@@ -58,7 +66,7 @@ function ResultContent() {
       } else {
         // Se não houver dados salvos, redirecionar para o quiz
         alert("Você precisa completar o quiz primeiro!");
-        router.push("/quiz");
+        router.push("/quiz/start");
         return;
       }
     }
