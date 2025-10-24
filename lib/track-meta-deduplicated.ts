@@ -13,6 +13,11 @@ interface TrackMetaEventParams {
   firstName?: string;
   lastName?: string;
   gender?: string;
+  birthdate?: string; // formato YYYYMMDD
+  city?: string;
+  state?: string;
+  country?: string; // código ISO 3166-1 alpha-2 (ex: 'br', 'us')
+  zipCode?: string;
   customData?: Record<string, string | number>;
 }
 

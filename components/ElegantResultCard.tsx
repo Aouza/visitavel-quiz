@@ -115,12 +115,23 @@ export function ElegantResultCard({
       });
 
       // Track Meta - InitiateCheckout (intenção de interesse) - proteção contra duplicação
+      const leadInfo = getLeadInfo();
       trackMetaEventOnce(`initiate_checkout_${location}`, {
         eventName: "InitiateCheckout",
+        email: leadInfo?.email,
+        phone: leadInfo?.whatsapp,
+        firstName: leadInfo?.name?.split(" ")[0],
+        lastName: leadInfo?.name?.split(" ").slice(1).join(" ") || undefined,
+        gender: leadInfo?.gender,
+        country: "br", // 🆕 ISO 3166-1 alpha-2 (Brasil)
         customData: {
           segment,
           location,
           content_name: "Relatório Completo",
+          content_category: "quiz_report",
+          value: 0, // Gratuito por enquanto
+          currency: "BRL",
+          has_lead: leadInfo ? 1 : 0,
         },
       });
 

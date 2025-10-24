@@ -304,6 +304,18 @@ export function QuizStepper() {
         },
       });
 
+      // Track Meta - CompleteRegistration (conclusão do quiz)
+      trackMetaEventOnce("quiz_registration_complete", {
+        eventName: "CompleteRegistration",
+        customData: {
+          content_name: "Quiz Pós-Término",
+          content_category: "quiz",
+          segment: result.segment,
+          score: result.totalScore,
+          registration_method: "quiz_completion",
+        },
+      });
+
       // Limpar progresso salvo (mas mantém o resultado)
       clearQuizProgress();
 

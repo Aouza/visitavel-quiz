@@ -116,10 +116,15 @@ export default function QuizLeadPage() {
       // Buffer mínimo para garantir que _fbp/_fbc foram setados pelo Pixel
       await new Promise((resolve) => setTimeout(resolve, 200));
 
-      // Track captura (Meta - Lead)
+      // Track captura (Meta - Lead) com chaves de deduplicação melhoradas
       const nameParts = formData.name.trim().split(" ");
       const firstName = nameParts[0];
       const lastName = nameParts.slice(1).join(" ") || undefined;
+
+      // Gerar chave de deduplicação baseada em dados únicos do usuário
+      const deduplicationKey = `${formData.email}_${
+        formData.whatsapp
+      }_${Date.now()}`;
 
       trackMetaEvent({
         eventName: "Lead",
@@ -128,10 +133,14 @@ export default function QuizLeadPage() {
         firstName,
         lastName,
         gender: formData.gender,
+        country: "br", // 🆕 ISO 3166-1 alpha-2 (Brasil)
         customData: {
           lead_source: "post_quiz_lead_page",
           gender: formData.gender || "not_informed",
           segment: quizResult?.segment || "unknown",
+          deduplication_key: deduplicationKey,
+          quiz_completed: 1,
+          form_type: "post_quiz_capture",
         },
       });
 

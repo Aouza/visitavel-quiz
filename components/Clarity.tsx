@@ -9,6 +9,7 @@ import { useEffect } from "react";
 import Clarity from "@microsoft/clarity";
 
 const CLARITY_PROJECT_ID = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+const CLARITY_CONSENTLESS_MODE = process.env.NEXT_PUBLIC_CLARITY_CONSENTLESS === "true";
 
 export function ClarityAnalytics() {
   useEffect(() => {
@@ -17,12 +18,25 @@ export function ClarityAnalytics() {
       return;
     }
 
+    // 🧪 Modo "consentless" para testes (até 500 sessões)
+    // Ative com: NEXT_PUBLIC_CLARITY_CONSENTLESS=true
+    if (CLARITY_CONSENTLESS_MODE) {
+      // @ts-ignore - window.clarityConsent é uma API não documentada
+      window.clarityConsent = "granted";
+      console.log("[Clarity] 🧪 Consentless mode ATIVADO (apenas para testes)");
+    }
+
     // Initialize Clarity with privacy settings
     Clarity.init(CLARITY_PROJECT_ID);
 
-    // Set default consent to false for GDPR compliance
-    // User must explicitly consent before tracking
-    Clarity.consent(false);
+    // Set default consent based on mode
+    if (CLARITY_CONSENTLESS_MODE) {
+      Clarity.consent(true); // Auto-consent em modo teste
+    } else {
+      // Set default consent to false for GDPR compliance
+      // User must explicitly consent before tracking
+      Clarity.consent(false);
+    }
   }, []);
 
   return null;

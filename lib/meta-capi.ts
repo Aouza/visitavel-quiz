@@ -16,6 +16,11 @@ interface MetaEventData {
     ln?: string; // last name (hashed)
     ge?: string; // gender (hashed, 'm' or 'f')
     db?: string; // date of birth (hashed, YYYYMMDD)
+    ct?: string; // city (hashed)
+    st?: string; // state (hashed)
+    zp?: string; // zip code (hashed)
+    country?: string; // country code (ISO 3166-1 alpha-2, lowercase)
+    external_id?: string; // 🆕 CRÍTICO - identificador único
     client_ip_address?: string;
     client_user_agent?: string;
     fbc?: string; // Facebook click ID
@@ -27,12 +32,17 @@ interface MetaEventData {
 interface SendMetaEventParams {
   eventName: string;
   eventId: string; // UUID para deduplicação
+  externalId?: string; // 🆕 CRÍTICO para matching
   email?: string;
   phone?: string;
   firstName?: string;
   lastName?: string;
   gender?: string;
   birthdate?: string; // formato YYYYMMDD
+  city?: string;
+  state?: string;
+  country?: string; // código ISO 3166-1 alpha-2 (ex: 'br', 'us')
+  zipCode?: string;
   ipAddress?: string;
   userAgent?: string;
   eventSourceUrl: string;
@@ -72,25 +82,70 @@ export async function sendMetaEvent(
       client_user_agent: params.userAgent,
     };
 
-    // Hashear email se fornecido
-    if (params.email) {
-      userData.em = await hashSHA256(params.email);
+    // 🆕 External ID (CRÍTICO para matching)
+    if (params.externalId) {
+      userData.external_id = params.externalId;
     }
 
-    // Hashear telefone se fornecido
+    // Hashear email se fornecido (normalizar para melhor correspondência)
+    if (params.email) {
+      const normalizedEmail = params.email.toLowerCase().trim();
+      userData.em = await hashSHA256(normalizedEmail);
+    }
+
+    // Hashear telefone se fornecido (normalizar formato internacional)
     if (params.phone) {
       // Remover caracteres não numéricos
-      const cleanPhone = params.phone.replace(/\D/g, "");
-      userData.ph = await hashSHA256(cleanPhone);
+      let cleanPhone = params.phone.replace(/\D/g, "");
+
+      // Se começar com 0, remover (formato brasileiro)
+      if (cleanPhone.startsWith("0")) {
+        cleanPhone = cleanPhone.substring(1);
+      }
+
+      // Remover código do país duplicado (5555... -> 55...)
+      if (cleanPhone.startsWith("5555")) {
+        cleanPhone = cleanPhone.substring(2);
+      }
+
+      // Se não tem código do país, adicionar +55 (Brasil)
+      // Formato brasileiro: DDD (2 dígitos) + Telefone (8-9 dígitos)
+      if (
+        cleanPhone.length >= 10 &&
+        cleanPhone.length <= 11 &&
+        !cleanPhone.startsWith("55")
+      ) {
+        cleanPhone = "55" + cleanPhone;
+      }
+
+      // Se já tem 55 mas está no formato errado, garantir que está correto
+      if (cleanPhone.startsWith("55") && cleanPhone.length >= 12) {
+        userData.ph = await hashSHA256(cleanPhone);
+      } else if (cleanPhone.length >= 10) {
+        // Fallback: tentar hashear mesmo se formato não está perfeito
+        userData.ph = await hashSHA256(cleanPhone);
+      }
     }
 
     // Hashear campos adicionais para melhorar qualidade de correspondência
     if (params.firstName) {
-      userData.fn = await hashSHA256(params.firstName);
+      // Normalizar nome: remover acentos, converter para minúsculo
+      const normalizedFirstName = params.firstName
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); // Remove acentos
+      userData.fn = await hashSHA256(normalizedFirstName);
     }
 
     if (params.lastName) {
-      userData.ln = await hashSHA256(params.lastName);
+      // Normalizar sobrenome: remover acentos, converter para minúsculo
+      const normalizedLastName = params.lastName
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, ""); // Remove acentos
+      userData.ln = await hashSHA256(normalizedLastName);
     }
 
     if (params.gender) {
@@ -104,6 +159,38 @@ export async function sendMetaEvent(
     if (params.birthdate) {
       // Formato esperado: YYYYMMDD (ex: 19900515)
       userData.db = await hashSHA256(params.birthdate);
+    }
+
+    // 🆕 Dados de geolocalização (melhoram muito o matching)
+    if (params.city) {
+      const normalizedCity = params.city
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "") // Remove acentos
+        .replace(/[^a-z0-9\s]/g, ""); // Remove caracteres especiais
+      userData.ct = await hashSHA256(normalizedCity);
+    }
+
+    if (params.state) {
+      // Estado: pode ser sigla (SP) ou nome completo (São Paulo)
+      const normalizedState = params.state
+        .toLowerCase()
+        .trim()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      userData.st = await hashSHA256(normalizedState);
+    }
+
+    if (params.zipCode) {
+      // CEP: remover formatação (12345-678 -> 12345678)
+      const normalizedZip = params.zipCode.replace(/\D/g, "");
+      userData.zp = await hashSHA256(normalizedZip);
+    }
+
+    if (params.country) {
+      // País: código ISO 3166-1 alpha-2, lowercase (ex: 'br', 'us')
+      userData.country = params.country.toLowerCase().trim().slice(0, 2);
     }
 
     // Adicionar Facebook IDs se disponíveis
@@ -124,14 +211,27 @@ export async function sendMetaEvent(
       eventData.custom_data = params.customData;
     }
 
+    // Test Event Code (para debug no Event Manager)
+    // Ativar em desenvolvimento para ver eventos em tempo real
+    const testEventCode = process.env.META_TEST_EVENT_CODE;
+
+    const requestBody: {
+      data: Array<MetaEventData & { event_id: string }>;
+      test_event_code?: string;
+    } = {
+      data: [eventData],
+    };
+
+    if (testEventCode) {
+      requestBody.test_event_code = testEventCode;
+    }
+
     const response = await fetch(
       `https://graph.facebook.com/v21.0/${pixelId}/events?access_token=${accessToken}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          data: [eventData],
-        }),
+        body: JSON.stringify(requestBody),
       }
     );
 
@@ -143,9 +243,47 @@ export async function sendMetaEvent(
     }
 
     if (result.events_received === 1) {
+      // Log detalhado de sucesso para debug de matching quality
+      const matchingQuality = {
+        // Identificadores únicos
+        externalId: !!params.externalId,
+        fbp: !!params.fbp,
+        fbc: !!params.fbc,
+
+        // Dados pessoais (PII)
+        email: !!params.email,
+        phone: !!params.phone,
+        firstName: !!params.firstName,
+        lastName: !!params.lastName,
+        gender: !!params.gender,
+        birthdate: !!params.birthdate,
+
+        // Geolocalização
+        city: !!params.city,
+        state: !!params.state,
+        country: !!params.country,
+        zipCode: !!params.zipCode,
+
+        // Dados técnicos
+        ipAddress: !!params.ipAddress,
+        userAgent: !!params.userAgent,
+      };
+
+      const qualityScore =
+        Object.values(matchingQuality).filter(Boolean).length;
+      const maxScore = Object.keys(matchingQuality).length;
+
+      console.log(
+        `[Meta CAPI] ✅ ${params.eventName} | eventId: ${params.eventId.slice(
+          0,
+          8
+        )}... | Matching: ${qualityScore}/${maxScore}`,
+        matchingQuality
+      );
+
       return true;
     } else {
-      console.error("[Meta CAPI] Evento não recebido:", result);
+      console.error("[Meta CAPI] ❌ Evento não recebido:", result);
       return false;
     }
   } catch (error) {

@@ -6,6 +6,7 @@
 
 import { generateUUID } from "./uuid";
 import { getCookie } from "./facebook-cookies";
+import { getExternalId } from "./external-id";
 
 interface TrackMetaEventParams {
   eventName: string;
@@ -15,6 +16,10 @@ interface TrackMetaEventParams {
   lastName?: string;
   gender?: string;
   birthdate?: string; // formato YYYYMMDD
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
   customData?: Record<string, string | number>;
 }
 
@@ -57,6 +62,9 @@ function firePixelEvent(
 
 /**
  * Envia evento para Conversions API (server-side) via endpoint Next.js
+ *
+ * IMPORTANTE: Adiciona delay de 300ms para garantir que Pixel chegue primeiro
+ * Isso melhora a taxa de deduplicação (CAPI deve chegar ligeiramente depois)
  */
 async function sendToConversionsAPI(
   eventName: string,
@@ -64,8 +72,13 @@ async function sendToConversionsAPI(
   params: TrackMetaEventParams
 ): Promise<void> {
   try {
+    // ⏱️ Delay estratégico: Pixel precisa chegar primeiro para deduplicação funcionar
+    // Meta recomenda que CAPI chegue 0.5-2 segundos depois do Pixel
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
     const fbp = getCookie("_fbp");
     const fbc = getCookie("_fbc");
+    const externalId = getExternalId(); // Identificador único do usuário
 
     const response = await fetch("/api/meta/track", {
       method: "POST",
@@ -73,16 +86,22 @@ async function sendToConversionsAPI(
       body: JSON.stringify({
         eventName,
         eventId,
+        externalId, // 🆕 CRÍTICO para matching
         email: params.email,
         phone: params.phone,
-        firstName: params.firstName, // 🆕 Para melhorar qualidade
-        lastName: params.lastName, // 🆕
-        gender: params.gender, // 🆕
-        birthdate: params.birthdate, // 🆕
+        firstName: params.firstName,
+        lastName: params.lastName,
+        gender: params.gender,
+        birthdate: params.birthdate,
+        city: params.city,
+        state: params.state,
+        country: params.country,
+        zipCode: params.zipCode,
         customData: params.customData,
         fbp,
         fbc,
         eventSourceUrl: window.location.href,
+        userAgent: navigator.userAgent, // Enviar do client também
       }),
     });
 

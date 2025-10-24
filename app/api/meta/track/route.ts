@@ -10,16 +10,22 @@ import { sendMetaEvent } from "@/lib/meta-capi";
 interface TrackRequest {
   eventName: string;
   eventId: string;
+  externalId?: string; // 🆕 CRÍTICO
   email?: string;
   phone?: string;
   firstName?: string;
   lastName?: string;
   gender?: string;
   birthdate?: string;
+  city?: string;
+  state?: string;
+  country?: string;
+  zipCode?: string;
   customData?: Record<string, string | number>;
   fbp?: string;
   fbc?: string;
   eventSourceUrl: string;
+  userAgent?: string; // 🆕 do client
 }
 
 export async function POST(request: NextRequest) {
@@ -35,22 +41,32 @@ export async function POST(request: NextRequest) {
     }
 
     // Coletar dados do servidor (IP, User Agent)
-    const ipAddress = (request.headers.get("x-forwarded-for") ||
+    // Priorizar headers de proxy para pegar IP real
+    const ipAddress = (
+      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
       request.headers.get("x-real-ip") ||
-      "unknown") as string;
+      request.headers.get("cf-connecting-ip") || // Cloudflare
+      "unknown"
+    ) as string;
 
-    const userAgent = request.headers.get("user-agent") || undefined;
+    // Usar User Agent do client se disponível, senão do servidor
+    const userAgent = body.userAgent || request.headers.get("user-agent") || undefined;
 
     // Enviar para Meta Conversions API
     const success = await sendMetaEvent({
       eventName: body.eventName,
       eventId: body.eventId,
+      externalId: body.externalId, // 🆕 CRÍTICO
       email: body.email,
       phone: body.phone,
-      firstName: body.firstName, // 🆕
-      lastName: body.lastName, // 🆕
-      gender: body.gender, // 🆕
-      birthdate: body.birthdate, // 🆕
+      firstName: body.firstName,
+      lastName: body.lastName,
+      gender: body.gender,
+      birthdate: body.birthdate,
+      city: body.city,
+      state: body.state,
+      country: body.country,
+      zipCode: body.zipCode,
       ipAddress,
       userAgent,
       eventSourceUrl: body.eventSourceUrl,

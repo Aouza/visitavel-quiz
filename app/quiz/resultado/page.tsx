@@ -12,6 +12,7 @@ import { type Segment } from "@/lib/questions";
 import { trackPageView } from "@/lib/analytics";
 import { loadQuizProgress, loadQuizResult, getLeadInfo } from "@/lib/storage";
 import { computeSegment } from "@/lib/scoring";
+import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
 
 function ResultContent() {
   const router = useRouter();
@@ -73,6 +74,19 @@ function ResultContent() {
 
     setSegment(seg);
     trackPageView("/quiz/resultado", `Resultado: ${seg}`);
+
+    // Track Meta - ViewContent (visualização do resultado)
+    trackMetaEventOnce("result_viewed", {
+      eventName: "ViewContent",
+      customData: {
+        content_type: "quiz_result",
+        content_name: `Resultado: ${seg}`,
+        content_category: "quiz",
+        segment: seg,
+        value: 0, // Gratuito
+        currency: "BRL",
+      },
+    });
   }, [searchParams, router]);
 
   const handlePrimaryAction = (location?: string) => {
