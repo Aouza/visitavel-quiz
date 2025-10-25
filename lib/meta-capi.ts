@@ -189,8 +189,9 @@ export async function sendMetaEvent(
     }
 
     if (params.country) {
-      // País: código ISO 3166-1 alpha-2, lowercase (ex: 'br', 'us')
-      userData.country = params.country.toLowerCase().trim().slice(0, 2);
+      // 🔥 FIX: Hashear país conforme exigência do Meta
+      const normalizedCountry = params.country.toLowerCase().trim().slice(0, 2);
+      userData.country = await hashSHA256(normalizedCountry);
     }
 
     // Adicionar Facebook IDs se disponíveis
@@ -272,14 +273,6 @@ export async function sendMetaEvent(
       const qualityScore =
         Object.values(matchingQuality).filter(Boolean).length;
       const maxScore = Object.keys(matchingQuality).length;
-
-      console.log(
-        `[Meta CAPI] ✅ ${params.eventName} | eventId: ${params.eventId.slice(
-          0,
-          8
-        )}... | Matching: ${qualityScore}/${maxScore}`,
-        matchingQuality
-      );
 
       return true;
     } else {
