@@ -9,7 +9,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { ProgressHeader } from "@/components/ProgressHeader";
 import { QuizQuestion } from "@/components/QuizQuestion";
 import { QUESTIONS, type Option } from "@/lib/questions";
@@ -43,11 +42,6 @@ export function QuizStepper() {
   const router = useRouter();
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Estado local para capturar respostas
-  const [localAnswers, setLocalAnswers] = useState<
-    Record<string, string | string[]>
-  >({});
 
   // Criar defaultValues com todos os IDs das perguntas
   const defaultValues = useMemo(() => {
@@ -108,69 +102,30 @@ export function QuizStepper() {
     const savedProgress = loadQuizProgress();
     if (savedProgress) {
       setCurrentStep(savedProgress.currentStep);
-      setLocalAnswers(savedProgress.answers); // Carregar no estado local
       Object.entries(savedProgress.answers).forEach(([key, value]) => {
         setValue(key, value);
       });
     }
   }, [register, setValue]); // Removido currentStep da dependência
 
-  // Não sincronizar automaticamente - usar getValues() quando necessário
+  const formValues = watch();
 
-  // Usar watch() para capturar todas as mudanças
-  const allFormValues = watch();
-
-  // Salvar progresso automaticamente usando estado local
+  // Salvar progresso automaticamente
   useEffect(() => {
-    const saveProgress = () => {
-      // Usar estado local que mantém as respostas
-      const answersToSave =
-        Object.keys(localAnswers).length > 0 ? localAnswers : allFormValues;
-
+    const timeoutId = setTimeout(() => {
+      const answersToSave = getValues();
       saveQuizProgress({
         currentStep,
         answers: answersToSave,
         startedAt: new Date().toISOString(),
         lastUpdated: new Date().toISOString(),
       });
-    };
-
-    const timeoutId = setTimeout(saveProgress, 1000);
+    }, 1000);
     return () => clearTimeout(timeoutId);
-  }, [currentStep, localAnswers, allFormValues, getValues]);
+  }, [currentStep, formValues, getValues]);
 
   const currentQuestion = QUESTIONS[currentStep];
   const currentAnswer = watch(currentQuestion.id);
-
-  // Sincronizar estado local com React Hook Form
-  useEffect(() => {
-    if (currentAnswer && currentAnswer !== "") {
-      setLocalAnswers((prev) => ({
-        ...prev,
-        [currentQuestion.id]: currentAnswer,
-      }));
-      setValue(currentQuestion.id, currentAnswer);
-    }
-  }, [currentAnswer, currentQuestion.id, setValue]);
-
-  // Escutar evento customizado do QuizQuestion
-  useEffect(() => {
-    const handleQuizAnswer = (event: CustomEvent) => {
-      const { questionId, value } = event.detail;
-      setLocalAnswers((prev) => ({
-        ...prev,
-        [questionId]: value,
-      }));
-    };
-
-    window.addEventListener("quizAnswer", handleQuizAnswer as EventListener);
-    return () => {
-      window.removeEventListener(
-        "quizAnswer",
-        handleQuizAnswer as EventListener
-      );
-    };
-  }, []);
 
   // Perguntas opcionais podem ser puladas
   const isAnswered =
@@ -201,7 +156,9 @@ export function QuizStepper() {
 
   const handleBack = () => {
     if (currentStep > 0) {
-      setCurrentStep((prev) => prev - 1);
+      const prevStep = currentStep - 1;
+      setCurrentStep(prevStep);
+
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -225,8 +182,7 @@ export function QuizStepper() {
 
     try {
       // Usar estado local que mantém todas as respostas
-      const currentAnswers =
-        Object.keys(localAnswers).length > 0 ? localAnswers : getValues();
+      const currentAnswers = getValues();
 
       // Criar payload detalhado para a API
       const detailedAnswers = QUESTIONS.map((question) => {
@@ -278,6 +234,14 @@ export function QuizStepper() {
       });
 
       const result = computeSegment(currentAnswers);
+
+      console.info("[QuizStepper] Final quiz data", {
+        answers: currentAnswers,
+        detailedAnswers,
+        scores: result.scores,
+        segment: result.segment,
+        totalScore: result.totalScore,
+      });
 
       // Salvar resultado final (mantém as respostas)
       saveQuizResult({

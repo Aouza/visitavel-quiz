@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DateSelector } from "@/components/DateSelector";
 import { type Question } from "@/lib/questions";
 
 interface QuizQuestionProps {
@@ -40,23 +41,23 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
       </div>
 
       <Controller
+        key={question.id}
         name={question.id}
         control={control}
         rules={{ required: question.required }}
         render={({ field }) => {
-          // Date input
+          // Date input - Seleção por dropdowns (estratégia de seleção)
           if (question.type === "date") {
             return (
-              <div className="space-y-3">
-                <Input
-                  type="date"
-                  value={field.value as string}
-                  onChange={field.onChange}
-                  max={new Date().toISOString().split("T")[0]}
-                  className="max-w-md h-12 md:h-14 text-sm md:text-base rounded-2xl border-slate-300 focus:border-slate-900 focus:ring-slate-900"
-                  aria-label={question.title}
-                />
-              </div>
+              <DateSelector
+                key={question.id}
+                value={field.value as string}
+                onChange={field.onChange}
+                maxDate={new Date().toISOString().split("T")[0]}
+                minDate="1900-01-01"
+                label={question.title}
+                required={question.required}
+              />
             );
           }
 
@@ -65,17 +66,7 @@ export function QuizQuestion({ question, control, error }: QuizQuestionProps) {
             return (
               <RadioGroup
                 value={field.value as string}
-                onValueChange={(value) => {
-                  field.onChange(value);
-
-                  // Forçar sincronização imediata
-                  setTimeout(() => {
-                    const event = new CustomEvent("quizAnswer", {
-                      detail: { questionId: question.id, value },
-                    });
-                    window.dispatchEvent(event);
-                  }, 0);
-                }}
+                onValueChange={field.onChange}
                 className="space-y-2 md:space-y-3"
                 aria-label={question.title}
               >
