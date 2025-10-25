@@ -84,14 +84,6 @@ function ResultContent() {
     // 🆕 Chave única para permitir múltiplos acessos (usuário pode voltar)
     const resultKey = `result_viewed_${seg}_${Date.now()}`;
 
-    // 🆕 Log para debug
-    console.log("[Result Page] Disparando ViewContent:", {
-      segment: seg,
-      hasLead: !!leadInfo,
-      leadEmail: leadInfo?.email,
-      resultKey,
-    });
-
     trackMetaEventOnce(resultKey, {
       eventName: "ViewContent",
       email: leadInfo?.email, // 🆕 Dados do lead para melhor matching
