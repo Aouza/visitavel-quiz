@@ -76,8 +76,30 @@ function ResultContent() {
     trackPageView("/quiz/resultado", `Resultado: ${seg}`);
 
     // Track Meta - ViewContent (visualização do resultado)
-    trackMetaEventOnce("result_viewed", {
+    // 🆕 Melhorar matching com dados do lead (reutilizar leadInfo já declarado)
+    const nameParts = leadInfo?.name?.trim().split(" ") || [];
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(" ") || undefined;
+
+    // 🆕 Chave única para permitir múltiplos acessos (usuário pode voltar)
+    const resultKey = `result_viewed_${seg}_${Date.now()}`;
+
+    // 🆕 Log para debug
+    console.log("[Result Page] Disparando ViewContent:", {
+      segment: seg,
+      hasLead: !!leadInfo,
+      leadEmail: leadInfo?.email,
+      resultKey,
+    });
+
+    trackMetaEventOnce(resultKey, {
       eventName: "ViewContent",
+      email: leadInfo?.email, // 🆕 Dados do lead para melhor matching
+      phone: leadInfo?.whatsapp, // 🆕
+      firstName, // 🆕
+      lastName, // 🆕
+      gender: leadInfo?.gender, // 🆕
+      country: "br", // 🆕 ISO 3166-1 alpha-2
       customData: {
         content_type: "quiz_result",
         content_name: `Resultado: ${seg}`,
@@ -85,6 +107,8 @@ function ResultContent() {
         segment: seg,
         value: 0, // Gratuito
         currency: "BRL",
+        has_lead: leadInfo ? 1 : 0, // 🆕 Flag para análise
+        lead_source: "post_quiz_capture", // 🆕
       },
     });
   }, [searchParams, router]);

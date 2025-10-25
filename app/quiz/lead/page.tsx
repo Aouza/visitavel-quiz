@@ -147,6 +147,13 @@ export default function QuizLeadPage() {
       // Aguardar feedback visual
       await new Promise((resolve) => setTimeout(resolve, 500));
 
+      // 🆕 Log para debug do redirecionamento
+      console.log("[Lead Page] Redirecionando para resultado:", {
+        segment: quizResult?.segment,
+        leadEmail: formData.email,
+        timestamp: new Date().toISOString(),
+      });
+
       // Redirecionar para resultado
       router.push(`/quiz/resultado?seg=${quizResult?.segment}`);
     } catch (error) {
