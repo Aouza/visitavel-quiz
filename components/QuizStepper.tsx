@@ -235,14 +235,6 @@ export function QuizStepper() {
 
       const result = computeSegment(currentAnswers);
 
-      console.info("[QuizStepper] Final quiz data", {
-        answers: currentAnswers,
-        detailedAnswers,
-        scores: result.scores,
-        segment: result.segment,
-        totalScore: result.totalScore,
-      });
-
       // Salvar resultado final (mantém as respostas)
       saveQuizResult({
         segment: result.segment,
