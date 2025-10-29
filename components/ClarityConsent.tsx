@@ -66,7 +66,20 @@ export function ClarityConsent() {
                 <p className="text-xs text-gray-600">
                   Usamos Microsoft Clarity para entender como você navega no
                   site e melhorar sua experiência. Nenhum dado pessoal é
-                  coletado.
+                  coletado.{" "}
+                  <a 
+                    href="/politica-privacidade" 
+                    className="text-blue-600 hover:underline"
+                  >
+                    Política de Privacidade
+                  </a>
+                  {" • "}
+                  <a 
+                    href="/termos-uso" 
+                    className="text-blue-600 hover:underline"
+                  >
+                    Termos de Uso
+                  </a>
                 </p>
               </div>
               <div className="flex gap-2">

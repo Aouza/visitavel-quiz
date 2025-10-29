@@ -72,10 +72,10 @@ export default function RootLayout({
               reservados.
             </p>
             <div className="flex gap-4 justify-center">
-              <a href="/privacidade" className="hover:underline">
+              <a href="/politica-privacidade" className="hover:underline">
                 Política de Privacidade
               </a>
-              <a href="/termos" className="hover:underline">
+              <a href="/termos-uso" className="hover:underline">
                 Termos de Uso
               </a>
             </div>

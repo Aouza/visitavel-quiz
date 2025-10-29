@@ -206,7 +206,7 @@ export default function QuizLeadPage() {
               Preencha para receber seu resultado
             </CardTitle>
             <p className="text-sm text-muted-foreground text-center">
-              Enviaremos por e-mail e WhatsApp
+              Enviaremos por e-mail
             </p>
           </CardHeader>
 
@@ -328,7 +328,7 @@ export default function QuizLeadPage() {
                   maxLength={15}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Vamos te enviar o resultado também pelo WhatsApp
+                  Campo opcional para futuras funcionalidades
                 </p>
               </div>
 
@@ -348,8 +348,21 @@ export default function QuizLeadPage() {
                   className="text-sm leading-relaxed cursor-pointer text-slate-700"
                 >
                   Concordo em receber o relatório personalizado e comunicações
-                  por e-mail e WhatsApp. Seus dados estão protegidos e não serão
-                  compartilhados com terceiros.
+                  por e-mail. Seus dados estão protegidos e não serão
+                  compartilhados com terceiros.{" "}
+                  <a
+                    href="/politica-privacidade"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Política de Privacidade
+                  </a>
+                  {" • "}
+                  <a
+                    href="/termos-uso"
+                    className="text-blue-600 hover:underline"
+                  >
+                    Termos de Uso
+                  </a>
                 </Label>
               </div>
 
