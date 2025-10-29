@@ -67,15 +67,15 @@ export function ClarityConsent() {
                   Usamos Microsoft Clarity para entender como você navega no
                   site e melhorar sua experiência. Nenhum dado pessoal é
                   coletado.{" "}
-                  <a 
-                    href="/politica-privacidade" 
+                  <a
+                    href="/politica-privacidade"
                     className="text-blue-600 hover:underline"
                   >
                     Política de Privacidade
                   </a>
                   {" • "}
-                  <a 
-                    href="/termos-uso" 
+                  <a
+                    href="/termos-uso"
                     className="text-blue-600 hover:underline"
                   >
                     Termos de Uso
