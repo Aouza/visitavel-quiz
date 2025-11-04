@@ -72,7 +72,9 @@ export async function sendMetaEvent(
   const accessToken = process.env.META_ACCESS_TOKEN;
 
   if (!pixelId || !accessToken) {
-    console.error("[Meta CAPI] Pixel ID ou Access Token não configurados");
+    console.error(
+      "[Meta CAPI] Pixel ID ou Access Token não configurados - verifique .env"
+    );
     return false;
   }
 
@@ -239,48 +241,26 @@ export async function sendMetaEvent(
     const result = await response.json();
 
     if (!response.ok) {
-      console.error("[Meta CAPI] Erro na resposta:", result);
+      console.error(
+        `[Meta CAPI] Erro ${response.status}: ${
+          result.error?.message || "Unknown error"
+        }`
+      );
       return false;
     }
 
     if (result.events_received === 1) {
-      // Log detalhado de sucesso para debug de matching quality
-      const matchingQuality = {
-        // Identificadores únicos
-        externalId: !!params.externalId,
-        fbp: !!params.fbp,
-        fbc: !!params.fbc,
-
-        // Dados pessoais (PII)
-        email: !!params.email,
-        phone: !!params.phone,
-        firstName: !!params.firstName,
-        lastName: !!params.lastName,
-        gender: !!params.gender,
-        birthdate: !!params.birthdate,
-
-        // Geolocalização
-        city: !!params.city,
-        state: !!params.state,
-        country: !!params.country,
-        zipCode: !!params.zipCode,
-
-        // Dados técnicos
-        ipAddress: !!params.ipAddress,
-        userAgent: !!params.userAgent,
-      };
-
-      const qualityScore =
-        Object.values(matchingQuality).filter(Boolean).length;
-      const maxScore = Object.keys(matchingQuality).length;
-
       return true;
     } else {
-      console.error("[Meta CAPI] ❌ Evento não recebido:", result);
+      console.error(
+        `[Meta CAPI] Evento não recebido: ${params.eventName} - ${
+          result.error?.message || "Unknown error"
+        }`
+      );
       return false;
     }
   } catch (error) {
-    console.error("[Meta CAPI] Error sending event:", error);
+    console.error("[Meta CAPI] Erro fatal:", error);
     return false;
   }
 }

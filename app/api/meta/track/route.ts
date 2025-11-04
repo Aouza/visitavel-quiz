@@ -42,15 +42,17 @@ export async function POST(request: NextRequest) {
 
     // Coletar dados do servidor (IP, User Agent)
     // Priorizar headers de proxy para pegar IP real
-    const ipAddress = (
-      request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
+    const ipAddress = (request.headers
+      .get("x-forwarded-for")
+      ?.split(",")[0]
+      .trim() ||
       request.headers.get("x-real-ip") ||
       request.headers.get("cf-connecting-ip") || // Cloudflare
-      "unknown"
-    ) as string;
+      "unknown") as string;
 
     // Usar User Agent do client se disponível, senão do servidor
-    const userAgent = body.userAgent || request.headers.get("user-agent") || undefined;
+    const userAgent =
+      body.userAgent || request.headers.get("user-agent") || undefined;
 
     // Enviar para Meta Conversions API
     const success = await sendMetaEvent({
@@ -75,9 +77,16 @@ export async function POST(request: NextRequest) {
       fbc: body.fbc,
     });
 
+    // Log apenas se falhou
+    if (!success) {
+      console.error(
+        `[Meta Track API] Falhou ao enviar ${body.eventName}: Token inválido ou erro na Meta API`
+      );
+    }
+
     return NextResponse.json({ success });
   } catch (error) {
-    console.error("[Meta Track API] Erro fatal:", error);
+    console.error("[Meta Track API] ❌ Erro fatal:", error);
 
     return NextResponse.json(
       {
