@@ -37,6 +37,17 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        {/* 🚀 PERFORMANCE: Preconnect e prefetch de rotas críticas */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://www.google-analytics.com" />
+        <link rel="preconnect" href="https://connect.facebook.net" />
+        <link rel="preconnect" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://connect.facebook.net" />
+        <link rel="dns-prefetch" href="https://www.clarity.ms" />
+        <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
+        <link rel="prefetch" href="/quiz/start" as="document" />
+
         {/* Google Analytics */}
         {gaId && (
           <>

@@ -3,66 +3,10 @@
  * @responsibility: Landing page do quiz + modal de captura
  */
 
-"use client";
-
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { getLeadInfo, captureUTMsFromURL } from "@/lib/storage";
-import {
-  trackLandingView,
-  trackQuizCTAClick,
-  gtagEvent,
-} from "@/lib/analytics";
-import { trackMetaEventOnce } from "@/lib/track-meta-deduplicated";
-import { Check, ArrowRight } from "lucide-react";
+import { StartQuizButton } from "@/components/StartQuizButton";
+import { Check } from "lucide-react";
 
 export default function QuizPage() {
-  const [hasLead, setHasLead] = useState(false);
-
-  useEffect(() => {
-    // Capturar UTMs da URL
-    captureUTMsFromURL();
-
-    // Verificar se já tem lead
-    const leadInfo = getLeadInfo();
-    setHasLead(!!leadInfo);
-
-    // Track visualização da landing page (GA4) - sempre executa
-    trackLandingView();
-
-    // Track visualização da landing (Meta - landing_view) - proteção contra duplicação
-    trackMetaEventOnce("landing_view", {
-      eventName: "landing_view",
-      customData: {
-        page: "landing",
-        has_lead: leadInfo ? 1 : 0,
-      },
-    });
-  }, []);
-
-  const handleStartClick = () => {
-    // Track GA4
-    trackQuizCTAClick();
-    gtagEvent("cta_start_quiz", {
-      page: "/quiz",
-      has_lead: hasLead,
-      source: "landing_page",
-    });
-
-    // Track Meta - quiz_start (permite múltiplos cliques por sessão)
-    trackMetaEventOnce(`quiz_start_${Date.now()}`, {
-      eventName: "quiz_start",
-      customData: {
-        source: "landing_cta",
-        has_lead: hasLead ? 1 : 0,
-      },
-    });
-
-    // Sempre redirecionar para /quiz/start (novo fluxo)
-    window.location.href = "/quiz/start";
-  };
-
-  // Landing page
   return (
     <div className="relative w-full bg-gradient-to-br from-slate-50 via-white to-slate-50">
       <div className="max-w-4xl mx-auto px-3 md:px-4 py-8 md:py-16 lg:py-24 space-y-12 md:space-y-16 lg:space-y-20">
@@ -97,19 +41,7 @@ export default function QuizPage() {
               </p>
             </div>
 
-            <div className="pt-4 md:pt-6">
-              <Button
-                size="lg"
-                onClick={handleStartClick}
-                className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-8 md:px-10 py-5 md:py-6 text-base md:text-lg font-semibold text-white transition hover:bg-slate-800 hover:shadow-lg"
-              >
-                Começar mapeamento gratuito
-                <ArrowRight className="h-4 w-4 md:h-5 md:w-5" />
-              </Button>
-              <p className="text-xs md:text-sm text-slate-500 mt-3 md:mt-4 text-center md:text-left">
-                ⏱️ Leva apenas 2 minutos • Resultado na hora • 100% gratuito
-              </p>
-            </div>
+            <StartQuizButton />
           </div>
         </section>
 
@@ -392,18 +324,7 @@ export default function QuizPage() {
             </p>
           </div>
 
-          <Button
-            size="lg"
-            onClick={handleStartClick}
-            className="w-full md:w-auto inline-flex items-center justify-center gap-2 md:gap-3 rounded-full bg-slate-900 px-10 md:px-12 py-5 md:py-6 text-base md:text-lg font-bold text-white transition hover:bg-slate-800 hover:shadow-xl hover:scale-105"
-          >
-            Começar mapeamento agora
-            <ArrowRight className="h-5 w-5 md:h-6 md:w-6" />
-          </Button>
-
-          <p className="text-xs md:text-sm text-slate-500">
-            ⏱️ 2 minutos • Resultado imediato • Totalmente gratuito
-          </p>
+          <StartQuizButton variant="footer" />
         </section>
       </div>
     </div>
