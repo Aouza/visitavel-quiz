@@ -8,8 +8,12 @@ import { ClarityAnalytics } from "@/components/Clarity";
 import { ClarityConsent } from "@/components/ClarityConsent";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { getMetaPixelInlineScript } from "@/lib/meta-pixel-inline";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap", // 🚀 PERFORMANCE: Mostra texto imediatamente, troca fonte depois
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -33,6 +37,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const gaId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const pixelId = process.env.NEXT_PUBLIC_FB_PIXEL_ID;
 
   return (
     <html lang="pt-BR">
@@ -47,6 +52,17 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.clarity.ms" />
         <link rel="dns-prefetch" href="https://va.vercel-scripts.com" />
         <link rel="prefetch" href="/quiz/start" as="document" />
+
+        {/* 🚀 CRÍTICO: PageView imediato ANTES da hidratação React */}
+        {pixelId && (
+          <Script
+            id="meta-pixel-inline"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: getMetaPixelInlineScript(pixelId),
+            }}
+          />
+        )}
 
         {/* Google Analytics */}
         {gaId && (

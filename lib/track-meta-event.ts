@@ -5,7 +5,11 @@
  */
 
 import { generateUUID } from "./uuid";
-import { getCookie } from "./facebook-cookies";
+import {
+  getCookie,
+  getFbcFromUrlOrStorage,
+  getFbpFromCookieOrStorage,
+} from "./facebook-cookies";
 import { getExternalId } from "./external-id";
 
 interface TrackMetaEventParams {
@@ -81,8 +85,9 @@ async function sendToConversionsAPI(
     // Meta recomenda que CAPI chegue 0.5-2 segundos depois do Pixel
     await new Promise((resolve) => setTimeout(resolve, 300));
 
-    const fbp = getCookie("_fbp");
-    const fbc = getCookie("_fbc");
+    // 🚀 CRÍTICO: Usar funções que pegam de cookie OU localStorage (iOS/ITP fallback)
+    const fbp = getFbpFromCookieOrStorage();
+    const fbc = getFbcFromUrlOrStorage(); // Captura fbclid da URL se disponível
     const externalId = getExternalId(); // Identificador único do usuário
 
     const payload = JSON.stringify({
