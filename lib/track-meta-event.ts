@@ -29,6 +29,7 @@ interface TrackMetaEventParams {
 
 /**
  * Dispara evento no Meta Pixel (client-side)
+ * 🚀 CRÍTICO: Envia externalId (camelCase) para o Pixel fazer matching com CAPI
  */
 function firePixelEvent(
   eventName: string,
@@ -38,6 +39,9 @@ function firePixelEvent(
   if (typeof window === "undefined" || !window.fbq) {
     return;
   }
+
+  // 🆕 CRÍTICO: Obter external_id para matching com CAPI
+  const externalId = getExternalId();
 
   // Eventos padrão do Meta (sem 'Custom' prefix)
   const standardEvents = [
@@ -51,14 +55,17 @@ function firePixelEvent(
 
   const isStandard = standardEvents.includes(eventName);
 
+  // 🚀 CRÍTICO: Pixel usa camelCase (externalId, eventID)
   if (isStandard) {
     window.fbq("track", eventName, {
       ...customData,
+      externalId: externalId, // 🆕 CRÍTICO para matching (camelCase no Pixel)
       eventID: eventId, // event_id para deduplicação
     });
   } else {
     window.fbq("trackCustom", eventName, {
       ...customData,
+      externalId: externalId, // 🆕 CRÍTICO para matching (camelCase no Pixel)
       eventID: eventId, // event_id para deduplicação
     });
   }

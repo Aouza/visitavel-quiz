@@ -39,6 +39,17 @@ export function getMetaPixelInlineScript(pixelId: string): string {
     } catch(e) {}
   }
 
+  // 🚀 CRÍTICO: Obter ou gerar external_id ANTES de disparar eventos
+  var externalId = localStorage.getItem('visitavel_external_id');
+  if (!externalId) {
+    var ts = Date.now().toString(36);
+    var rand = Math.random().toString(36).substring(2, 15);
+    externalId = 'vq_' + ts + '_' + rand;
+    try {
+      localStorage.setItem('visitavel_external_id', externalId);
+    } catch(e) {}
+  }
+
   // 🚀 CRÍTICO: Gerar event_id único baseado em timestamp + path (compartilhado entre Pixel e CAPI)
   var path = window.location.pathname + window.location.search;
   var timestamp = Date.now();
@@ -69,17 +80,18 @@ export function getMetaPixelInlineScript(pixelId: string): string {
   }
 
   // 🚀 CRÍTICO: Disparar PageView IMEDIATAMENTE (antes da hidratação React)
+  // IMPORTANTE: externalId vai no primeiro objeto (camelCase), eventID vai no segundo (options)
   if (window.fbq) {
     window.fbq('init', pixelId);
-    window.fbq('track', 'PageView', {}, { eventID: eventId });
+    window.fbq('track', 'PageView', { externalId: externalId }, { eventID: eventId });
   } else {
     // Se fbq ainda não carregou, adicionar à fila
     window.fbq = window.fbq || function(){(window.fbq.q=window.fbq.q||[]).push(arguments)};
     window.fbq('init', pixelId);
-    window.fbq('track', 'PageView', {}, { eventID: eventId });
+    window.fbq('track', 'PageView', { externalId: externalId }, { eventID: eventId });
   }
 
-  // 🚀 CRÍTICO: Enviar PageView para CAPI também (com mesmo event_id)
+  // 🚀 CRÍTICO: Enviar PageView para CAPI também (com mesmo event_id E externalId)
   setTimeout(function() {
     try {
       var fbp = document.cookie.match(/[; ]?_fbp=([^;]*)/);
@@ -87,9 +99,13 @@ export function getMetaPixelInlineScript(pixelId: string): string {
       var fbpValue = fbp ? fbp[1] : (localStorage.getItem('visitavel_fbp') || '');
       var fbcValue = fbc ? fbc[1] : (localStorage.getItem('visitavel_fbc') || '');
       
+      // Reutilizar o externalId que já foi criado acima
+      var storedExternalId = localStorage.getItem('visitavel_external_id');
+      
       var payload = {
         eventName: 'PageView',
         eventId: eventId,
+        externalId: storedExternalId, // 🆕 CRÍTICO para matching (mesmo ID do Pixel)
         eventSourceUrl: window.location.href,
         userAgent: navigator.userAgent,
         fbp: fbpValue || undefined,
